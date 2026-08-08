@@ -1,32 +1,51 @@
-from application.bootstrap import create_rag_engine
+from application.bootstrap import (
+    create_rag_components,
+)
+
+from cli.chat.cli import ChatCLI
+from cli.knowledge.cli import KnowledgeCLI
 
 
 def main():
 
-    rag_engine = create_rag_engine()
+    components = create_rag_components()
+
+    chat_cli = ChatCLI(
+        engine=components["rag_engine"]
+    )
+
+    knowledge_cli = KnowledgeCLI(
+        knowledge_base=components[
+            "knowledge_base"
+        ]
+    )
 
     while True:
 
-        query = input("\nYou: ")
+        command = input("\n> ").strip()
 
-        if query.lower() in {
+        if command in {
+            "/exit",
+            "/quit",
             "exit",
             "quit",
         }:
             break
 
-        print("\nAssistant: ", end="")
+        if command == "/chat":
+            chat_cli.run()
+            continue
 
-        for token in rag_engine.stream(
-            query
-        ):
-            print(
-                token,
-                end="",
-                flush=True,
-            )
+        if command == "/knowledge":
+            knowledge_cli.run()
+            continue
 
-        print()
+        print(
+            "Commands:\n"
+            "  /chat\n"
+            "  /knowledge\n"
+            "  /exit"
+        )
 
 
 if __name__ == "__main__":

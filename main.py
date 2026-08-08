@@ -20,9 +20,12 @@ def main():
         if user_message.lower() == "exit":
             break
 
-        print("Assistant: ", end="")
+        print("Assistant: ", end="", flush=True)
 
-        chat.chat(user_message)
+        for chunk in chat.stream(user_message):
+            print(chunk, end="", flush=True)
+
+        print()
 
 
 if __name__ == "__main__":

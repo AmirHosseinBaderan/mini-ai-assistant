@@ -10,22 +10,26 @@ class DocumentLoader:
         ".md",
     }
 
-    def load(self, path: str | Path) -> Document:
+    def load(
+        self,
+        path: str | Path,
+    ) -> Document:
+
         path = Path(path)
 
         if not path.exists():
             raise FileNotFoundError(
-                f"Document not found: {path}"
+                f"File not found: {path}"
             )
 
         if not path.is_file():
             raise ValueError(
-                f"Path is not a file: {path}"
+                f"Path must be a file: {path}"
             )
 
         if path.suffix.lower() not in self.SUPPORTED_EXTENSIONS:
             raise ValueError(
-                f"Unsupported document type: {path.suffix}"
+                f"Unsupported file type: {path.suffix}"
             )
 
         content = path.read_text(
@@ -35,8 +39,43 @@ class DocumentLoader:
         return Document(
             content=content,
             metadata={
-                "source": str(path),
                 "filename": path.name,
-                "extension": path.suffix.lower(),
+                "source": str(path),
             },
         )
+
+    def load_directory(
+        self,
+        directory: str | Path,
+    ) -> list[Document]:
+
+        directory = Path(directory)
+
+        if not directory.exists():
+            raise FileNotFoundError(
+                f"Directory not found: {directory}"
+            )
+
+        if not directory.is_dir():
+            raise ValueError(
+                f"Path must be a directory: {directory}"
+            )
+
+        documents = []
+
+        for path in sorted(directory.iterdir()):
+
+            if not path.is_file():
+                continue
+
+            if (
+                path.suffix.lower()
+                not in self.SUPPORTED_EXTENSIONS
+            ):
+                continue
+
+            documents.append(
+                self.load(path)
+            )
+
+        return documents

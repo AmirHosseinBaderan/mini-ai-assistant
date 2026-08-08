@@ -19,11 +19,15 @@ class ChatEngine:
 
         response = []
 
-        for chunk in self.llm.stream(
-            self.history.get_messages()
-        ):
-            response.append(chunk)
-            yield chunk
+        try:
+            for chunk in self.llm.stream(
+                self.history.get_messages()
+            ):
+                response.append(chunk)
+                yield chunk
+
+        except Exception:
+            raise
 
         assistant_message = "".join(response)
 

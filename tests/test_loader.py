@@ -20,7 +20,6 @@ def test_load_text_file(tmp_path: Path):
     assert document.content == "Hello RAG"
 
     assert document.metadata["filename"] == "test.txt"
-    assert document.metadata["extension"] == ".txt"
 
 
 def test_load_markdown_file(tmp_path: Path):

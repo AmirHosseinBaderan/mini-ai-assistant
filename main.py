@@ -1,29 +1,30 @@
-from dotenv import load_dotenv
-
-from application.chat.engine import ChatEngine
-from application.llm.ollama_client import OllamaClient
+from application.bootstrap import create_rag_engine
 
 
 def main():
-    load_dotenv()
 
-    llm = OllamaClient()
-    chat = ChatEngine(llm)
-
-    print("Mini AI Assistant")
-    print("Type 'exit' to quit.")
-    print()
+    rag_engine = create_rag_engine()
 
     while True:
-        user_message = input("You: ")
 
-        if user_message.lower() == "exit":
+        query = input("\nYou: ")
+
+        if query.lower() in {
+            "exit",
+            "quit",
+        }:
             break
 
-        print("Assistant: ", end="", flush=True)
+        print("\nAssistant: ", end="")
 
-        for chunk in chat.stream(user_message):
-            print(chunk, end="", flush=True)
+        for token in rag_engine.stream(
+            query
+        ):
+            print(
+                token,
+                end="",
+                flush=True,
+            )
 
         print()
 

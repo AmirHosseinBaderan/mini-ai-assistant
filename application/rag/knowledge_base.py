@@ -20,24 +20,32 @@ class KnowledgeBase:
     def add_file(self, path: Path) -> int:
         document = self.loader.load(path)
 
-        chunks = self.chunker.split(
-            document
-        )
+        chunks = self.chunker.split(document)
 
         self.indexer.index(chunks)
 
         return len(chunks)
 
     def add_directory(self, path: Path) -> int:
+        if not path.exists():
+            raise ValueError(
+                f"Directory does not exist: {path}"
+            )
+
+        if not path.is_dir():
+            raise ValueError(
+                f"Path is not a directory: {path}"
+            )
+
         total = 0
 
-        for file in path.iterdir():
+        for path in path.iterdir():
 
-            if not file.is_file():
+            if not path.is_file():
                 continue
 
             try:
-                total += self.add_file(file)
+                total += self.add_file(path)
             except ValueError:
                 continue
 

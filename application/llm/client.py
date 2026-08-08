@@ -10,3 +10,7 @@ class LLMClient(ABC):
         messages: list[dict[str, str]],
     ) -> Iterator[str]:
         pass
+
+    @abstractmethod
+    def embed(self,text)-> list[float]:
+        pass

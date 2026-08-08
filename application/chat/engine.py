@@ -1,29 +1,30 @@
 from collections.abc import Iterator
 
+from application.chat.history import ConversationHistory
 from application.llm.client import LLMClient
 
 
 class ChatEngine:
 
-    def __init__(self, llm: LLMClient):
+    def __init__(
+        self,
+        llm: LLMClient,
+        history: ConversationHistory | None = None,
+    ):
         self.llm = llm
-        self.messages: list[dict[str, str]] = []
+        self.history = history or ConversationHistory()
 
     def stream(self, user_message: str) -> Iterator[str]:
-        self.messages.append({
-            "role": "user",
-            "content": user_message,
-        })
+        self.history.add_user(user_message)
 
         response = []
 
-        for chunk in self.llm.stream(self.messages):
+        for chunk in self.llm.stream(
+            self.history.get_messages()
+        ):
             response.append(chunk)
             yield chunk
 
         assistant_message = "".join(response)
 
-        self.messages.append({
-            "role": "assistant",
-            "content": assistant_message,
-        })
+        self.history.add_assistant(assistant_message)

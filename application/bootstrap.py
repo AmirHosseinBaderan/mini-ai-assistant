@@ -1,6 +1,11 @@
 from application.llm.ollama_client import OllamaClient
+
+from application.rag.chunker import Chunker
 from application.rag.context_builder import ContextBuilder
 from application.rag.engine import RAGEngine
+from application.rag.indexer import Indexer
+from application.rag.knowledge_base import KnowledgeBase
+from application.rag.loader import DocumentLoader
 from application.rag.ollama_embedding import (
     OllamaEmbeddingProvider,
 )
@@ -10,9 +15,13 @@ from application.rag.qdrant_vector_store import (
 from application.rag.retriever import Retriever
 
 
-def create_rag_engine() -> RAGEngine:
+def create_llm_client():
+    return OllamaClient()
 
-    llm_client = OllamaClient()
+
+def create_rag_components():
+
+    llm_client = create_llm_client()
 
     embedding_provider = (
         OllamaEmbeddingProvider(
@@ -20,13 +29,15 @@ def create_rag_engine() -> RAGEngine:
         )
     )
 
-    embedding = embedding_provider.embed(
-        "initialization"
+    vector_size = len(
+        embedding_provider.embed(
+            "initialization"
+        )
     )
 
     vector_store = QdrantVectorStore(
         collection_name="mini_ai_assistant",
-        vector_size=len(embedding),
+        vector_size=vector_size,
     )
 
     retriever = Retriever(
@@ -36,8 +47,28 @@ def create_rag_engine() -> RAGEngine:
 
     context_builder = ContextBuilder()
 
-    return RAGEngine(
+    rag_engine = RAGEngine(
         retriever=retriever,
         context_builder=context_builder,
         llm_client=llm_client,
     )
+
+    indexer = Indexer(
+        embedding_provider=embedding_provider,
+        vector_store=vector_store,
+    )
+
+    knowledge_base = KnowledgeBase(
+        loader=DocumentLoader(),
+        chunker=Chunker(
+            chunk_size=500,
+            chunk_overlap=50,
+        ),
+        indexer=indexer,
+    )
+
+    return {
+        "llm_client": llm_client,
+        "rag_engine": rag_engine,
+        "knowledge_base": knowledge_base,
+    }

@@ -1,0 +1,11 @@
+{"text": "hello", "label": "chat"}
+{"text": "how are you?", "label": "chat"}
+{"text": "thanks for your help", "label": "chat"}
+{"text": "that's great", "label": "chat"}
+{"text": "what is your name?", "label": "chat"}
+
+{"text": "what is python?", "label": "rag"}
+{"text": "explain python", "label": "rag"}
+{"text": "what does the document say about python?", "label": "rag"}
+{"text": "tell me about docker", "label": "rag"}
+{"text": "according to the documents what is redis?", "label": "rag"}

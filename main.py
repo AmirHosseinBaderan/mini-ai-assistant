@@ -1,25 +1,28 @@
 from dotenv import load_dotenv
 
+from application.chat.engine import ChatEngine
 from application.llm.ollama_client import OllamaClient
 
 
-load_dotenv()
-
-
 def main():
-    client = OllamaClient()
+    load_dotenv()
 
-    messages = [
-        {
-            "role": "user",
-            "content": "Hello! Introduce yourself in one sentence.",
-        }
-    ]
+    llm = OllamaClient()
+    chat = ChatEngine(llm)
 
-    for token in client.stream(messages):
-        print(token, end="", flush=True)
-
+    print("Mini AI Assistant")
+    print("Type 'exit' to quit.")
     print()
+
+    while True:
+        user_message = input("You: ")
+
+        if user_message.lower() == "exit":
+            break
+
+        print("Assistant: ", end="")
+
+        chat.chat(user_message)
 
 
 if __name__ == "__main__":

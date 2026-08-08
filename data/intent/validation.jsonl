@@ -1,400 +1,1000 @@
-{"text": "who are you?", "label": "chat"}
-{"text": "hello there :)", "label": "chat"}
-{"text": "explain the concept of Prettier", "label": "rag"}
-{"text": "سلام صبحگاهی لطفا", "label": "chat"}
-{"text": "that's great today", "label": "chat"}
-{"text": "موافقم", "label": "chat"}
-{"text": "ویو‌جی‌اس چگونه کار می‌کند؟", "label": "rag"}
+{"text": "how are you? :)", "label": "chat"}
+{"text": "what do the documents mention about neural networks?", "label": "rag"}
+{"text": "explain the concept of Selenium", "label": "rag"}
+{"text": "how would you define Kubernetes operators?", "label": "rag"}
+{"text": "what are the benefits of Azure?", "label": "rag"}
+{"text": "ویژگی‌های اصلی ویرچوال‌ان‌وی چیست؟", "label": "rag"}
 {"text": "بعدا می‌بینمت", "label": "chat"}
-{"text": "شگفت‌انگیز", "label": "chat"}
-{"text": "what do we know about Helm?", "label": "rag"}
-{"text": "how do you do?", "label": "chat"}
-{"text": "how is everything? do you understand me?", "label": "chat"}
-{"text": "خیلی ممنونم", "label": "chat"}
-{"text": "از روی اسناد درباره اتریوم چه می‌دانی؟", "label": "rag"}
-{"text": "می‌تونی اس‌ان‌اس را توصیف کنی؟", "label": "rag"}
-{"text": "that makes sense", "label": "chat"}
-{"text": "summarize AWS", "label": "rag"}
-{"text": "ویژگی‌های اصلی علم داده چیست؟", "label": "rag"}
-{"text": "can you describe Rust?", "label": "rag"}
-{"text": "خوب پیش می‌رم", "label": "chat"}
-{"text": "اسناد درباره اس‌کیو‌اس چه گفته‌اند؟", "label": "rag"}
-{"text": "give a brief explanation of Apache", "label": "rag"}
-{"text": "حالت خوبه؟", "label": "chat"}
-{"text": "explain Lambda", "label": "rag"}
-{"text": "give me an overview of Ethereum", "label": "rag"}
-{"text": "هی", "label": "chat"}
-{"text": "اهلت کجاست؟", "label": "chat"}
-{"text": "درباره کش ردیس چه می‌دانیم؟", "label": "rag"}
-{"text": "I agree", "label": "chat"}
-{"text": "details about Lambda please", "label": "rag"}
-{"text": "سلام تشکر", "label": "chat"}
-{"text": "hi doing well", "label": "chat"}
-{"text": "ممنون از کمکت امروز", "label": "chat"}
-{"text": "how is everything? :)", "label": "chat"}
-{"text": "تعریف گیت‌لب چیست؟", "label": "rag"}
-{"text": "شب بخیر؟", "label": "chat"}
-{"text": "how do you do?", "label": "chat"}
-{"text": "اطلاعاتی درباره رایانش ابری بده", "label": "rag"}
-{"text": "until next time", "label": "chat"}
-{"text": "retrieve information about Java", "label": "rag"}
-{"text": "مفهوم وب۳ را توضیح بده", "label": "rag"}
-{"text": "oh", "label": "chat"}
-{"text": "خب امروز", "label": "chat"}
-{"text": "از روی اسناد درباره تایپ‌اسکریپت چه می‌دانی؟", "label": "rag"}
-{"text": "روز خوبی داشته باشی رفیق", "label": "chat"}
-{"text": "شگفت‌انگیز", "label": "chat"}
-{"text": "لطفا امنیت را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "what does the document say about NFT?", "label": "rag"}
-{"text": "سی‌آی‌سی‌دی را خلاصه کن", "label": "rag"}
-{"text": "well done", "label": "chat"}
-{"text": "درود بر تو", "label": "chat"}
+{"text": "نحوه کار ای‌بی‌پی‌اف را توضیح بده", "label": "rag"}
+{"text": "از روی اسناد، گیت چیست؟", "label": "rag"}
+{"text": "according to the documents what is pnpm?", "label": "rag"}
+{"text": "tell me about Bitcoin", "label": "rag"}
+{"text": "درود بر تو!", "label": "chat"}
+{"text": "how does NLP work?", "label": "rag"}
+{"text": "sup mate what's your favorite color?", "label": "chat"}
+{"text": "I disagree?", "label": "chat"}
+{"text": "what can you tell me about SonarQube from the docs?", "label": "rag"}
 {"text": "تو کی هستی؟", "label": "chat"}
-{"text": "what are the main features of artificial intelligence?", "label": "rag"}
-{"text": "خوبی؟", "label": "chat"}
-{"text": "عصر بخیر", "label": "chat"}
-{"text": "how would you define Express.js?", "label": "rag"}
-{"text": "what is Elasticsearch used for?", "label": "rag"}
-{"text": "explain VPN", "label": "rag"}
-{"text": "از روی اسناد درباره انجینکس چه می‌دانی؟", "label": "rag"}
-{"text": "what do the documents mention about TLS?", "label": "rag"}
-{"text": "explain quantum computing", "label": "rag"}
-{"text": "I need info on kubernetes", "label": "rag"}
-{"text": "excellent friend", "label": "chat"}
-{"text": "do you understand me?", "label": "chat"}
-{"text": "how is Weaviate used?", "label": "rag"}
-{"text": "طبق اسناد کاساندرا چیست؟", "label": "rag"}
-{"text": "پانداز چیست؟", "label": "rag"}
-{"text": "خداحافظ", "label": "chat"}
-{"text": "please explain Web3 based on available data", "label": "rag"}
-{"text": "سلام صبحگاهی", "label": "chat"}
-{"text": "according to the docs, explain Webpack", "label": "rag"}
-{"text": "take care", "label": "chat"}
-{"text": "اطلاعاتی درباره اس‌اس‌ال لازم دارم", "label": "rag"}
-{"text": "nice :)", "label": "chat"}
-{"text": "thank you so much", "label": "chat"}
-{"text": "کامل تا دفعه بعد", "label": "chat"}
-{"text": "خلاصه‌ای از تایم‌اسکیل بده", "label": "rag"}
-{"text": "طبق اسناد، فلسک را توضیح بده", "label": "rag"}
-{"text": "give me an overview of cryptocurrency", "label": "rag"}
-{"text": "how have you been?", "label": "chat"}
-{"text": "nice", "label": "chat"}
-{"text": "طبق اسناد هوش مصنوعی چیست؟", "label": "rag"}
-{"text": "ممنونم!", "label": "chat"}
-{"text": "who are you? what's up?", "label": "chat"}
-{"text": "لطفا تایم‌اسکیل را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "ممنونم", "label": "chat"}
-{"text": "tell me about yourself", "label": "chat"}
-{"text": "bye", "label": "chat"}
-{"text": "how is hybrid cloud used?", "label": "rag"}
-{"text": "what is Django used for?", "label": "rag"}
-{"text": "hello", "label": "chat"}
-{"text": "درباره خودت بگو دوست", "label": "chat"}
-{"text": "how is everything?", "label": "chat"}
-{"text": "explain how Django works", "label": "rag"}
-{"text": "can you chat?", "label": "chat"}
-{"text": "explain Kanban", "label": "rag"}
-{"text": "are you a robot?!", "label": "chat"}
-{"text": "how have you been?", "label": "chat"}
-{"text": "می‌تونی اطلاعاتی در مورد گو پیدا کنی؟", "label": "rag"}
-{"text": "good morning awesome", "label": "chat"}
-{"text": "until next time", "label": "chat"}
-{"text": "ممنونم اسمت چیه؟", "label": "chat"}
-{"text": "describe Pinecone in simple terms", "label": "rag"}
-{"text": "حالت چطوره؟", "label": "chat"}
-{"text": "can you describe machine learning?", "label": "rag"}
-{"text": "what are the main features of Cypress?", "label": "rag"}
-{"text": "از روی اسناد درباره گیت‌لب چه می‌دانی؟", "label": "rag"}
-{"text": "درباره اسکرام چه می‌دانیم؟", "label": "rag"}
-{"text": "summarize cryptocurrency", "label": "rag"}
-{"text": "cool!", "label": "chat"}
-{"text": "مفهوم کش ردیس را توضیح بده", "label": "rag"}
-{"text": "نحوه کار علم داده را توضیح بده", "label": "rag"}
-{"text": "اطلاعاتی درباره اکسپرس لازم دارم", "label": "rag"}
-{"text": "what does the document say about Jenkins?", "label": "rag"}
-{"text": "ناکست چیست؟", "label": "rag"}
-{"text": "شب بخیر", "label": "chat"}
-{"text": "مزایای رمزنگاری چیست؟", "label": "rag"}
-{"text": "I need info on ESLint", "label": "rag"}
-{"text": "فوق‌العاده", "label": "chat"}
-{"text": "ممنونم امروز", "label": "chat"}
-{"text": "حالت چطوره؟", "label": "chat"}
-{"text": "سلام علیکم می‌تونی حرف بزنی؟", "label": "chat"}
-{"text": "خب", "label": "chat"}
-{"text": "let's talk", "label": "chat"}
-{"text": "goodbye", "label": "chat"}
-{"text": "حالت خوبه؟ تا دفعه بعد", "label": "chat"}
-{"text": "عالی", "label": "chat"}
-{"text": "hi there", "label": "chat"}
-{"text": "see you!", "label": "chat"}
-{"text": "goodbye buddy", "label": "chat"}
-{"text": "اطلاعاتی درباره آر‌ای‌جی بده", "label": "rag"}
-{"text": "what is python?", "label": "rag"}
-{"text": "لطفا کش ردیس را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "خوبی؟", "label": "chat"}
-{"text": "how have you been?", "label": "chat"}
-{"text": "مفهوم کافکا را توضیح بده", "label": "rag"}
-{"text": "what's your favorite color?", "label": "chat"}
-{"text": "chat with me!", "label": "chat"}
-{"text": "what are the main features of C++?", "label": "rag"}
-{"text": "what do the documents mention about TensorFlow?", "label": "rag"}
-{"text": "can you chat? until next time", "label": "chat"}
-{"text": "where are you from?", "label": "chat"}
-{"text": "hi there", "label": "chat"}
-{"text": "می‌تونی فلسک را توصیف کنی؟", "label": "rag"}
-{"text": "تعریف اسواگر چیست؟", "label": "rag"}
-{"text": "what are the main features of GPT?", "label": "rag"}
-{"text": "goodbye buddy", "label": "chat"}
-{"text": "I need info on Cassandra", "label": "rag"}
-{"text": "based on the knowledge base, explain GitLab", "label": "rag"}
-{"text": "چه خبر؟", "label": "chat"}
-{"text": "شب بخیر", "label": "chat"}
-{"text": "عصر بخیر؟", "label": "chat"}
-{"text": "چطور پیش می‌ره؟ امروز", "label": "chat"}
-{"text": "خوبم رفیق", "label": "chat"}
-{"text": "عصر بخیر امروز", "label": "chat"}
-{"text": "thx friend", "label": "chat"}
-{"text": "می‌تونی اطلاعاتی در مورد ان‌اف‌تی پیدا کنی؟", "label": "rag"}
-{"text": "موسیقی دوست داری؟ تو کی هستی؟", "label": "chat"}
-{"text": "please", "label": "chat"}
-{"text": "درباره بیت‌باکت بگو", "label": "rag"}
-{"text": "رایانش ابری چگونه استفاده می‌شود؟", "label": "rag"}
-{"text": "طبق اسناد، ۵جی را توضیح بده", "label": "rag"}
-{"text": "بیشتر درباره ترانسفورمر بگو", "label": "rag"}
-{"text": "نه", "label": "chat"}
-{"text": "درباره گیت‌هاب چه می‌دانیم؟", "label": "rag"}
-{"text": "سلام صبحگاهی", "label": "chat"}
-{"text": "منو می‌فهمی؟", "label": "chat"}
-{"text": "what is the purpose of Graph databases?", "label": "rag"}
-{"text": "do you like music? :)", "label": "chat"}
-{"text": "سلام به تو رفیق", "label": "chat"}
-{"text": "explain how CI/CD works", "label": "rag"}
-{"text": "درباره خودت بگو", "label": "chat"}
-{"text": "what is the definition of NoSQL?", "label": "rag"}
-{"text": "how's it going?", "label": "chat"}
-{"text": "morning please", "label": "chat"}
-{"text": "خدا نگهدار", "label": "chat"}
-{"text": "goodbye", "label": "chat"}
-{"text": "عالیه 😊 عذر می‌خوام", "label": "chat"}
-{"text": "تعریف کوبرنتیز چیست؟", "label": "rag"}
-{"text": "می‌تونی حرف بزنی؟", "label": "chat"}
-{"text": "what is the purpose of Nginx?", "label": "rag"}
-{"text": "what can you tell me about PyTorch from the docs?", "label": "rag"}
-{"text": "how is everything? please", "label": "chat"}
-{"text": "how do you do? now", "label": "chat"}
-{"text": "goodbye", "label": "chat"}
-{"text": "عذر می‌خوام دوست بی‌نظیر", "label": "chat"}
-{"text": "nice to meet you?", "label": "chat"}
-{"text": "تشکر لطفا", "label": "chat"}
-{"text": "در اسناد دنبال کانبان بگرد", "label": "rag"}
-{"text": "در اسناد دنبال شبکه‌های عصبی بگرد", "label": "rag"}
-{"text": "according to the docs, explain Neo4j", "label": "rag"}
-{"text": "لطفا اس۳ را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "می‌تونی حرف بزنی؟", "label": "chat"}
-{"text": "summarize Lambda", "label": "rag"}
-{"text": "alright", "label": "chat"}
-{"text": "خداحافظ 😊", "label": "chat"}
-{"text": "نه دوست", "label": "chat"}
-{"text": "thanks for everything", "label": "chat"}
-{"text": "summarize SQS", "label": "rag"}
-{"text": "great job?", "label": "chat"}
-{"text": "نحوه کار سلری را توضیح بده", "label": "rag"}
-{"text": "شب بخیر صبح بخیر", "label": "chat"}
-{"text": "از روی اسناد درباره مجوزدهی چه می‌دانی؟", "label": "rag"}
-{"text": "retrieve information about InfluxDB", "label": "rag"}
-{"text": "what is EC2 used for?", "label": "rag"}
-{"text": "can you find information regarding deep learning?", "label": "rag"}
-{"text": "that's great today", "label": "chat"}
-{"text": "بیت‌کوین برای چه استفاده می‌شود؟", "label": "rag"}
-{"text": "what is the definition of JWT?", "label": "rag"}
-{"text": "according to the documents what is Lambda?", "label": "rag"}
-{"text": "چه خبر؟", "label": "chat"}
-{"text": "retrieve information about hashing", "label": "rag"}
-{"text": "اسناد درباره فایروال چه گفته‌اند؟", "label": "rag"}
-{"text": "لطفا جی‌پی‌تی را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "do you like music? now", "label": "chat"}
-{"text": "hi :)", "label": "chat"}
-{"text": "how have you been? now", "label": "chat"}
-{"text": "what are the main features of time series databases?", "label": "rag"}
-{"text": "what does the document say about SQL?", "label": "rag"}
-{"text": "بای", "label": "chat"}
-{"text": "می‌تونی انجینکس را توصیف کنی؟", "label": "rag"}
-{"text": "appreciate it", "label": "chat"}
-{"text": "explain the concept of JavaScript", "label": "rag"}
-{"text": "ویژگی‌های اصلی میکروسرویس چیست؟", "label": "rag"}
-{"text": "describe Cypress in simple terms", "label": "rag"}
-{"text": "explain Docker Compose", "label": "rag"}
-{"text": "اسناد درباره جست چه گفته‌اند؟", "label": "rag"}
-{"text": "حالت چطوره؟", "label": "chat"}
-{"text": "can you find information regarding Ethereum?", "label": "rag"}
-{"text": "what is the definition of hashing?", "label": "rag"}
-{"text": "details about AWS please", "label": "rag"}
-{"text": "بای", "label": "chat"}
-{"text": "از روی اسناد درباره دواپس چه می‌دانی؟", "label": "rag"}
-{"text": "thanks a bunch buddy", "label": "chat"}
-{"text": "مشکلی نیست", "label": "chat"}
-{"text": "how are you?", "label": "chat"}
-{"text": "from the documents, what is NFT?", "label": "rag"}
-{"text": "thanks a lot nice to meet you", "label": "chat"}
-{"text": "summarize SNS", "label": "rag"}
-{"text": "based on the knowledge base, explain Celery", "label": "rag"}
-{"text": "retrieve information about API", "label": "rag"}
-{"text": "how old are you??", "label": "chat"}
-{"text": "شب بخیر", "label": "chat"}
-{"text": "hello today thanks for everything", "label": "chat"}
-{"text": "goodbye", "label": "chat"}
-{"text": "what are the advantages of using Socket.io?", "label": "rag"}
-{"text": "درباره اکسپرس بگو", "label": "rag"}
-{"text": "سند درباره سی‌دی‌ان چه می‌گوید؟", "label": "rag"}
-{"text": "how's life? :)", "label": "chat"}
-{"text": "در اسناد دنبال ناکست بگرد", "label": "rag"}
-{"text": "how does Graph databases work?", "label": "rag"}
-{"text": "can you chat? buddy", "label": "chat"}
-{"text": "what is your name?", "label": "chat"}
-{"text": "explain how InfluxDB works", "label": "rag"}
-{"text": "درباره گوگل کلود بگو", "label": "rag"}
-{"text": "می‌تونی حرف بزنی؟", "label": "chat"}
-{"text": "تا بعد 😊", "label": "chat"}
-{"text": "چطوری؟", "label": "chat"}
-{"text": "good night morning", "label": "chat"}
-{"text": "می‌تونی میکروسرویس را توصیف کنی؟", "label": "rag"}
-{"text": "از روی اسناد، ترافرم چیست؟", "label": "rag"}
-{"text": "how would you define DevOps?", "label": "rag"}
-{"text": "see you later now", "label": "chat"}
-{"text": "maybe", "label": "chat"}
-{"text": "what is the purpose of Swagger?", "label": "rag"}
-{"text": "until next time", "label": "chat"}
-{"text": "ممنون لطفا", "label": "chat"}
-{"text": "درباره لامبدا چه می‌دانیم؟", "label": "rag"}
-{"text": "many thanks how are you?", "label": "chat"}
-{"text": "what can you tell me about Docker Compose from the docs?", "label": "rag"}
-{"text": "تعریف آر‌ای‌جی چیست؟", "label": "rag"}
-{"text": "ببخشید", "label": "chat"}
-{"text": "how does 5G work?", "label": "rag"}
-{"text": "فوق‌العاده", "label": "chat"}
-{"text": "can you chat?", "label": "chat"}
-{"text": "سلام", "label": "chat"}
-{"text": "درباره خودت بگو", "label": "chat"}
-{"text": "عصر بخیر رفیق می‌تونی حرف بزنی؟", "label": "chat"}
-{"text": "retrieve information about GitHub", "label": "rag"}
-{"text": "what are the main features of Apache?", "label": "rag"}
-{"text": "many thanks", "label": "chat"}
-{"text": "درجه یک ببخشید", "label": "chat"}
-{"text": "from the documents, what is Docker Compose?", "label": "rag"}
-{"text": "بینایی ماشین را توضیح بده", "label": "rag"}
-{"text": "wonderful please", "label": "chat"}
-{"text": "لطفا رایانش ابری را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "صبح بخیر! چطور پیش می‌ره؟", "label": "chat"}
-{"text": "هدف از ویوئیت چیست؟", "label": "rag"}
-{"text": "هی", "label": "chat"}
-{"text": "what does the document say about Socket.io?", "label": "rag"}
-{"text": "according to the docs, explain Express.js", "label": "rag"}
-{"text": "according to the documents what is pandas?", "label": "rag"}
-{"text": "نحوه کار پرومتئوس را توضیح بده", "label": "rag"}
-{"text": "how would you define NFT?", "label": "rag"}
-{"text": "how are you? please", "label": "chat"}
-{"text": "لطفا یادگیری عمیق را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "تعریف محاسبات لبه چیست؟", "label": "rag"}
-{"text": "آپاچی چیست؟", "label": "rag"}
-{"text": "در اسناد دنبال ای‌پی‌آی بگرد", "label": "rag"}
-{"text": "see you?", "label": "chat"}
-{"text": "tell me more about Go", "label": "rag"}
 {"text": "درود بر تو", "label": "chat"}
-{"text": "اس‌ان‌اس برای چه استفاده می‌شود؟", "label": "rag"}
-{"text": "درباره اس‌ان‌اس چه می‌دانیم؟", "label": "rag"}
-{"text": "سلام", "label": "chat"}
-{"text": "goodbye how have you been?", "label": "chat"}
-{"text": "از ملاقاتت خوشحالم! مشکلی نیست", "label": "chat"}
-{"text": "have a nice day?", "label": "chat"}
-{"text": "retrieve information about InfluxDB", "label": "rag"}
-{"text": "شاید", "label": "chat"}
-{"text": "morning", "label": "chat"}
-{"text": "explain authorization", "label": "rag"}
-{"text": "based on the knowledge base, explain Angular", "label": "rag"}
-{"text": "thanks a bunch", "label": "chat"}
-{"text": "ببخشید", "label": "chat"}
-{"text": "what do we know about Angular?", "label": "rag"}
-{"text": "طبق اسناد بینایی ماشین چیست؟", "label": "rag"}
-{"text": "تعریف یادگیری ماشین چیست؟", "label": "rag"}
-{"text": "لاگ‌گیری چیست؟", "label": "rag"}
-{"text": "do you understand me? today", "label": "chat"}
-{"text": "حالت خوبه؟ 😊", "label": "chat"}
-{"text": "لاگ‌گیری چیست؟", "label": "rag"}
-{"text": "سلام علیکم", "label": "chat"}
-{"text": "در اسناد دنبال سولت بگرد", "label": "rag"}
-{"text": "خیلی ممنونم 😊", "label": "chat"}
-{"text": "amazing! how do you do?", "label": "chat"}
-{"text": "اینفلاکس را خلاصه کن", "label": "rag"}
-{"text": "لطفا تیلویند را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "جزئیات درباره سی‌آی‌سی‌دی لطفا", "label": "rag"}
-{"text": "what is CDN?", "label": "rag"}
-{"text": "according to the documents what is ELK stack?", "label": "rag"}
-{"text": "از روی اسناد، الاستیک‌سرچ چیست؟", "label": "rag"}
+{"text": "excellent buddy", "label": "chat"}
+{"text": "طبق اسناد پاین‌کون چیست؟", "label": "rag"}
+{"text": "how would you define TypeScript?", "label": "rag"}
 {"text": "how have you been?", "label": "chat"}
-{"text": "البته", "label": "chat"}
-{"text": "مزایای ان‌اف‌تی چیست؟", "label": "rag"}
-{"text": "حالت خوبه؟", "label": "chat"}
-{"text": "اهلت کجاست؟ 😊", "label": "chat"}
-{"text": "that's great", "label": "chat"}
-{"text": "لطفا کافکا را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "بد نیست امروز", "label": "chat"}
-{"text": "hey please", "label": "chat"}
-{"text": "hey", "label": "chat"}
-{"text": "هدف از اس‌ان‌اس چیست؟", "label": "rag"}
-{"text": "درباره نکست‌جی‌اس بگو", "label": "rag"}
-{"text": "what does the document say about TLS?", "label": "rag"}
-{"text": "can you find information regarding HTTP?", "label": "rag"}
-{"text": "اسمت چیه؟ امروز", "label": "chat"}
-{"text": "طبق اسناد فست‌ای‌پی‌آی چیست؟", "label": "rag"}
+{"text": "greetings now", "label": "chat"}
+{"text": "really?", "label": "chat"}
+{"text": "please explain cryptocurrency based on available data", "label": "rag"}
+{"text": "درباره دواپس چه می‌دانیم؟", "label": "rag"}
+{"text": "بیشتر درباره تایم‌اسکیل بگو", "label": "rag"}
+{"text": "منو می‌فهمی؟", "label": "chat"}
+{"text": "چه کارا می‌کنی؟؟", "label": "chat"}
+{"text": "تو کی هستی؟", "label": "chat"}
+{"text": "outstanding impressive", "label": "chat"}
+{"text": "what should I know about neural networks?", "label": "rag"}
+{"text": "explain ArgoCD", "label": "rag"}
+{"text": "ممنون از کمکت امروز", "label": "chat"}
+{"text": "what are the benefits of CQRS?", "label": "rag"}
+{"text": "explain monitoring", "label": "rag"}
+{"text": "what do the documents mention about BDD?", "label": "rag"}
+{"text": "what do the documents mention about NumPy?", "label": "rag"}
+{"text": "overview of authorization from the knowledge base", "label": "rag"}
+{"text": "how's it going?", "label": "chat"}
+{"text": "according to the docs, explain Helm charts", "label": "rag"}
+{"text": "لطفا اس‌کیو‌ال را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
+{"text": "فهمیدم الان", "label": "chat"}
+{"text": "summarize NoSQL", "label": "rag"}
+{"text": "thanks for everything today", "label": "chat"}
+{"text": "درباره خودت بگو", "label": "chat"}
+{"text": "retrieve information about SQS", "label": "rag"}
+{"text": "سلام", "label": "chat"}
+{"text": "overview of Helm charts from the knowledge base", "label": "rag"}
+{"text": "many thanks buddy", "label": "chat"}
+{"text": "what's up?", "label": "chat"}
+{"text": "according to the documents what is code review?", "label": "rag"}
+{"text": "هشینگ را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "اسمت چیه؟", "label": "chat"}
+{"text": "از روی اسناد درباره پرومتئوس چه می‌دانی؟", "label": "rag"}
+{"text": "cool", "label": "chat"}
+{"text": "good afternoon later", "label": "chat"}
+{"text": "give me an overview of npm", "label": "rag"}
+{"text": "appreciate it", "label": "chat"}
+{"text": "how's life?", "label": "chat"}
+{"text": "گو را توضیح بده", "label": "rag"}
+{"text": "می‌تونی اطلاعاتی در مورد وب‌سوکت پیدا کنی؟", "label": "rag"}
+{"text": "how old are you? how do you do?", "label": "chat"}
+{"text": "حرف نداره", "label": "chat"}
+{"text": "help me understand load balancer", "label": "rag"}
+{"text": "thanks a lot", "label": "chat"}
+{"text": "cool now how's it going?", "label": "chat"}
+{"text": "مزایای استفاده از سی‌کیو‌آر‌اس چیست؟", "label": "rag"}
+{"text": "give me an overview of Express.js", "label": "rag"}
+{"text": "ویژگی‌های اصلی لامبدا چیست؟", "label": "rag"}
+{"text": "what can you tell me about Pinecone from the docs?", "label": "rag"}
+{"text": "how do you do? same here", "label": "chat"}
+{"text": "بد نیست!", "label": "chat"}
+{"text": "good morning my friend that's great", "label": "chat"}
+{"text": "are you a robot?", "label": "chat"}
+{"text": "خلاصه‌ای از تحلیل استاتیک بده", "label": "rag"}
+{"text": "can you find information regarding BDD?", "label": "rag"}
+{"text": "چند سالته؟", "label": "chat"}
+{"text": "شب بخیر", "label": "chat"}
+{"text": "superb friend", "label": "chat"}
+{"text": "بدرود جان", "label": "chat"}
+{"text": "عالی", "label": "chat"}
+{"text": "حوصله‌ام سر رفته", "label": "chat"}
+{"text": "اطلاعاتی درباره پست‌من بده", "label": "rag"}
+{"text": "thank you so much buddy", "label": "chat"}
+{"text": "طبق اسناد، گیت‌لب را توضیح بده", "label": "rag"}
+{"text": "اچ‌تی‌تی‌پی‌اس را توضیح بده", "label": "rag"}
+{"text": "explain the concept of Cassandra", "label": "rag"}
+{"text": "how have you been?", "label": "chat"}
+{"text": "what do we know about Next.js?", "label": "rag"}
+{"text": "ممنونم", "label": "chat"}
+{"text": "احتمالا؟", "label": "chat"}
+{"text": "دنبال جزئیات کنسول هستم", "label": "rag"}
+{"text": "حالت چطوره؟ الان", "label": "chat"}
+{"text": "بر اساس پایگاه دانش، آرگو‌سی‌دی را توضیح بده", "label": "rag"}
+{"text": "tell me about yourself", "label": "chat"}
+{"text": "awesome?", "label": "chat"}
+{"text": "what does the document say about GPT?", "label": "rag"}
 {"text": "سلام صبحگاهی", "label": "chat"}
+{"text": "what can you tell me about IoT from the docs?", "label": "rag"}
+{"text": "غلط", "label": "chat"}
+{"text": "خلاصه‌ای از وب۳ بده", "label": "rag"}
+{"text": "explain how TLS works", "label": "rag"}
+{"text": "please explain HTTPS based on available data", "label": "rag"}
+{"text": "خیلی ممنون چطوری؟", "label": "chat"}
+{"text": "مفهوم سی‌دی‌ان را توضیح بده", "label": "rag"}
+{"text": "درست", "label": "chat"}
+{"text": "how have you been?", "label": "chat"}
+{"text": "are you AI?", "label": "chat"}
+{"text": "what do the documents mention about Gradle?", "label": "rag"}
+{"text": "perfect?", "label": "chat"}
+{"text": "awesome please", "label": "chat"}
+{"text": "what are the main features of event-driven architecture?", "label": "rag"}
+{"text": "what are the main features of virtualenv?", "label": "rag"}
+{"text": "how are you?", "label": "chat"}
+{"text": "according to the docs, explain Zipkin", "label": "rag"}
+{"text": "what is the definition of neural networks?", "label": "rag"}
+{"text": "can you find information regarding VPN?", "label": "rag"}
+{"text": "overview of conda from the knowledge base", "label": "rag"}
+{"text": "عالیه واقعا رفیق", "label": "chat"}
+{"text": "summarize encryption", "label": "rag"}
+{"text": "what is your name? friend", "label": "chat"}
+{"text": "thank you so much", "label": "chat"}
+{"text": "سلام رفیق جان خیلی ممنونم", "label": "chat"}
+{"text": "yes", "label": "chat"}
+{"text": "درود دوست ممنونم", "label": "chat"}
+{"text": "ویژگی‌های اصلی علم داده چیست؟", "label": "rag"}
+{"text": "درست دوست", "label": "chat"}
+{"text": "superb", "label": "chat"}
 {"text": "دمت گرم", "label": "chat"}
-{"text": "عذر می‌خوام بعدا می‌بینمت", "label": "chat"}
-{"text": "مفهوم دواپس را توضیح بده", "label": "rag"}
-{"text": "that's great :)", "label": "chat"}
-{"text": "خوبی؟ لطفا", "label": "chat"}
-{"text": "amazing?", "label": "chat"}
-{"text": "خوبه مواظب خودت باش", "label": "chat"}
-{"text": "خواهش می‌کنم 😊", "label": "chat"}
-{"text": "تعریف انگولار چیست؟", "label": "rag"}
-{"text": "توضیح مختصری از نواس‌کیو‌ال بده", "label": "rag"}
-{"text": "do you like music?", "label": "chat"}
-{"text": "لطفا نئو۴جی را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "explain the concept of machine learning", "label": "rag"}
-{"text": "what's up? friend", "label": "chat"}
-{"text": "give a brief explanation of LLM", "label": "rag"}
-{"text": "چگونه انسیبل را تعریف می‌کنی؟", "label": "rag"}
+{"text": "where are you from?! how have you been?", "label": "chat"}
+{"text": "بر اساس پایگاه دانش، گیت را توضیح بده", "label": "rag"}
 {"text": "بای", "label": "chat"}
-{"text": "لینوکس را به زبان ساده توصیف کن", "label": "rag"}
-{"text": "از روی اسناد درباره میکروسرویس چه می‌دانی؟", "label": "rag"}
-{"text": "hey", "label": "chat"}
-{"text": "سلنیوم برای چه استفاده می‌شود؟", "label": "rag"}
-{"text": "درود بر تو؟", "label": "chat"}
-{"text": "provide information on Redis Streams", "label": "rag"}
-{"text": "what does the document say about Java?", "label": "rag"}
+{"text": "لاگ‌گیری را توضیح بده", "label": "rag"}
+{"text": "provide information on python", "label": "rag"}
+{"text": "درباره کوبرنتیز بگو", "label": "rag"}
+{"text": "چه خبر؟ 😊", "label": "chat"}
+{"text": "می‌تونی حرف بزنی؟ عزیز", "label": "chat"}
+{"text": "شگفت‌انگیز! عالیه", "label": "chat"}
+{"text": "hello", "label": "chat"}
+{"text": "looking for details on vector database", "label": "rag"}
+{"text": "how you doing?", "label": "chat"}
+{"text": "yo!", "label": "chat"}
+{"text": "evening superb", "label": "chat"}
+{"text": "حرف نداره الان چه می‌کنی؟", "label": "chat"}
+{"text": "what is Vite?", "label": "rag"}
+{"text": "you good? much appreciated", "label": "chat"}
+{"text": "درجه یک", "label": "chat"}
+{"text": "سپاسگزارم لطفا هوش مصنوعی هستی؟", "label": "chat"}
 {"text": "می‌تونی حرف بزنی؟", "label": "chat"}
+{"text": "hey there :)", "label": "chat"}
+{"text": "what's your favorite color? friend", "label": "chat"}
+{"text": "how you doing?", "label": "chat"}
+{"text": "همم!", "label": "chat"}
+{"text": "بر اساس پایگاه دانش، لانچ‌دارکلی را توضیح بده", "label": "rag"}
+{"text": "اطلاعاتی درباره داکر کامپوز بده", "label": "rag"}
+{"text": "می‌تونی اطلاعاتی در مورد اس‌کیو‌اس پیدا کنی؟", "label": "rag"}
+{"text": "مفهوم تی‌ال‌اس را توضیح بده", "label": "rag"}
+{"text": "می‌تونی اطلاعاتی در مورد ویو‌جی‌اس پیدا کنی؟", "label": "rag"}
+{"text": "based on the knowledge base, explain Nginx", "label": "rag"}
+{"text": "درباره نود‌جی‌اس چه باید بدونم؟", "label": "rag"}
+{"text": "how is pnpm used?", "label": "rag"}
+{"text": "اهلت کجاست؟", "label": "chat"}
+{"text": "سولت را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "طبق اسناد پوئتری چیست؟", "label": "rag"}
+{"text": "بیشتر درباره پیپ بگو", "label": "rag"}
+{"text": "who are you?", "label": "chat"}
+{"text": "مرسی", "label": "chat"}
+{"text": "درست جان", "label": "chat"}
+{"text": "what should I know about GraphQL?", "label": "rag"}
+{"text": "بیشتر درباره بوت‌استرپ بگو", "label": "rag"}
+{"text": "اطلاعاتی درباره اسپرینگ بوت لازم دارم", "label": "rag"}
+{"text": "منو می‌فهمی؟ 😊", "label": "chat"}
+{"text": "اطلاعاتی درباره جاوااسکریپت بازیابی کن", "label": "rag"}
+{"text": "مزایای سرورلس چیست؟", "label": "rag"}
+{"text": "اطلاعاتی درباره ویرچوال‌ان‌وی لازم دارم", "label": "rag"}
+{"text": "well!", "label": "chat"}
+{"text": "چه کارا می‌کنی؟ عالیه", "label": "chat"}
+{"text": "چطور پیش می‌ره؟ جان", "label": "chat"}
+{"text": "how are you? not bad", "label": "chat"}
+{"text": "دنبال جزئیات لینوکس هستم", "label": "rag"}
+{"text": "کانتینرد را توضیح بده", "label": "rag"}
+{"text": "overview of conda from the knowledge base", "label": "rag"}
+{"text": "from the documents, what is InfluxDB?", "label": "rag"}
+{"text": "سلام به تو", "label": "chat"}
+{"text": "how would you define Flux?", "label": "rag"}
+{"text": "cool now", "label": "chat"}
+{"text": "مشکلی نیست", "label": "chat"}
+{"text": "based on the knowledge base, explain Maven", "label": "rag"}
+{"text": "based on the knowledge base, explain smart contracts", "label": "rag"}
+{"text": "یادگیری عمیق را توضیح بده", "label": "rag"}
+{"text": "what are the benefits of PyTorch?", "label": "rag"}
+{"text": "می‌تونی اطلاعاتی در مورد الگوهای طراحی پیدا کنی؟", "label": "rag"}
+{"text": "doing well", "label": "chat"}
+{"text": "می‌تونی اطلاعاتی در مورد ویوئیت پیدا کنی؟", "label": "rag"}
+{"text": "نامپای چیست؟", "label": "rag"}
+{"text": "درباره بینایی ماشین چه می‌دانیم؟", "label": "rag"}
+{"text": "where are you from?", "label": "chat"}
+{"text": "thanks a lot!", "label": "chat"}
+{"text": "explain the concept of Tailwind CSS", "label": "rag"}
+{"text": "ممنونم امروز", "label": "chat"}
+{"text": "بی‌نظیر! بای", "label": "chat"}
+{"text": "طبق اسناد سورسینگ رویداد چیست؟", "label": "rag"}
+{"text": "how is machine learning used?", "label": "rag"}
+{"text": "goodbye today", "label": "chat"}
+{"text": "چگونه ابر هیبریدی را تعریف می‌کنی؟", "label": "rag"}
+{"text": "thank you", "label": "chat"}
+{"text": "سپاس لطفا", "label": "chat"}
+{"text": "موسیقی دوست داری؟ خیلی ممنون", "label": "chat"}
+{"text": "لینکرد برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "summarize FastAPI", "label": "rag"}
+{"text": "what does the document say about Kanban?", "label": "rag"}
+{"text": "how you doing? that's great", "label": "chat"}
+{"text": "amazing today", "label": "chat"}
+{"text": "what are the main features of Swagger?", "label": "rag"}
+{"text": "peace out", "label": "chat"}
+{"text": "رمزنگاری برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "give a brief explanation of python", "label": "rag"}
+{"text": "awesome?", "label": "chat"}
+{"text": "ممنون از کمکت دوست", "label": "chat"}
+{"text": "well done now", "label": "chat"}
+{"text": "hey", "label": "chat"}
+{"text": "درباره خودت بگو", "label": "chat"}
+{"text": "morning buddy", "label": "chat"}
+{"text": "درست جان خب", "label": "chat"}
+{"text": "what is Vue.js?", "label": "rag"}
+{"text": "رنگ مورد علاقت چیه؟ دوست", "label": "chat"}
+{"text": "ممنون لطفا", "label": "chat"}
+{"text": "اوه رفیق", "label": "chat"}
+{"text": "thx", "label": "chat"}
+{"text": "well done my friend who are you?", "label": "chat"}
+{"text": "how is Babel used?", "label": "rag"}
+{"text": "تشکر لطفا", "label": "chat"}
+{"text": "درود دوست سلام علیکم", "label": "chat"}
+{"text": "true buddy chat with me", "label": "chat"}
+{"text": "retrieve information about EC2", "label": "rag"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "cheers mate", "label": "chat"}
+{"text": "چه می‌کنی؟", "label": "chat"}
+{"text": "catch you later what's your favorite color?", "label": "chat"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "اطلاعاتی درباره فلاکس لازم دارم", "label": "rag"}
+{"text": "لطفا ربیت‌ام‌کیو را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
+{"text": "tell me more about HTTP", "label": "rag"}
+{"text": "خلاصه‌ای از ری‌اکت بده", "label": "rag"}
+{"text": "چطوری؟ امروز", "label": "chat"}
+{"text": "توضیح مختصری از سرورلس بده", "label": "rag"}
+{"text": "اچ‌تی‌تی‌پی‌اس چگونه کار می‌کند؟", "label": "rag"}
+{"text": "are you a robot? can you chat?", "label": "chat"}
+{"text": "نکات کلیدی درباره ارکستریشن", "label": "rag"}
+{"text": "بعدا می‌بینمت امروز", "label": "chat"}
+{"text": "what is your name? how are things?", "label": "chat"}
 {"text": "wonderful", "label": "chat"}
-{"text": "take care :)", "label": "chat"}
-{"text": "لطفا اجایل را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
-{"text": "how is LLM used?", "label": "rag"}
-{"text": "tell me about VPN", "label": "rag"}
-{"text": "explain DeFi", "label": "rag"}
-{"text": "can you find information regarding smart contracts?", "label": "rag"}
-{"text": "اطلاعاتی درباره ارکستریشن بده", "label": "rag"}
-{"text": "nice please", "label": "chat"}
-{"text": "explain the concept of GPT", "label": "rag"}
-{"text": "سپاس رفیق", "label": "chat"}
-{"text": "give a brief explanation of InfluxDB", "label": "rag"}
-{"text": "can you describe load balancer?", "label": "rag"}
-{"text": "خلاصه‌ای از انسیبل بده", "label": "rag"}
-{"text": "provide information on AWS", "label": "rag"}
-{"text": "how would you define DevOps?", "label": "rag"}
-{"text": "می‌تونی اطلاعاتی در مورد احراز هویت پیدا کنی؟", "label": "rag"}
-{"text": "سند درباره جنکینز چه می‌گوید؟", "label": "rag"}
-{"text": "فست‌ای‌پی‌آی چگونه کار می‌کند؟", "label": "rag"}
+{"text": "help me understand Angular", "label": "rag"}
+{"text": "what is the definition of static analysis?", "label": "rag"}
+{"text": "can you describe 5G?", "label": "rag"}
+{"text": "دنبال جزئیات الاستیک‌سرچ هستم", "label": "rag"}
+{"text": "درود", "label": "chat"}
+{"text": "عالیه رفیق", "label": "chat"}
+{"text": "how is everything? please", "label": "chat"}
+{"text": "explain the concept of IoT", "label": "rag"}
+{"text": "مزایای استفاده از پست‌من چیست؟", "label": "rag"}
+{"text": "thx today until next time", "label": "chat"}
+{"text": "سپاس", "label": "chat"}
+{"text": "what are the advantages of using logging?", "label": "rag"}
+{"text": "ویژگی‌های اصلی سورسینگ رویداد چیست؟", "label": "rag"}
+{"text": "موسیقی دوست داری؟", "label": "chat"}
+{"text": "خلاصه لانچ‌دارکلی از پایگاه دانش", "label": "rag"}
+{"text": "great job", "label": "chat"}
+{"text": "بعدا می‌بینمت", "label": "chat"}
+{"text": "سلام صبحگاهی", "label": "chat"}
+{"text": "appreciate it my friend", "label": "chat"}
+{"text": "what should I know about 5G?", "label": "rag"}
+{"text": "سند درباره نکست‌جی‌اس چه می‌گوید؟", "label": "rag"}
+{"text": "ممنون بی‌نظیر", "label": "chat"}
+{"text": "چگونه تنسورفلو را تعریف می‌کنی؟", "label": "rag"}
+{"text": "اطلاعاتی درباره ایستیو بازیابی کن", "label": "rag"}
+{"text": "جزئیات درباره آر‌ای‌جی لطفا", "label": "rag"}
+{"text": "واقعا؟", "label": "chat"}
+{"text": "بعدا می‌بینمت دوست فعلا", "label": "chat"}
+{"text": "how have you been? buddy", "label": "chat"}
+{"text": "از روی اسناد درباره ای‌بی‌پی‌اف چه می‌دانی؟", "label": "rag"}
+{"text": "سلام", "label": "chat"}
+{"text": "اطلاعاتی درباره شبکه‌های عصبی بده", "label": "rag"}
+{"text": "می‌بینمت؟", "label": "chat"}
+{"text": "اطلاعاتی درباره لامبدا بازیابی کن", "label": "rag"}
+{"text": "what are the advantages of using InfluxDB?", "label": "rag"}
+{"text": "please explain event-driven architecture based on available data", "label": "rag"}
+{"text": "درسته مرسی", "label": "chat"}
+{"text": "سلام علیکم", "label": "chat"}
+{"text": "according to the documents what is data science?", "label": "rag"}
+{"text": "رنگ مورد علاقت چیه؟ لطفا", "label": "chat"}
+{"text": "تا دفعه بعد 😊 روز خوبی داشته باشی", "label": "chat"}
+{"text": "می‌تونی اطلاعاتی در مورد کانبان پیدا کنی؟", "label": "rag"}
+{"text": "bye", "label": "chat"}
+{"text": "true my friend", "label": "chat"}
+{"text": "are you AI? what is your name?", "label": "chat"}
+{"text": "فهمیدم 😊 هی", "label": "chat"}
+{"text": "farewell friend", "label": "chat"}
+{"text": "fantastic friend", "label": "chat"}
+{"text": "bye bye! good afternoon", "label": "chat"}
+{"text": "that's great!", "label": "chat"}
+{"text": "مواظب خودت باش لطفا", "label": "chat"}
+{"text": "ان‌پی‌ام را خلاصه کن", "label": "rag"}
+{"text": "خیلی ممنونم الان", "label": "chat"}
+{"text": "sup", "label": "chat"}
+{"text": "retrieve information about conda", "label": "rag"}
+{"text": "اهلت کجاست؟ می‌تونی حرف بزنی؟", "label": "chat"}
+{"text": "چگونه گیت‌آپس را تعریف می‌کنی؟", "label": "rag"}
+{"text": "اسمت چیه؟ دوست", "label": "chat"}
+{"text": "what do the documents mention about C++?", "label": "rag"}
+{"text": "hmm", "label": "chat"}
+{"text": "overview of NLP from the knowledge base", "label": "rag"}
+{"text": "حوصله‌ام سر رفته دوست", "label": "chat"}
+{"text": "what is your name?", "label": "chat"}
+{"text": "what's your favorite color?", "label": "chat"}
+{"text": "بعدا می‌بینمت دقیقا", "label": "chat"}
+{"text": "کامل خب", "label": "chat"}
+{"text": "what is the purpose of quantum computing?", "label": "rag"}
+{"text": "مزایای پری‌تی‌یر چیست؟", "label": "rag"}
+{"text": "overview of SNS from the knowledge base", "label": "rag"}
+{"text": "اوضاع چطوره؟ 😊", "label": "chat"}
+{"text": "خلاصه انگولار از پایگاه دانش", "label": "rag"}
+{"text": "هوش مصنوعی هستی؟", "label": "chat"}
+{"text": "give me an overview of GitHub", "label": "rag"}
+{"text": "بعدا می‌بینمت؟", "label": "chat"}
+{"text": "طبق اسناد نامپای چیست؟", "label": "rag"}
+{"text": "درود دوست الان", "label": "chat"}
+{"text": "چگونه کش ردیس را تعریف می‌کنی؟", "label": "rag"}
+{"text": "explain how Bitcoin works", "label": "rag"}
+{"text": "explain the concept of event-driven architecture", "label": "rag"}
+{"text": "تا بعد لطفا", "label": "chat"}
+{"text": "what is the purpose of containerization?", "label": "rag"}
+{"text": "درود دوست!", "label": "chat"}
+{"text": "چه کارهایی می‌تونی بکنی؟", "label": "chat"}
+{"text": "خلاصه تایم‌اسکیل از پایگاه دانش", "label": "rag"}
+{"text": "عالیه واقعا عزیز بدرود", "label": "chat"}
+{"text": "سپاسگزارم", "label": "chat"}
+{"text": "مزایای انسیبل چیست؟", "label": "rag"}
+{"text": "هدف از ویوئیت چیست؟", "label": "rag"}
+{"text": "key points about DevOps", "label": "rag"}
+{"text": "what is pub/sub used for?", "label": "rag"}
+{"text": "حالت خوبه؟ عذر می‌خوام", "label": "chat"}
+{"text": "peace out! good night", "label": "chat"}
+{"text": "لطفا بلاکچین را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
+{"text": "در اسناد دنبال داکر کامپوز بگرد", "label": "rag"}
+{"text": "tell me more about Prettier", "label": "rag"}
+{"text": "شاید جان", "label": "chat"}
+{"text": "I'm tired", "label": "chat"}
+{"text": "what is Kafka?", "label": "rag"}
+{"text": "اسناد درباره ات‌سی‌دی چه گفته‌اند؟", "label": "rag"}
+{"text": "hello", "label": "chat"}
+{"text": "سپاس؟", "label": "chat"}
+{"text": "based on the knowledge base, explain logging", "label": "rag"}
+{"text": "ان‌اف‌تی را توضیح بده", "label": "rag"}
+{"text": "هدف از بیت‌کوین چیست؟", "label": "rag"}
+{"text": "جالبه", "label": "chat"}
+{"text": "طبق اسناد اپن‌تلمتری چیست؟", "label": "rag"}
+{"text": "what are the advantages of using Neo4j?", "label": "rag"}
+{"text": "دنبال جزئیات اینفلاکس هستم", "label": "rag"}
+{"text": "منو می‌فهمی؟ سلام", "label": "chat"}
+{"text": "I'm happy mate", "label": "chat"}
+{"text": "what do we know about Memcached?", "label": "rag"}
+{"text": "have a nice day", "label": "chat"}
+{"text": "where are you from?", "label": "chat"}
+{"text": "provide information on Memcached", "label": "rag"}
+{"text": "tell me about quantum computing", "label": "rag"}
+{"text": "great job friend peace out", "label": "chat"}
+{"text": "منو می‌فهمی؟ رفیق", "label": "chat"}
+{"text": "what can you tell me about Linkerd from the docs?", "label": "rag"}
+{"text": "کوندا را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "ممنون", "label": "chat"}
+{"text": "provide information on Istio", "label": "rag"}
+{"text": "درباره خودت بگو جان", "label": "chat"}
+{"text": "well done", "label": "chat"}
+{"text": "good evening now", "label": "chat"}
+{"text": "رنگ مورد علاقت چیه؟", "label": "chat"}
+{"text": "got it", "label": "chat"}
+{"text": "overview of blockchain from the knowledge base", "label": "rag"}
+{"text": "how are things?", "label": "chat"}
+{"text": "looking for details on CQRS", "label": "rag"}
+{"text": "can you describe artificial intelligence?", "label": "rag"}
+{"text": "می‌تونی اطلاعاتی در مورد نواس‌کیو‌ال پیدا کنی؟", "label": "rag"}
+{"text": "درباره تست آ/ب چه باید بدونم؟", "label": "rag"}
+{"text": "thanks a bunch", "label": "chat"}
+{"text": "چه کارهایی می‌تونی بکنی؟ لطفا", "label": "chat"}
+{"text": "خدا نگهدار", "label": "chat"}
+{"text": "have a nice day buddy", "label": "chat"}
+{"text": "مزایای استفاده از پیپ چیست؟", "label": "rag"}
+{"text": "طبق اسناد کانبان چیست؟", "label": "rag"}
+{"text": "what is the purpose of AWS?", "label": "rag"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "می‌تونی بلاکچین را توصیف کنی؟", "label": "rag"}
+{"text": "تا دفعه بعد", "label": "chat"}
+{"text": "explain the concept of CI pipelines", "label": "rag"}
+{"text": "خلاصه نواس‌کیو‌ال از پایگاه دانش", "label": "rag"}
+{"text": "بدرود خوبه", "label": "chat"}
+{"text": "based on the knowledge base, explain MongoDB", "label": "rag"}
+{"text": "ربات هستی؟", "label": "chat"}
+{"text": "explain the concept of blockchain", "label": "rag"}
+{"text": "search the documents for transformers", "label": "rag"}
+{"text": "later", "label": "chat"}
+{"text": "what can you tell me about proxy from the docs?", "label": "rag"}
+{"text": "درباره جی‌پی‌تی چه می‌دانیم؟", "label": "rag"}
+{"text": "خلاصه‌ای از مدیریت وابستگی بده", "label": "rag"}
+{"text": "بعدا می‌بینمت", "label": "chat"}
+{"text": "اتریوم را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "what do we know about design patterns?", "label": "rag"}
+{"text": "چطوری؟", "label": "chat"}
+{"text": "می‌تونی گیت‌لب را توصیف کنی؟", "label": "rag"}
+{"text": "looking for details on ELK stack", "label": "rag"}
+{"text": "how you doing?", "label": "chat"}
+{"text": "درود", "label": "chat"}
+{"text": "می‌بینمت", "label": "chat"}
+{"text": "خوبی؟؟", "label": "chat"}
+{"text": "از روی اسناد درباره کوندا چه می‌دانی؟", "label": "rag"}
+{"text": "مزایای استفاده از داکر کامپوز چیست؟", "label": "rag"}
+{"text": "سلام صبحگاهی الان", "label": "chat"}
+{"text": "خیلی ممنون", "label": "chat"}
+{"text": "outstanding", "label": "chat"}
+{"text": "retrieve information about Zipkin", "label": "rag"}
+{"text": "توضیح مختصری از ای‌اس‌لینت بده", "label": "rag"}
+{"text": "fantastic", "label": "chat"}
+{"text": "چگونه بابل را تعریف می‌کنی؟", "label": "rag"}
+{"text": "ممنون از کمکت", "label": "chat"}
+{"text": "thanks for everything mate", "label": "chat"}
+{"text": "what do the documents mention about Socket.io?", "label": "rag"}
+{"text": "درود", "label": "chat"}
+{"text": "فعلا رفیق", "label": "chat"}
+{"text": "how have you been?", "label": "chat"}
+{"text": "I need info on serverless", "label": "rag"}
+{"text": "see you later", "label": "chat"}
+{"text": "can you describe kubernetes?", "label": "rag"}
+{"text": "لامبدا برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "what are the advantages of using Postman?", "label": "rag"}
+{"text": "thx", "label": "chat"}
+{"text": "until next time", "label": "chat"}
+{"text": "وی‌پی‌ان را خلاصه کن", "label": "rag"}
+{"text": "are you AI? farewell", "label": "chat"}
+{"text": "می‌تونی اطلاعاتی در مورد ای‌پی‌آی پیدا کنی؟", "label": "rag"}
+{"text": "search the documents for design patterns", "label": "rag"}
+{"text": "later today", "label": "chat"}
+{"text": "give me an overview of Cypress", "label": "rag"}
+{"text": "thanks for everything", "label": "chat"}
+{"text": "موسیقی دوست داری؟", "label": "chat"}
+{"text": "how does TDD work?", "label": "rag"}
+{"text": "appreciate it mate morning", "label": "chat"}
+{"text": "what are the advantages of using Grafana?", "label": "rag"}
+{"text": "what is the purpose of Kubernetes operators?", "label": "rag"}
+{"text": "بابل چگونه کار می‌کند؟", "label": "rag"}
+{"text": "true", "label": "chat"}
+{"text": "tell me about clean architecture", "label": "rag"}
+{"text": "سپاس", "label": "chat"}
+{"text": "how you doing?", "label": "chat"}
+{"text": "how's it going? now", "label": "chat"}
+{"text": "explain how Ethereum works", "label": "rag"}
+{"text": "what's up? are you a robot?", "label": "chat"}
+{"text": "خلاصه جست از پایگاه دانش", "label": "rag"}
+{"text": "مرسی", "label": "chat"}
+{"text": "describe blockchain in simple terms", "label": "rag"}
+{"text": "overview of authentication from the knowledge base", "label": "rag"}
+{"text": "yo", "label": "chat"}
+{"text": "please explain pub/sub based on available data", "label": "rag"}
+{"text": "that's great?", "label": "chat"}
+{"text": "خوب پیش می‌رم", "label": "chat"}
+{"text": "appreciate it", "label": "chat"}
+{"text": "provide information on feature flags", "label": "rag"}
+{"text": "اطلاعاتی درباره بینایی ماشین بازیابی کن", "label": "rag"}
+{"text": "فوق‌العاده رفیق", "label": "chat"}
+{"text": "how is everything? friend", "label": "chat"}
+{"text": "درباره جی‌دابلیو‌تی چه می‌دانیم؟", "label": "rag"}
+{"text": "help me understand redis", "label": "rag"}
+{"text": "bye", "label": "chat"}
+{"text": "خوبی تو؟", "label": "chat"}
+{"text": "give a brief explanation of Webpack", "label": "rag"}
+{"text": "how are things? my friend", "label": "chat"}
+{"text": "do you have feelings?", "label": "chat"}
+{"text": "هی عزیز تشکر", "label": "chat"}
+{"text": "hello mate", "label": "chat"}
+{"text": "hey there", "label": "chat"}
+{"text": "details about Ubuntu please", "label": "rag"}
+{"text": "what do we know about Bitbucket?", "label": "rag"}
+{"text": "می‌تونی گرافانا را توصیف کنی؟", "label": "rag"}
+{"text": "عالیه واقعا دوست", "label": "chat"}
+{"text": "درباره اس۳ چه می‌دانیم؟", "label": "rag"}
+{"text": "bye bye now have a nice day", "label": "chat"}
+{"text": "چگونه کش ردیس را تعریف می‌کنی؟", "label": "rag"}
+{"text": "explain python", "label": "rag"}
+{"text": "from the documents, what is C++?", "label": "rag"}
+{"text": "خوبم رفیق محشره", "label": "chat"}
+{"text": "هشینگ را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "explain the concept of edge computing", "label": "rag"}
+{"text": "اسپرینگ بوت برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "what are the benefits of Grafana?", "label": "rag"}
+{"text": "impressive", "label": "chat"}
+{"text": "بای 😊", "label": "chat"}
+{"text": "حالت چطوره؟", "label": "chat"}
+{"text": "from the documents, what is Git?", "label": "rag"}
+{"text": "خوبه دوست", "label": "chat"}
+{"text": "چگونه ای‌ال‌کی را تعریف می‌کنی؟", "label": "rag"}
+{"text": "در اسناد دنبال انسیبل بگرد", "label": "rag"}
+{"text": "دنبال جزئیات تایم‌اسکیل هستم", "label": "rag"}
+{"text": "می‌تونی نئو۴جی را توصیف کنی؟", "label": "rag"}
+{"text": "give a brief explanation of Jest", "label": "rag"}
+{"text": "حالت چطوره؟", "label": "chat"}
+{"text": "what should I know about LaunchDarkly?", "label": "rag"}
+{"text": "از روی اسناد، لانچ‌دارکلی چیست؟", "label": "rag"}
+{"text": "fantastic today", "label": "chat"}
+{"text": "overview of Gradle from the knowledge base", "label": "rag"}
+{"text": "what should I know about Ethereum?", "label": "rag"}
+{"text": "لطفا هلم را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
+{"text": "superb", "label": "chat"}
+{"text": "از روی اسناد، ترافرم چیست؟", "label": "rag"}
+{"text": "based on the knowledge base, explain Lambda", "label": "rag"}
 {"text": "nice", "label": "chat"}
-{"text": "از روی اسناد، اس‌ان‌اس چیست؟", "label": "rag"}
-{"text": "bye please", "label": "chat"}
-{"text": "مرسی 😊", "label": "chat"}
-{"text": "اوضاع چطوره؟", "label": "chat"}
-{"text": "according to the docs, explain gRPC", "label": "rag"}
-{"text": "مزایای امنیت چیست؟", "label": "rag"}
+{"text": "thank you see you later", "label": "chat"}
+{"text": "حتما", "label": "chat"}
+{"text": "حرف نداره؟", "label": "chat"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "how are you? :)", "label": "chat"}
+{"text": "مفهوم لود بالانسر را توضیح بده", "label": "rag"}
+{"text": "how's life?", "label": "chat"}
+{"text": "تعریف جی‌دابلیو‌تی چیست؟", "label": "rag"}
+{"text": "how is cloud computing used?", "label": "rag"}
+{"text": "خب امروز", "label": "chat"}
+{"text": "اسناد درباره ردیس چه گفته‌اند؟", "label": "rag"}
+{"text": "مواظب خودت باش", "label": "chat"}
+{"text": "نحوه کار معماری شش‌ضلعی را توضیح بده", "label": "rag"}
+{"text": "سلام به تو", "label": "chat"}
+{"text": "می‌تونی سونارکیوب را توصیف کنی؟", "label": "rag"}
+{"text": "what should I know about Nuxt?", "label": "rag"}
+{"text": "حرف نداره عزیز", "label": "chat"}
+{"text": "مفهوم اجایل را توضیح بده", "label": "rag"}
+{"text": "how's it going? please", "label": "chat"}
+{"text": "what is Ethereum?", "label": "rag"}
+{"text": "تعریف رمزنگاری چیست؟", "label": "rag"}
+{"text": "چطور پیش می‌ره؟", "label": "chat"}
+{"text": "what is your name?", "label": "chat"}
+{"text": "درجه یک دوست", "label": "chat"}
+{"text": "اهلت کجاست؟", "label": "chat"}
+{"text": "اطلاعاتی درباره نئو۴جی بازیابی کن", "label": "rag"}
+{"text": "what do we know about hashing?", "label": "rag"}
+{"text": "help me understand Prettier", "label": "rag"}
+{"text": "لطفا سی‌آر‌آی‌او را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
+{"text": "لینوکس چیست؟", "label": "rag"}
+{"text": "what's up? mate", "label": "chat"}
+{"text": "مرسی!", "label": "chat"}
+{"text": "ویوئیت را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "how you doing?", "label": "chat"}
+{"text": "what can you do? please", "label": "chat"}
+{"text": "توضیح مختصری از رست بده", "label": "rag"}
+{"text": "چگونه جی‌دابلیو‌تی را تعریف می‌کنی؟", "label": "rag"}
+{"text": "what are the benefits of distributed tracing?", "label": "rag"}
+{"text": "you good?", "label": "chat"}
+{"text": "looking for details on Nginx", "label": "rag"}
+{"text": "thanks how are you?", "label": "chat"}
+{"text": "می‌تونی نئو۴جی را توصیف کنی؟", "label": "rag"}
+{"text": "good evening", "label": "chat"}
+{"text": "well done please", "label": "chat"}
+{"text": "cheers", "label": "chat"}
+{"text": "درسته لطفا", "label": "chat"}
+{"text": "search the documents for redis", "label": "rag"}
+{"text": "summarize TimescaleDB", "label": "rag"}
+{"text": "how you doing??", "label": "chat"}
+{"text": "خلاصه ان‌پی‌ام از پایگاه دانش", "label": "rag"}
+{"text": "ممکنه عزیز", "label": "chat"}
+{"text": "ویژگی‌های اصلی سلنیوم چیست؟", "label": "rag"}
+{"text": "دنبال جزئیات سونارکیوب هستم", "label": "rag"}
+{"text": "how's it going? who are you?", "label": "chat"}
+{"text": "summarize Tailwind CSS", "label": "rag"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "what is Lambda?", "label": "rag"}
+{"text": "what do we know about Memcached?", "label": "rag"}
+{"text": "bye bye", "label": "chat"}
+{"text": "کمکم کن اکسپرس را بفهمم", "label": "rag"}
+{"text": "در اسناد دنبال تست یکپارچگی بگرد", "label": "rag"}
+{"text": "how's it going? today", "label": "chat"}
+{"text": "به نظر خوبه", "label": "chat"}
+{"text": "no worries my friend", "label": "chat"}
+{"text": "اهلت کجاست؟", "label": "chat"}
+{"text": "what are the advantages of using SQS?", "label": "rag"}
+{"text": "مرسی از تو 😊", "label": "chat"}
+{"text": "bye bye my friend", "label": "chat"}
+{"text": "چطور پیش می‌ره؟؟", "label": "chat"}
+{"text": "می‌تونی جنکینز را توصیف کنی؟", "label": "rag"}
+{"text": "توضیح مختصری از انجینکس بده", "label": "rag"}
+{"text": "that's great", "label": "chat"}
+{"text": "tell me more about Flux", "label": "rag"}
+{"text": "عصر بخیر", "label": "chat"}
+{"text": "درجه یک امروز عصر بخیر", "label": "chat"}
+{"text": "describe DevOps in simple terms", "label": "rag"}
+{"text": "طبق اسناد، ری‌اکت را توضیح بده", "label": "rag"}
+{"text": "what is your name?", "label": "chat"}
+{"text": "hello! thank you", "label": "chat"}
+{"text": "دنبال جزئیات امنیت هستم", "label": "rag"}
+{"text": "cheers mate", "label": "chat"}
+{"text": "تعریف کشف سرویس چیست؟", "label": "rag"}
+{"text": "احساس داری؟ دوست", "label": "chat"}
+{"text": "از ملاقاتت خوشحالم رفیق", "label": "chat"}
+{"text": "اطلاعاتی درباره انجینکس لازم دارم", "label": "rag"}
+{"text": "many thanks!", "label": "chat"}
+{"text": "درسته", "label": "chat"}
+{"text": "search the documents for Kustomize", "label": "rag"}
+{"text": "give me an overview of LLM", "label": "rag"}
+{"text": "what do the documents mention about Ansible?", "label": "rag"}
+{"text": "نواس‌کیو‌ال چگونه استفاده می‌شود؟", "label": "rag"}
+{"text": "می‌تونی بوت‌استرپ را توصیف کنی؟", "label": "rag"}
+{"text": "گو را توضیح بده", "label": "rag"}
+{"text": "I need info on Spring Boot", "label": "rag"}
+{"text": "according to the docs, explain event-driven architecture", "label": "rag"}
+{"text": "sup", "label": "chat"}
+{"text": "how does event sourcing work?", "label": "rag"}
+{"text": "مفهوم گیت‌آپس را توضیح بده", "label": "rag"}
+{"text": "search the documents for LLM", "label": "rag"}
+{"text": "روز خوبی داشته باشی لطفا", "label": "chat"}
+{"text": "according to the documents what is VPN?", "label": "rag"}
+{"text": "کوندا برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "تعریف اسکرام چیست؟", "label": "rag"}
+{"text": "درباره ای‌سی۲ چه باید بدونم؟", "label": "rag"}
+{"text": "what do the documents mention about SSL?", "label": "rag"}
+{"text": "سند درباره سی‌آر‌آی‌او چه می‌گوید؟", "label": "rag"}
+{"text": "سند درباره اس‌کیو‌ال چه می‌گوید؟", "label": "rag"}
+{"text": "چه کارا می‌کنی؟ 😊", "label": "chat"}
+{"text": "summarize RabbitMQ", "label": "rag"}
+{"text": "what does the document say about event-driven architecture?", "label": "rag"}
+{"text": "نحوه کار اس‌آر‌ای را توضیح بده", "label": "rag"}
+{"text": "what should I know about load balancer?", "label": "rag"}
+{"text": "brilliant", "label": "chat"}
+{"text": "bye bye", "label": "chat"}
+{"text": "شب بخیر سلام رفیق", "label": "chat"}
+{"text": "خداحافظ", "label": "chat"}
+{"text": "اسناد درباره پاب/ساب چه گفته‌اند؟", "label": "rag"}
+{"text": "فعلا", "label": "chat"}
+{"text": "what is the purpose of SOLID principles?", "label": "rag"}
+{"text": "please explain event sourcing based on available data", "label": "rag"}
+{"text": "اطلاعاتی درباره هلم بده", "label": "rag"}
+{"text": "جست برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "اطلاعاتی درباره مجوزدهی بازیابی کن", "label": "rag"}
+{"text": "are you a robot?", "label": "chat"}
+{"text": "thanks a lot :)", "label": "chat"}
+{"text": "بعدا می‌بینمت رفیق", "label": "chat"}
+{"text": "greetings now", "label": "chat"}
+{"text": "bye bye", "label": "chat"}
+{"text": "بدرود", "label": "chat"}
+{"text": "اهلت کجاست؟ رفیق بدرود", "label": "chat"}
+{"text": "what is event sourcing used for?", "label": "rag"}
+{"text": "اوه لطفا", "label": "chat"}
+{"text": "می‌تونی حرف بزنی؟!", "label": "chat"}
+{"text": "give a brief explanation of Nuxt", "label": "rag"}
+{"text": "can you find information regarding TDD?", "label": "rag"}
+{"text": "how would you define SOLID principles?", "label": "rag"}
+{"text": "same here friend", "label": "chat"}
+{"text": "از روی اسناد درباره پوئتری چه می‌دانی؟", "label": "rag"}
+{"text": "have a nice day today", "label": "chat"}
+{"text": "help me understand Web3", "label": "rag"}
+{"text": "بی‌نظیر", "label": "chat"}
+{"text": "کانتینریزیشن چگونه کار می‌کند؟", "label": "rag"}
+{"text": "درباره خودت بگو", "label": "chat"}
+{"text": "می‌تونی حرف بزنی؟", "label": "chat"}
+{"text": "bye", "label": "chat"}
+{"text": "based on the knowledge base, explain OAuth", "label": "rag"}
+{"text": "اسناد درباره هشینگ چه گفته‌اند؟", "label": "rag"}
+{"text": "دنبال جزئیات کاستومایز هستم", "label": "rag"}
+{"text": "superb", "label": "chat"}
+{"text": "رنگ مورد علاقت چیه؟", "label": "chat"}
+{"text": "thank you! good night", "label": "chat"}
+{"text": "have a nice day", "label": "chat"}
+{"text": "what can you do?", "label": "chat"}
+{"text": "retrieve information about kubernetes", "label": "rag"}
+{"text": "درود", "label": "chat"}
+{"text": "سلام رفیق", "label": "chat"}
+{"text": "much appreciated", "label": "chat"}
+{"text": "good night :)", "label": "chat"}
+{"text": "اطلاعاتی درباره بلاکچین بده", "label": "rag"}
+{"text": "خلاصه اچ‌تی‌تی‌پی‌اس از پایگاه دانش", "label": "rag"}
+{"text": "خوبی؟؟", "label": "chat"}
+{"text": "نحوه کار سیلیوم را توضیح بده", "label": "rag"}
+{"text": "I need info on data science", "label": "rag"}
+{"text": "do you understand me? please", "label": "chat"}
+{"text": "می‌تونی اطلاعاتی در مورد جی‌دابلیو‌تی پیدا کنی؟", "label": "rag"}
+{"text": "what is the definition of Ansible?", "label": "rag"}
+{"text": "how are things?", "label": "chat"}
+{"text": "I need info on NLP", "label": "rag"}
+{"text": "how does TDD work?", "label": "rag"}
+{"text": "search the documents for PyTorch", "label": "rag"}
+{"text": "according to the docs, explain Scrum", "label": "rag"}
+{"text": "provide information on Spring Boot", "label": "rag"}
+{"text": "good afternoon my friend", "label": "chat"}
+{"text": "what is machine learning used for?", "label": "rag"}
+{"text": "can you describe vector database?", "label": "rag"}
+{"text": "see you", "label": "chat"}
+{"text": "can you describe Gradle?", "label": "rag"}
+{"text": "farewell!", "label": "chat"}
+{"text": "perfect", "label": "chat"}
+{"text": "شب بخیر", "label": "chat"}
+{"text": "جزئیات درباره اس‌آر‌ای لطفا", "label": "rag"}
+{"text": "do you understand me? please", "label": "chat"}
+{"text": "according to the documents what is Linux?", "label": "rag"}
+{"text": "sup mate", "label": "chat"}
+{"text": "هی لطفا", "label": "chat"}
+{"text": "می‌تونی حرف بزنی؟ لطفا", "label": "chat"}
+{"text": "how have you been?", "label": "chat"}
+{"text": "thanks for your help", "label": "chat"}
+{"text": "پست‌من چیست؟", "label": "rag"}
+{"text": "مرسی از تو", "label": "chat"}
+{"text": "superb my friend", "label": "chat"}
+{"text": "چند سالته؟", "label": "chat"}
+{"text": "have a nice day please", "label": "chat"}
+{"text": "thanks a bunch! how is everything?", "label": "chat"}
+{"text": "سلام به تو", "label": "chat"}
+{"text": "دنبال جزئیات تی‌ال‌اس هستم", "label": "rag"}
+{"text": "شب بخیر", "label": "chat"}
+{"text": "مفهوم دواپس را توضیح بده", "label": "rag"}
+{"text": "چه خبر؟ کامل", "label": "chat"}
+{"text": "خوبه", "label": "chat"}
+{"text": "حالت چطوره؟", "label": "chat"}
+{"text": "what should I know about serverless?", "label": "rag"}
+{"text": "have a nice day please", "label": "chat"}
+{"text": "okay my friend", "label": "chat"}
+{"text": "explain how Jenkins works", "label": "rag"}
+{"text": "نه", "label": "chat"}
+{"text": "مفهوم ایستیو را توضیح بده", "label": "rag"}
+{"text": "آفرین", "label": "chat"}
+{"text": "summarize NoSQL", "label": "rag"}
+{"text": "can you describe conda?", "label": "rag"}
+{"text": "summarize CI pipelines", "label": "rag"}
+{"text": "what's up?", "label": "chat"}
+{"text": "what does the document say about GitOps?", "label": "rag"}
+{"text": "خوبی؟", "label": "chat"}
+{"text": "thank you so much mate", "label": "chat"}
+{"text": "ویژگی‌های اصلی گیت چیست؟", "label": "rag"}
+{"text": "hi today", "label": "chat"}
+{"text": "brilliant?", "label": "chat"}
+{"text": "can you chat? I'm bored", "label": "chat"}
+{"text": "تایم‌اسکیل برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "what does the document say about domain-driven design?", "label": "rag"}
+{"text": "درود دوست", "label": "chat"}
+{"text": "ویژگی‌های اصلی پری‌تی‌یر چیست؟", "label": "rag"}
+{"text": "درباره نواس‌کیو‌ال بگو", "label": "rag"}
+{"text": "morning", "label": "chat"}
+{"text": "اطلاعاتی درباره کاساندرا بازیابی کن", "label": "rag"}
+{"text": "good afternoon buddy", "label": "chat"}
+{"text": "farewell now", "label": "chat"}
+{"text": "explain the concept of feature flags", "label": "rag"}
+{"text": "هوش مصنوعی هستی؟", "label": "chat"}
+{"text": "thx", "label": "chat"}
+{"text": "possibly", "label": "chat"}
+{"text": "good night", "label": "chat"}
+{"text": "درود بر تو", "label": "chat"}
+{"text": "اطلاعاتی درباره اپن‌تلمتری لازم دارم", "label": "rag"}
+{"text": "سلام به تو", "label": "chat"}
+{"text": "search the documents for observability", "label": "rag"}
+{"text": "سند درباره سایکیت‌لرن چه می‌گوید؟", "label": "rag"}
+{"text": "thanks a bunch friend", "label": "chat"}
+{"text": "perhaps", "label": "chat"}
+{"text": "what is the definition of distributed tracing?", "label": "rag"}
+{"text": "chat with me my friend", "label": "chat"}
+{"text": "منم همینطور", "label": "chat"}
+{"text": "how do you do?", "label": "chat"}
+{"text": "اسناد درباره گوگل کلود چه گفته‌اند؟", "label": "rag"}
+{"text": "تعریف ردیس چیست؟", "label": "rag"}
+{"text": "هدف از جی‌آر‌پی‌سی چیست؟", "label": "rag"}
+{"text": "کمکم کن بیت‌کوین را بفهمم", "label": "rag"}
+{"text": "how is Kustomize used?", "label": "rag"}
+{"text": "please explain cryptocurrency based on available data", "label": "rag"}
+{"text": "hello there mate", "label": "chat"}
+{"text": "همم", "label": "chat"}
+{"text": "کمکم کن سولت را بفهمم", "label": "rag"}
+{"text": "چه کارهایی می‌تونی بکنی؟", "label": "chat"}
+{"text": "درباره گیت‌آپس بگو", "label": "rag"}
+{"text": "thx nice to meet you", "label": "chat"}
+{"text": "چه می‌کنی؟", "label": "chat"}
+{"text": "رایانش ابری را توضیح بده", "label": "rag"}
+{"text": "سلام رفیق", "label": "chat"}
+{"text": "چه کارا می‌کنی؟ لطفا", "label": "chat"}
+{"text": "ممنون رفیق خداحافظ", "label": "chat"}
+{"text": "what do we know about redis?", "label": "rag"}
+{"text": "explain how kubernetes works", "label": "rag"}
+{"text": "توضیح مختصری از جنکینز بده", "label": "rag"}
+{"text": "مفهوم آمازون وب سرویس را توضیح بده", "label": "rag"}
+{"text": "اطلاعاتی درباره پردازش زبان طبیعی بده", "label": "rag"}
+{"text": "شب بخیر جان", "label": "chat"}
+{"text": "provide information on Lambda", "label": "rag"}
+{"text": "summarize Bootstrap", "label": "rag"}
+{"text": "according to the docs, explain serverless", "label": "rag"}
+{"text": "هی", "label": "chat"}
+{"text": "excellent", "label": "chat"}
+{"text": "tell me more about TypeScript", "label": "rag"}
+{"text": "how would you define feature flags?", "label": "rag"}
+{"text": "بر اساس پایگاه دانش، سایپرس را توضیح بده", "label": "rag"}
+{"text": "عالی جان", "label": "chat"}
+{"text": "give me an overview of Splunk", "label": "rag"}
+{"text": "until next time", "label": "chat"}
+{"text": "wonderful buddy", "label": "chat"}
+{"text": "جزئیات درباره ویرچوال‌ان‌وی لطفا", "label": "rag"}
+{"text": "مزایای استفاده از کاساندرا چیست؟", "label": "rag"}
+{"text": "درباره جست بگو", "label": "rag"}
+{"text": "چگونه چارت‌های هلم را تعریف می‌کنی؟", "label": "rag"}
+{"text": "درباره خودت بگو", "label": "chat"}
+{"text": "سلام علیکم!", "label": "chat"}
+{"text": "good afternoon", "label": "chat"}
+{"text": "نحوه کار ویو‌جی‌اس را توضیح بده", "label": "rag"}
+{"text": "what is the purpose of Helm charts?", "label": "rag"}
+{"text": "what should I know about Jest?", "label": "rag"}
+{"text": "در اسناد دنبال گیت‌آپس بگرد", "label": "rag"}
+{"text": "nice", "label": "chat"}
+{"text": "دنبال جزئیات اچ‌تی‌تی‌پی‌اس هستم", "label": "rag"}
+{"text": "سیلیوم را توضیح بده", "label": "rag"}
+{"text": "good afternoon? much appreciated", "label": "chat"}
+{"text": "سلام به تو", "label": "chat"}
+{"text": "کمکم کن لامبدا را بفهمم", "label": "rag"}
+{"text": "بیشتر درباره ای‌سی۲ بگو", "label": "rag"}
+{"text": "what are the main features of Vite?", "label": "rag"}
+{"text": "see you later", "label": "chat"}
+{"text": "what is the purpose of artificial intelligence?", "label": "rag"}
+{"text": "نحوه کار آپاچی را توضیح بده", "label": "rag"}
+{"text": "impressive", "label": "chat"}
+{"text": "nice :)", "label": "chat"}
+{"text": "آفرین جان", "label": "chat"}
+{"text": "درباره نواس‌کیو‌ال چه باید بدونم؟", "label": "rag"}
+{"text": "what are the advantages of using CI/CD?", "label": "rag"}
+{"text": "catch you later", "label": "chat"}
+{"text": "what do we know about data science?", "label": "rag"}
+{"text": "much appreciated", "label": "chat"}
+{"text": "according to the docs, explain HTTP", "label": "rag"}
+{"text": "چه کارا می‌کنی؟ با من حرف بزن", "label": "chat"}
+{"text": "دنبال جزئیات پستگرس هستم", "label": "rag"}
+{"text": "catch you later", "label": "chat"}
+{"text": "excuse me how do you do?", "label": "chat"}
+{"text": "خوبی؟ عزیز", "label": "chat"}
+{"text": "بیشتر درباره کانتینریزیشن بگو", "label": "rag"}
+{"text": "what can you tell me about Lambda from the docs?", "label": "rag"}
+{"text": "explain how pandas works", "label": "rag"}
+{"text": "چطور پیش می‌ره؟ رفیق", "label": "chat"}
+{"text": "در اسناد دنبال اس‌کیو‌اس بگرد", "label": "rag"}
+{"text": "excellent who are you?", "label": "chat"}
+{"text": "search the documents for transformers", "label": "rag"}
+{"text": "نحوه کار بوت‌استرپ را توضیح بده", "label": "rag"}
+{"text": "awesome friend", "label": "chat"}
+{"text": "how does OAuth work?", "label": "rag"}
+{"text": "مزایای استفاده از وی‌پی‌ان چیست؟", "label": "rag"}
+{"text": "how do you do?", "label": "chat"}
+{"text": "جزئیات درباره پوئتری لطفا", "label": "rag"}
+{"text": "see you later", "label": "chat"}
+{"text": "goodbye :)", "label": "chat"}
+{"text": "اتریوم را خلاصه کن", "label": "rag"}
+{"text": "give me an overview of serverless", "label": "rag"}
+{"text": "اطلاعاتی درباره طراحی دامنه محور بده", "label": "rag"}
+{"text": "tell me more about OpenTelemetry", "label": "rag"}
+{"text": "how would you define Consul?", "label": "rag"}
+{"text": "interesting mate all good", "label": "chat"}
+{"text": "from the documents, what is dependency management?", "label": "rag"}
+{"text": "how have you been?!", "label": "chat"}
+{"text": "how would you define A/B testing?", "label": "rag"}
+{"text": "explain Jenkins", "label": "rag"}
+{"text": "how would you define pub/sub?", "label": "rag"}
+{"text": "تا بعد رفیق", "label": "chat"}
+{"text": "do you understand me?", "label": "chat"}
+{"text": "اسناد درباره طراحی دامنه محور چه گفته‌اند؟", "label": "rag"}
+{"text": "thank you so much now", "label": "chat"}
+{"text": "درباره خودت بگو", "label": "chat"}
+{"text": "تا دفعه بعد", "label": "chat"}
+{"text": "اسناد درباره لینوکس چه گفته‌اند؟", "label": "rag"}
+{"text": "درود بر تو", "label": "chat"}
+{"text": "give a brief explanation of Redis Cache", "label": "rag"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "of course", "label": "chat"}
+{"text": "می‌تونی حرف بزنی؟", "label": "chat"}
+{"text": "I'm bored mate you good?", "label": "chat"}
+{"text": "لطفا بیت‌کوین را بر اساس داده‌های موجود توضیح بده", "label": "rag"}
+{"text": "provide information on distributed tracing", "label": "rag"}
+{"text": "hello there?", "label": "chat"}
+{"text": "واقعا؟", "label": "chat"}
+{"text": "brilliant thx", "label": "chat"}
+{"text": "key points about neural networks", "label": "rag"}
+{"text": "خوبی؟ 😊 خیلی ممنون", "label": "chat"}
+{"text": "درود دوست", "label": "chat"}
+{"text": "how is artificial intelligence used?", "label": "rag"}
+{"text": "دمت گرم دوست", "label": "chat"}
+{"text": "what can you tell me about SRE from the docs?", "label": "rag"}
+{"text": "سلام صبحگاهی! اوضاع چطوره؟", "label": "chat"}
+{"text": "how is Java used?", "label": "rag"}
+{"text": "excellent", "label": "chat"}
+{"text": "catch you later please", "label": "chat"}
+{"text": "فوق‌العاده؟ متقابلا", "label": "chat"}
+{"text": "دنبال جزئیات ردیابی توزیع‌شده هستم", "label": "rag"}
+{"text": "آفرین", "label": "chat"}
+{"text": "مفهوم چارت‌های هلم را توضیح بده", "label": "rag"}
+{"text": "درباره آرگو‌سی‌دی بگو", "label": "rag"}
+{"text": "مم‌کش را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "bye?", "label": "chat"}
+{"text": "what is the purpose of Linux?", "label": "rag"}
+{"text": "احراز هویت را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "catch you later buddy", "label": "chat"}
+{"text": "looking for details on scikit-learn", "label": "rag"}
+{"text": "چه می‌کنی؟؟", "label": "chat"}
+{"text": "do you like music?", "label": "chat"}
+{"text": "روز خوبی داشته باشی", "label": "chat"}
+{"text": "چگونه مم‌کش را تعریف می‌کنی؟", "label": "rag"}
+{"text": "سند درباره محاسبات لبه چه می‌گوید؟", "label": "rag"}
+{"text": "سپاس امروز", "label": "chat"}
+{"text": "خلاصه‌ای از تست واحد بده", "label": "rag"}
+{"text": "نحوه کار اجایل را توضیح بده", "label": "rag"}
+{"text": "what are the advantages of using Agile?", "label": "rag"}
+{"text": "see you later?", "label": "chat"}
+{"text": "خوبی تو؟", "label": "chat"}
+{"text": "نکات کلیدی درباره لاگ‌گیری", "label": "rag"}
+{"text": "کنسول چگونه کار می‌کند؟", "label": "rag"}
+{"text": "توضیح مختصری از آمازون وب سرویس بده", "label": "rag"}
+{"text": "سپاسگزارم", "label": "chat"}
+{"text": "درباره گو بگو", "label": "rag"}
+{"text": "thanks a bunch", "label": "chat"}
+{"text": "احساس داری؟ الان", "label": "chat"}
+{"text": "اینفلاکس برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "سند درباره مدیریت وابستگی چه می‌گوید؟", "label": "rag"}
+{"text": "can you find information regarding JWT?", "label": "rag"}
+{"text": "what are the main features of Kustomize?", "label": "rag"}
+{"text": "در اسناد دنبال مایکروسافت آژور بگرد", "label": "rag"}
+{"text": "great job cheers", "label": "chat"}
+{"text": "what are the advantages of using Postman?", "label": "rag"}
+{"text": "جالبه خوبه", "label": "chat"}
+{"text": "good night", "label": "chat"}
+{"text": "ربات هستی؟ می‌بینمت", "label": "chat"}
+{"text": "what are the advantages of using RabbitMQ?", "label": "rag"}
+{"text": "مزایای استفاده از پایتون چیست؟", "label": "rag"}
+{"text": "سند درباره ترافرم چه می‌گوید؟", "label": "rag"}
+{"text": "according to the documents what is Angular?", "label": "rag"}
+{"text": "help me understand Gradle", "label": "rag"}
+{"text": "اسمت چیه؟", "label": "chat"}
+{"text": "retrieve information about Redis Cache", "label": "rag"}
+{"text": "hello there thank you so much", "label": "chat"}
+{"text": "اطلاعاتی درباره معماری تمیز بازیابی کن", "label": "rag"}
+{"text": "cheers how do you do?", "label": "chat"}
+{"text": "where are you from?", "label": "chat"}
+{"text": "summarize encryption", "label": "rag"}
+{"text": "چه کارا می‌کنی؟ احتمالا", "label": "chat"}
+{"text": "حالت چطوره؟! نه", "label": "chat"}
+{"text": "search the documents for Babel", "label": "rag"}
+{"text": "what is the definition of Kubernetes operators?", "label": "rag"}
+{"text": "give a brief explanation of code review", "label": "rag"}
+{"text": "ترانسفورمر را به زبان ساده توصیف کن", "label": "rag"}
+{"text": "overview of CI pipelines from the knowledge base", "label": "rag"}
+{"text": "درباره ربیت‌ام‌کیو بگو", "label": "rag"}
+{"text": "what is message queues used for?", "label": "rag"}
+{"text": "مفهوم اتریوم را توضیح بده", "label": "rag"}
+{"text": "رنگ مورد علاقت چیه؟", "label": "chat"}
+{"text": "نحوه کار میون را توضیح بده", "label": "rag"}
+{"text": "بای", "label": "chat"}
+{"text": "مفهوم انسیبل را توضیح بده", "label": "rag"}
+{"text": "اطلاعاتی درباره طراحی دامنه محور لازم دارم", "label": "rag"}
+{"text": "اطلاعاتی درباره ری‌اکت بازیابی کن", "label": "rag"}
+{"text": "اسمت چیه؟ الان", "label": "chat"}
+{"text": "آفرین", "label": "chat"}
+{"text": "اکسپرس چگونه استفاده می‌شود؟", "label": "rag"}
+{"text": "سند درباره گیت چه می‌گوید؟", "label": "rag"}
+{"text": "what do we know about SOLID principles?", "label": "rag"}
+{"text": "see you later", "label": "chat"}
+{"text": "خدا نگهدار", "label": "chat"}
+{"text": "بد نیست", "label": "chat"}
+{"text": "مواظب خودت باش الان رنگ مورد علاقت چیه؟", "label": "chat"}
+{"text": "خداحافظ", "label": "chat"}
+{"text": "حالت چطوره؟؟", "label": "chat"}
+{"text": "what are the main features of NoSQL?", "label": "rag"}
+{"text": "تا بعد", "label": "chat"}
+{"text": "منم همینطور", "label": "chat"}
+{"text": "دمت گرم", "label": "chat"}
+{"text": "می‌تونی حرف بزنی؟ لطفا", "label": "chat"}
+{"text": "مفهوم نامپای را توضیح بده", "label": "rag"}
+{"text": "hello", "label": "chat"}
+{"text": "how does Kubernetes operators work?", "label": "rag"}
+{"text": "عصر بخیر", "label": "chat"}
+{"text": "مزایای استفاده از اوآث چیست؟", "label": "rag"}
+{"text": "تشکر", "label": "chat"}
+{"text": "سپاسگزارم لطفا", "label": "chat"}
+{"text": "تست یکپارچگی برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "all good mate brilliant", "label": "chat"}
+{"text": "details about yarn please", "label": "rag"}
+{"text": "thanks", "label": "chat"}
+{"text": "fantastic yo", "label": "chat"}
+{"text": "appreciate it :)", "label": "chat"}
+{"text": "what should I know about pub/sub?", "label": "rag"}
+{"text": "از روی اسناد، تست واحد چیست؟", "label": "rag"}
+{"text": "tell me about Elasticsearch", "label": "rag"}
+{"text": "thanks a lot", "label": "chat"}
+{"text": "what should I know about orchestration?", "label": "rag"}
+{"text": "later today", "label": "chat"}
+{"text": "مم‌کش برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "نکات کلیدی درباره اتریوم", "label": "rag"}
+{"text": "thank you", "label": "chat"}
+{"text": "چگونه ایستیو را تعریف می‌کنی؟", "label": "rag"}
+{"text": "can you chat?", "label": "chat"}
+{"text": "what should I know about Java?", "label": "rag"}
+{"text": "درباره پانداز چه باید بدونم؟", "label": "rag"}
+{"text": "sup?", "label": "chat"}
+{"text": "مزایای ویرچوال‌ان‌وی چیست؟", "label": "rag"}
+{"text": "صبح بخیر", "label": "chat"}
+{"text": "وب‌سوکت برای چه استفاده می‌شود؟", "label": "rag"}
+{"text": "can you describe smart contracts?", "label": "rag"}
+{"text": "give a brief explanation of Bitcoin", "label": "rag"}
+{"text": "درباره فلسک چه باید بدونم؟", "label": "rag"}

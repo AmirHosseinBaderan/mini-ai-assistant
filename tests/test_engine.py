@@ -4,17 +4,21 @@ from collections.abc import Iterator
 from application.chat.engine import ChatEngine
 from application.llm.client import LLMClient
 
+
 class FailingLLM(LLMClient):
 
     def stream(
-        self,
-        messages: list[dict[str, str]],
+            self,
+            messages: list[dict[str, str]],
     ) -> Iterator[str]:
-
         yield "Hello"
         yield " from"
 
         raise RuntimeError("LLM connection failed")
+
+    def embed(self, text) -> list[float]:
+        return []
+
 
 class FakeLLM(LLMClient):
 
@@ -22,15 +26,17 @@ class FakeLLM(LLMClient):
         self.received_messages = []
 
     def stream(
-        self,
-        messages: list[dict[str, str]],
+            self,
+            messages: list[dict[str, str]],
     ) -> Iterator[str]:
-
         self.received_messages = messages
 
         yield "Hello"
         yield " from"
         yield " FakeLLM"
+
+    def embed(self, text) -> list[float]:
+        return []
 
 
 def test_chat_stream():
@@ -105,7 +111,8 @@ def test_multi_turn_conversation():
             "content": "Hello from FakeLLM",
         },
     ]
-    
+
+
 def test_failed_stream_does_not_save_assistant_response():
     llm = FailingLLM()
     chat = ChatEngine(llm)
@@ -119,7 +126,8 @@ def test_failed_stream_does_not_save_assistant_response():
             "content": "Hello",
         }
     ]
-    
+
+
 def test_successful_stream_saves_assistant_response():
     llm = FakeLLM()
     chat = ChatEngine(llm)

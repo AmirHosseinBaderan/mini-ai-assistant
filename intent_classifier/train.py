@@ -2,8 +2,10 @@ from pathlib import Path
 
 from torch.utils.data import DataLoader
 
+from intent_classifier.checkpoint import CheckpointManager
 from intent_classifier.config import IntentConfig
 from intent_classifier.dataset import IntentDataset
+from intent_classifier.early_stopping import EarlyStopping
 from intent_classifier.model import IntentClassifier
 from intent_classifier.tokenizer import IntentTokenizer
 from intent_classifier.trainer import IntentTrainer
@@ -18,7 +20,7 @@ VALIDATION_PATH = Path(
 )
 
 CHECKPOINT_PATH = Path(
-    "checkpoints/intent/best.pt"
+    "checkpoints/intent"
 )
 
 
@@ -76,32 +78,43 @@ def main():
         device=config.device,
     )
 
-    history = trainer.fit(
+    early_stopping = EarlyStopping(
+        monitor="validation_f1",
+        mode="max",
+        patience=5,
+        min_delta=0.001,
+    )
+
+    checkpoint_manager = CheckpointManager(
+        checkpoint_dir=CHECKPOINT_PATH,
+        monitor="validation_f1",
+        mode="max",
+    )
+
+    history, best_epoch = trainer.fit(
         epochs=config.epochs,
+        checkpoint_path=CHECKPOINT_PATH / "best.pt",
+        early_stopping=early_stopping,
     )
 
-    best_epoch = max(
-        history,
-        key=lambda item: item["validation_f1"],
-    )
-
-    trainer.save_checkpoint(
-        path=CHECKPOINT_PATH,
-        epoch=best_epoch["epoch"],
-        metrics=best_epoch,
+    best_checkpoint = checkpoint_manager.load(
+        CHECKPOINT_PATH / "best.pt"
     )
 
     print()
     print("Training completed.")
     print(
-        f"Best Epoch: {best_epoch['epoch']}"
+        f"Best Epoch: {best_epoch}"
     )
     print(
         f"Validation F1: "
-        f"{best_epoch['validation_f1']:.4f}"
+        f"{best_checkpoint['metrics']['validation_f1']:.4f}"
     )
     print(
-        f"Checkpoint: {CHECKPOINT_PATH}"
+        f"Best Checkpoint: {CHECKPOINT_PATH / 'best.pt'}"
+    )
+    print(
+        f"Last Checkpoint: {CHECKPOINT_PATH / 'last.pt'}"
     )
 
 

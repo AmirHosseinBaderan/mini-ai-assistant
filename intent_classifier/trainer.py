@@ -250,12 +250,20 @@ class IntentTrainer:
             )
 
         best_epoch = 0
+        try:
+            load_model = checkpoint_manager.load(
+                checkpoint_path
+            )
+            epoch = load_model['metrics']['epoch']
+        except:
+            print("failed load model")
 
         epoch_pbar = tqdm(
-            range(1, epochs + 1),
+            range(epoch, epochs + 1),
             desc="Epochs",
             dynamic_ncols=True,
         )
+              
 
         for epoch in epoch_pbar:
 
@@ -330,46 +338,3 @@ class IntentTrainer:
                 break
 
         return history, best_epoch
-
-    def save_checkpoint(
-        self,
-        path: str | Path,
-        epoch: int,
-        metrics: dict[str, float],
-    ) -> None:
-
-        path = Path(path)
-
-        path.parent.mkdir(
-            parents=True,
-            exist_ok=True,
-        )
-
-        torch.save(
-            {
-                "epoch": epoch,
-                "model_state_dict": self.model.state_dict(),
-                "optimizer_state_dict": self.optimizer.state_dict(),
-                "metrics": metrics,
-            },
-            path,
-        )
-
-    def load_checkpoint(
-        self,
-        path: str | Path,
-        load_optimizer: bool = True,
-    ) -> dict:
-
-        checkpoint = CheckpointManager.load(path)
-
-        self.model.load_state_dict(
-            checkpoint["model_state_dict"]
-        )
-
-        if load_optimizer:
-            self.optimizer.load_state_dict(
-                checkpoint["optimizer_state_dict"]
-            )
-
-        return checkpoint

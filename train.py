@@ -19,10 +19,6 @@ VALIDATION_PATH = Path(
     "data/intent/validation.jsonl"
 )
 
-CHECKPOINT_PATH = Path(
-    "checkpoints/intent"
-)
-
 
 def main():
 
@@ -85,20 +81,20 @@ def main():
         min_delta=0.001,
     )
 
+    history, best_epoch = trainer.fit(
+        epochs=config.epochs,
+        checkpoint_dir=config.checkpoint_dir,
+        early_stopping=early_stopping,
+    )
+
     checkpoint_manager = CheckpointManager(
-        checkpoint_dir=CHECKPOINT_PATH,
+        checkpoint_dir=config.checkpoint_dir,
         monitor="validation_f1",
         mode="max",
     )
 
-    history, best_epoch = trainer.fit(
-        epochs=config.epochs,
-        checkpoint_path=CHECKPOINT_PATH / "best.pt",
-        early_stopping=early_stopping,
-    )
-
     best_checkpoint = checkpoint_manager.load(
-        CHECKPOINT_PATH / "best.pt"
+        config.checkpoint_dir / "best.pt"
     )
 
     print()
@@ -111,10 +107,10 @@ def main():
         f"{best_checkpoint['metrics']['validation_f1']:.4f}"
     )
     print(
-        f"Best Checkpoint: {CHECKPOINT_PATH / 'best.pt'}"
+        f"Best Checkpoint: {config.checkpoint_dir / 'best.pt'}"
     )
     print(
-        f"Last Checkpoint: {CHECKPOINT_PATH / 'last.pt'}"
+        f"Last Checkpoint: {config.checkpoint_dir / 'last.pt'}"
     )
 
 

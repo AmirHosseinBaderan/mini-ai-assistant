@@ -80,3 +80,39 @@ class EncoderBlock(nn.Module):
         x = x + feed_forward_output
 
         return x
+    
+class TransformerEncoder(nn.Module):
+
+    def __init__(
+        self,
+        num_layers: int = 2,
+        embed_dim: int = 128,
+        num_heads: int = 4,
+        ff_dim: int = 256,
+        dropout: float = 0.1,
+    ):
+        super().__init__()
+
+        self.layers = nn.ModuleList([
+            EncoderBlock(
+                embed_dim=embed_dim,
+                num_heads=num_heads,
+                ff_dim=ff_dim,
+                dropout=dropout,
+            )
+            for _ in range(num_layers)
+        ])
+
+    def forward(
+        self,
+        x: torch.Tensor,
+        attention_mask: torch.Tensor | None = None,
+    ) -> torch.Tensor:
+
+        for layer in self.layers:
+            x = layer(
+                x,
+                attention_mask,
+            )
+
+        return x

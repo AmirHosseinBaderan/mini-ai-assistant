@@ -28,6 +28,10 @@ class IntentConfig:
         default_factory=lambda: Path("checkpoints/intent")
     )
 
+    tensorboard_log_dir: Path = field(
+        default_factory=lambda: Path("logs/intent")
+    )
+
     @property
     def device(self) -> torch.device:
         return torch.device(

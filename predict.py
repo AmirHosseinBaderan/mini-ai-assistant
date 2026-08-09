@@ -3,9 +3,13 @@
 
 from pathlib import Path
 
+from application.utils.logger import get_logger, setup_file_logger
+
 from intent_classifier.config import IntentConfig
 from intent_classifier.tokenizer import IntentTokenizer
 from intent_classifier.predictor import IntentPredictor
+
+logger = get_logger("intent.predict")
 
 CHECKPOINT_DIR = Path("checkpoints/intent")
 TRAIN_PATH = Path("data/intent/train.jsonl")
@@ -13,6 +17,14 @@ TRAIN_PATH = Path("data/intent/train.jsonl")
 
 def main():
     config = IntentConfig()
+
+    setup_file_logger(
+        logger,
+        log_dir=config.tensorboard_log_dir,
+        filename="prediction.log",
+    )
+
+    logger.info("Starting intent predictor")
 
     tokenizer = IntentTokenizer()
     tokenizer.build_vocab_from_file(TRAIN_PATH)
@@ -45,6 +57,8 @@ def main():
             f"Intent: {result.label} "
             f"(confidence: {result.confidence:.2%})\n"
         )
+
+    logger.info("Predictor stopped")
 
 
 if __name__ == "__main__":

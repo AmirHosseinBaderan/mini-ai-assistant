@@ -3,11 +3,16 @@ from pathlib import Path
 
 import torch
 
+from application.utils.logger import get_logger
+
 from .checkpoint import CheckpointManager
 from .config import IntentConfig
 from .labels import id_to_label
 from .model import IntentClassifier
 from .tokenizer import IntentTokenizer
+
+
+logger = get_logger("intent.predictor")
 
 
 @dataclass
@@ -70,6 +75,11 @@ class IntentPredictor:
 
         self.model.eval()
 
+        logger.info(
+            "Predictor initialized with checkpoint: %s",
+            checkpoint_path,
+        )
+
     @torch.no_grad()
     def predict(
         self,
@@ -119,6 +129,13 @@ class IntentPredictor:
         ].item()
 
         label = id_to_label(class_id)
+
+        logger.debug(
+            "Predicted '%s' -> %s (%.2f%%)",
+            text,
+            label,
+            confidence * 100,
+        )
 
         return ClassificationResult(
             label=label,

@@ -2,6 +2,8 @@ from pathlib import Path
 
 from torch.utils.data import DataLoader
 
+from application.utils.logger import get_logger, setup_file_logger
+
 from intent_classifier.checkpoint import CheckpointManager
 from intent_classifier.config import IntentConfig
 from intent_classifier.dataset import IntentDataset
@@ -10,6 +12,8 @@ from intent_classifier.model import IntentClassifier
 from intent_classifier.tokenizer import IntentTokenizer
 from intent_classifier.trainer import IntentTrainer
 
+
+logger = get_logger("intent.train")
 
 TRAIN_PATH = Path(
     "data/intent/train.jsonl"
@@ -23,6 +27,15 @@ VALIDATION_PATH = Path(
 def main():
 
     config = IntentConfig()
+
+    setup_file_logger(
+        logger,
+        log_dir=config.tensorboard_log_dir,
+        filename="training.log",
+    )
+
+    logger.info("Starting intent classifier training")
+    logger.info("Config: %s", config)
 
     tokenizer = IntentTokenizer()
 
@@ -72,6 +85,7 @@ def main():
         learning_rate=config.learning_rate,
         weight_decay=config.weight_decay,
         device=config.device,
+        config=config,
     )
 
     early_stopping = EarlyStopping(
@@ -85,6 +99,7 @@ def main():
         epochs=config.epochs,
         checkpoint_dir=config.checkpoint_dir,
         early_stopping=early_stopping,
+        log_dir=config.tensorboard_log_dir,
     )
 
     checkpoint_manager = CheckpointManager(
@@ -97,20 +112,19 @@ def main():
         config.checkpoint_dir / "best.pt"
     )
 
-    print()
-    print("Training completed.")
-    print(
-        f"Best Epoch: {best_epoch}"
+    logger.info("Training completed.")
+    logger.info("Best Epoch: %d", best_epoch)
+    logger.info(
+        "Validation F1: %.4f",
+        best_checkpoint["metrics"]["validation_f1"],
     )
-    print(
-        f"Validation F1: "
-        f"{best_checkpoint['metrics']['validation_f1']:.4f}"
+    logger.info(
+        "Best Checkpoint: %s",
+        config.checkpoint_dir / "best.pt",
     )
-    print(
-        f"Best Checkpoint: {config.checkpoint_dir / 'best.pt'}"
-    )
-    print(
-        f"Last Checkpoint: {config.checkpoint_dir / 'last.pt'}"
+    logger.info(
+        "Last Checkpoint: %s",
+        config.checkpoint_dir / "last.pt",
     )
 
 

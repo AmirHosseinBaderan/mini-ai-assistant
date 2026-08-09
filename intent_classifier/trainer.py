@@ -3,9 +3,13 @@ from pathlib import Path
 import torch
 from torch import nn
 from torch.optim import AdamW
+from torch.utils.tensorboard import SummaryWriter
 from tqdm.auto import tqdm
 
+from application.utils.logger import get_logger, setup_file_logger
+
 from .checkpoint import CheckpointManager
+from .config import IntentConfig
 from .early_stopping import EarlyStopping
 from .metrics import (
     accuracy,
@@ -13,6 +17,9 @@ from .metrics import (
     precision,
     recall,
 )
+
+
+logger = get_logger("intent.trainer")
 
 
 class IntentTrainer:
@@ -25,6 +32,7 @@ class IntentTrainer:
         learning_rate: float = 3e-4,
         weight_decay: float = 1e-2,
         device: torch.device | None = None,
+        config: IntentConfig | None = None,
     ):
         self.model = model
 
@@ -36,6 +44,8 @@ class IntentTrainer:
             if torch.cuda.is_available()
             else "cpu"
         )
+
+        self.config = config or IntentConfig()
 
         self.model.to(self.device)
 
@@ -239,6 +249,7 @@ class IntentTrainer:
         epochs: int,
         checkpoint_dir: str | Path | None = None,
         early_stopping: EarlyStopping | None = None,
+        log_dir: str | Path | None = None,
     ) -> tuple[list[dict[str, float]], int]:
         history = []
         start_epoch = 1
@@ -272,15 +283,32 @@ class IntentTrainer:
                             checkpoint["metrics"][monitor_key]
                         )
 
-                    print(
-                        f"Resumed from checkpoint at epoch "
-                        f"{checkpoint['metrics']['epoch']}"
+                    logger.info(
+                        "Resumed from checkpoint at epoch %d",
+                        checkpoint["metrics"]["epoch"],
                     )
-                except Exception as e:
-                    print(
-                        f"Failed to load checkpoint: {e}. "
-                        f"Starting from scratch."
+                except Exception as exc:
+                    logger.warning(
+                        "Failed to load checkpoint: %s. "
+                        "Starting from scratch.",
+                        exc,
                     )
+
+        setup_file_logger(
+            logger,
+            log_dir=log_dir or self.config.tensorboard_log_dir,
+            filename="training.log",
+        )
+
+        writer = None
+        if log_dir is not None:
+            log_path = Path(log_dir)
+            log_path.mkdir(parents=True, exist_ok=True)
+            writer = SummaryWriter(log_dir=str(log_path))
+            logger.info(
+                "TensorBoard logging enabled at %s",
+                log_path,
+            )
 
         epoch_pbar = tqdm(
             range(start_epoch, epochs + 1),
@@ -324,6 +352,28 @@ class IntentTrainer:
                 }
             )
 
+            if writer is not None:
+                writer.add_scalar(
+                    "Loss/train", result["train_loss"], epoch
+                )
+                writer.add_scalar(
+                    "Loss/validation", result["validation_loss"], epoch
+                )
+                writer.add_scalar(
+                    "Accuracy/train", result["train_accuracy"], epoch
+                )
+                writer.add_scalar(
+                    "Accuracy/validation",
+                    result["validation_accuracy"],
+                    epoch,
+                )
+                writer.add_scalar(
+                    "F1/train", result["train_f1"], epoch
+                )
+                writer.add_scalar(
+                    "F1/validation", result["validation_f1"], epoch
+                )
+
             if checkpoint_manager is not None:
                 checkpoint_manager.save_last(
                     epoch=epoch,
@@ -348,6 +398,14 @@ class IntentTrainer:
 
                     best_epoch = epoch
 
+                    logger.info(
+                        "New best model at epoch %d "
+                        "with %s=%.4f",
+                        epoch,
+                        checkpoint_manager.monitor,
+                        result[checkpoint_manager.monitor],
+                    )
+
             if (
                 early_stopping is not None
                 and early_stopping.step(
@@ -355,10 +413,17 @@ class IntentTrainer:
                     epoch,
                 )
             ):
-                print(
-                    f"\nEarly stopping triggered at epoch {epoch}. "
-                    f"Best epoch: {early_stopping.best_value:.4f}"
+                logger.info(
+                    "Early stopping triggered at epoch %d. "
+                    "Best epoch: %d",
+                    epoch,
+                    best_epoch,
                 )
                 break
+
+        if writer is not None:
+            writer.close()
+
+        logger.info("Training completed. Best epoch: %d", best_epoch)
 
         return history, best_epoch

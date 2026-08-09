@@ -115,3 +115,20 @@ class CheckpointManager:
             map_location="cpu",
             weights_only=False,
         )
+
+    def last_checkpoint_path(self) -> Path:
+        return self.checkpoint_dir / "last.pt"
+
+    def best_checkpoint_path(self) -> Path:
+        return self.checkpoint_dir / "best.pt"
+
+    def has_last_checkpoint(self) -> bool:
+        return self.last_checkpoint_path().exists()
+
+    def load_last(self) -> dict:
+        path = self.last_checkpoint_path()
+        if not path.exists():
+            raise FileNotFoundError(
+                f"Last checkpoint not found: {path}"
+            )
+        return self.load(path)

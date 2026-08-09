@@ -1,8 +1,11 @@
 from pathlib import Path
 
-from intent_classifier.dataset import IntentDataset
+from intent_classifier.dataset import (
+    IntentDataset,
+    create_dataloader,
+)
 from intent_classifier.tokenizer import IntentTokenizer
-
+import torch
 
 DATA_DIR = Path("data/intent")
 
@@ -139,3 +142,49 @@ def test_english_tokenization():
         "python",
         "?",
     ]
+    
+def test_dataloader():
+
+    train_path = DATA_DIR / "train.jsonl"
+
+    tokenizer = IntentTokenizer()
+
+    train_texts = load_training_texts(
+        train_path
+    )
+
+    tokenizer.build_vocab(
+        train_texts
+    )
+
+    dataset = IntentDataset(
+        file_path=train_path,
+        tokenizer=tokenizer,
+        max_length=64,
+    )
+
+    dataloader = create_dataloader(
+        dataset,
+        batch_size=4,
+        shuffle=False,
+    )
+
+    batch = next(iter(dataloader))
+
+    assert batch["input_ids"].shape == (
+        4,
+        64,
+    )
+
+    assert batch["attention_mask"].shape == (
+        4,
+        64,
+    )
+
+    assert batch["label"].shape == (
+        4,
+    )
+
+    assert batch["input_ids"].dtype == torch.long
+    assert batch["attention_mask"].dtype == torch.long
+    assert batch["label"].dtype == torch.long

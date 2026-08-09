@@ -6,7 +6,7 @@ from torch.utils.data import Dataset
 
 from .labels import label_to_id
 from .tokenizer import IntentTokenizer
-
+from torch.utils.data import DataLoader
 
 class IntentDataset(Dataset):
 
@@ -92,3 +92,16 @@ class IntentDataset(Dataset):
                 dtype=torch.long,
             ),
         }
+        
+
+def create_dataloader(
+        dataset: IntentDataset,
+        batch_size: int = 32,
+        shuffle: bool = True,
+    ) -> DataLoader:
+
+        return DataLoader(
+            dataset,
+            batch_size=batch_size,
+            shuffle=shuffle,
+        )

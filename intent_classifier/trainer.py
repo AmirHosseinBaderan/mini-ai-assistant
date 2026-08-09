@@ -3,7 +3,10 @@ from pathlib import Path
 import torch
 from torch import nn
 from torch.optim import AdamW
+from tqdm.auto import tqdm
 
+from .checkpoint import CheckpointManager
+from .early_stopping import EarlyStopping
 from .metrics import (
     accuracy,
     f1_score,
@@ -44,7 +47,11 @@ class IntentTrainer:
             weight_decay=weight_decay,
         )
 
-    def train_epoch(self) -> dict[str, float]:
+    def train_epoch(
+        self,
+        epoch: int = 1,
+        total_epochs: int = 1,
+    ) -> dict[str, float]:
 
         self.model.train()
 
@@ -52,7 +59,13 @@ class IntentTrainer:
         all_predictions = []
         all_labels = []
 
-        for batch in self.train_loader:
+        pbar = tqdm(
+            self.train_loader,
+            desc=f"Epoch {epoch}/{total_epochs} [Train]",
+            leave=False,
+        )
+
+        for batch in pbar:
 
             input_ids = batch[
                 "input_ids"
@@ -131,7 +144,11 @@ class IntentTrainer:
         }
 
     @torch.no_grad()
-    def validate(self) -> dict[str, float]:
+    def validate(
+        self,
+        epoch: int = 1,
+        total_epochs: int = 1,
+    ) -> dict[str, float]:
 
         self.model.eval()
 
@@ -139,7 +156,13 @@ class IntentTrainer:
         all_predictions = []
         all_labels = []
 
-        for batch in self.validation_loader:
+        pbar = tqdm(
+            self.validation_loader,
+            desc=f"Epoch {epoch}/{total_epochs} [Val]",
+            leave=False,
+        )
+
+        for batch in pbar:
 
             input_ids = batch[
                 "input_ids"
@@ -215,18 +238,37 @@ class IntentTrainer:
         self,
         epochs: int,
         checkpoint_path: str | Path | None = None,
-    ) -> list[dict[str, float]]:
-    
+        early_stopping: EarlyStopping | None = None,
+    ) -> tuple[list[dict[str, float]], int]:
         history = []
-    
-        best_f1 = -1.0
-    
-        for epoch in range(1, epochs + 1):
-        
-            train_metrics = self.train_epoch()
-    
-            validation_metrics = self.validate()
-    
+
+        checkpoint_manager = None
+
+        if checkpoint_path is not None:
+            checkpoint_manager = CheckpointManager(
+                checkpoint_dir=Path(checkpoint_path).parent,
+            )
+
+        best_epoch = 0
+
+        epoch_pbar = tqdm(
+            range(1, epochs + 1),
+            desc="Epochs",
+            dynamic_ncols=True,
+        )
+
+        for epoch in epoch_pbar:
+
+            train_metrics = self.train_epoch(
+                epoch=epoch,
+                total_epochs=epochs,
+            )
+
+            validation_metrics = self.validate(
+                epoch=epoch,
+                total_epochs=epochs,
+            )
+
             result = {
                 "epoch": epoch,
                 "train_loss": train_metrics["loss"],
@@ -240,38 +282,54 @@ class IntentTrainer:
                 "validation_recall": validation_metrics["recall"],
                 "validation_f1": validation_metrics["f1"],
             }
-    
+
             history.append(result)
-    
-            print(
-                f"Epoch {epoch}/{epochs} "
-                f"| "
-                f"Train Loss: {result['train_loss']:.4f} "
-                f"| "
-                f"Train Acc: {result['train_accuracy']:.4f} "
-                f"| "
-                f"Val Loss: {result['validation_loss']:.4f} "
-                f"| "
-                f"Val Acc: {result['validation_accuracy']:.4f} "
-                f"| "
-                f"Val F1: {result['validation_f1']:.4f}"
+
+            epoch_pbar.set_postfix(
+                {
+                    "Train Loss": f"{result['train_loss']:.4f}",
+                    "Val F1": f"{result['validation_f1']:.4f}",
+                }
             )
-    
-            if (
-                checkpoint_path is not None
-                and result["validation_f1"] > best_f1
-            ):
-                best_f1 = result[
-                    "validation_f1"
-                ]
-    
-                self.save_checkpoint(
-                    path=checkpoint_path,
+
+            if checkpoint_manager is not None:
+                checkpoint_manager.save_last(
                     epoch=epoch,
+                    model_state_dict=self.model.state_dict(),
+                    optimizer_state_dict=self.optimizer.state_dict(),
                     metrics=result,
                 )
-    
-        return history
+
+                if checkpoint_manager.is_better(
+                    result[checkpoint_manager.monitor]
+                ):
+                    checkpoint_manager.update_best(
+                        result[checkpoint_manager.monitor]
+                    )
+
+                    checkpoint_manager.save_best(
+                        epoch=epoch,
+                        model_state_dict=self.model.state_dict(),
+                        optimizer_state_dict=self.optimizer.state_dict(),
+                        metrics=result,
+                    )
+
+                    best_epoch = epoch
+
+            if (
+                early_stopping is not None
+                and early_stopping.step(
+                    result[early_stopping.monitor],
+                    epoch,
+                )
+            ):
+                print(
+                    f"\nEarly stopping triggered at epoch {epoch}. "
+                    f"Best epoch: {early_stopping.best_value:.4f}"
+                )
+                break
+
+        return history, best_epoch
 
     def save_checkpoint(
         self,
@@ -296,3 +354,22 @@ class IntentTrainer:
             },
             path,
         )
+
+    def load_checkpoint(
+        self,
+        path: str | Path,
+        load_optimizer: bool = True,
+    ) -> dict:
+
+        checkpoint = CheckpointManager.load(path)
+
+        self.model.load_state_dict(
+            checkpoint["model_state_dict"]
+        )
+
+        if load_optimizer:
+            self.optimizer.load_state_dict(
+                checkpoint["optimizer_state_dict"]
+            )
+
+        return checkpoint

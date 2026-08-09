@@ -348,6 +348,7 @@ class IntentTrainer:
             epoch_pbar.set_postfix(
                 {
                     "Train Loss": f"{result['train_loss']:.4f}",
+                    "Val Loss": f"{result['validation_loss']:.4f}",
                     "Val F1": f"{result['validation_f1']:.4f}",
                 }
             )

@@ -1,5 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from pathlib import Path
+
 import torch
+
 
 @dataclass
 class IntentConfig:
@@ -20,6 +23,10 @@ class IntentConfig:
     weight_decay: float = 1e-2
 
     epochs: int = 20
+
+    checkpoint_dir: Path = field(
+        default_factory=lambda: Path("checkpoints/intent")
+    )
 
     @property
     def device(self) -> torch.device:

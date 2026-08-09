@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-"""Interactive intent predictor CLI."""
-
 from pathlib import Path
 
 from application.utils.logger import get_logger, setup_file_logger

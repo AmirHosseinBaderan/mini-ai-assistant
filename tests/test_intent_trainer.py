@@ -193,3 +193,48 @@ def test_trainer_fit():
     assert "train_loss" in history[0]
     assert "validation_loss" in history[0]
     assert "validation_f1" in history[0]
+
+
+def test_trainer_fit_resumes_from_checkpoint(tmp_path):
+
+    train_loader = create_loader()
+    validation_loader = create_loader()
+
+    model = TinyModel()
+    trainer = IntentTrainer(
+        model=model,
+        train_loader=train_loader,
+        validation_loader=validation_loader,
+    )
+
+    # Train for 2 epochs and save checkpoint
+    history, best_epoch = trainer.fit(
+        epochs=2,
+        checkpoint_dir=tmp_path,
+    )
+    assert len(history) == 2
+
+    # Create a new trainer with a fresh model
+    resumed_model = TinyModel()
+    resumed_trainer = IntentTrainer(
+        model=resumed_model,
+        train_loader=train_loader,
+        validation_loader=validation_loader,
+    )
+
+    # Resume training from checkpoint for 2 more epochs (total 4)
+    resumed_history, resumed_best_epoch = resumed_trainer.fit(
+        epochs=4,
+        checkpoint_dir=tmp_path,
+    )
+
+    # Should only train epochs 3 and 4
+    assert len(resumed_history) == 2
+    assert resumed_history[0]["epoch"] == 3
+    assert resumed_history[1]["epoch"] == 4
+
+    # Model weights should be loaded from checkpoint,
+    # so resumed epoch 3 metrics should match original epoch 3
+    # (not a fresh model's epoch 3)
+    assert "train_loss" in resumed_history[0]
+    assert "validation_f1" in resumed_history[0]

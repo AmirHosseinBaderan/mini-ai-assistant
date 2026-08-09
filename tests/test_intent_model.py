@@ -1,24 +1,17 @@
-import torch
-
-from intent_classifier.model import (
-    IntentTransformerEncoder,
-)
-
 import json
 from pathlib import Path
+
+import torch
 
 from intent_classifier.dataset import (
     IntentDataset,
     create_dataloader,
 )
-from intent_classifier.tokenizer import (
-    IntentTokenizer,
-)
+from intent_classifier.model import IntentClassifier
+from intent_classifier.tokenizer import IntentTokenizer
 
 
-DATA_PATH = Path(
-    "data/intent/train.jsonl"
-)
+DATA_PATH = Path("data/intent/train.jsonl")
 
 
 def load_training_texts(
@@ -39,16 +32,18 @@ def load_training_texts(
 
             record = json.loads(line)
 
-            texts.append(
-                record["text"]
-            )
+            texts.append(record["text"])
 
     return texts
 
-def test_model_shape():
 
-    model = IntentTransformerEncoder(
-        vocab_size=1017,
+def create_test_model(
+    vocab_size: int = 1017,
+) -> IntentClassifier:
+
+    return IntentClassifier(
+        vocab_size=vocab_size,
+        num_classes=2,
         embed_dim=128,
         num_heads=4,
         num_layers=2,
@@ -56,6 +51,11 @@ def test_model_shape():
         max_length=64,
         dropout=0.1,
     )
+
+
+def test_classifier_shape():
+
+    model = create_test_model()
 
     input_ids = torch.randint(
         0,
@@ -69,27 +69,19 @@ def test_model_shape():
         dtype=torch.long,
     )
 
-    output = model(
+    logits = model(
         input_ids,
         attention_mask,
     )
 
-    assert output.shape == (
-        4,
-        64,
-        128,
-    )
-    
-def test_model_with_padding():
+    assert logits.shape == (4, 2)
 
-    model = IntentTransformerEncoder(
-        vocab_size=1017,
-        embed_dim=128,
-        num_heads=4,
-        num_layers=2,
-        ff_dim=256,
-        max_length=64,
-    )
+    assert torch.isfinite(logits).all()
+
+
+def test_classifier_with_padding():
+
+    model = create_test_model()
 
     input_ids = torch.tensor([
         [2, 0, 0, 0, 0, 0, 0, 0],
@@ -101,20 +93,97 @@ def test_model_with_padding():
         [1, 1, 1, 1, 1, 0, 0, 0],
     ])
 
-    output = model(
+    logits = model(
         input_ids,
         attention_mask,
     )
 
-    assert output.shape == (
-        2,
-        8,
-        128,
+    assert logits.shape == (2, 2)
+
+    assert torch.isfinite(logits).all()
+
+
+def test_classifier_loss():
+
+    model = create_test_model()
+
+    input_ids = torch.randint(
+        0,
+        1017,
+        (4, 64),
     )
 
-    assert torch.isfinite(output).all()
-    
-def test_model_with_real_dataset():
+    attention_mask = torch.ones(
+        4,
+        64,
+        dtype=torch.long,
+    )
+
+    labels = torch.tensor(
+        [0, 1, 0, 1],
+        dtype=torch.long,
+    )
+
+    logits = model(
+        input_ids,
+        attention_mask,
+    )
+
+    criterion = torch.nn.CrossEntropyLoss()
+
+    loss = criterion(
+        logits,
+        labels,
+    )
+
+    assert loss.ndim == 0
+
+    assert torch.isfinite(loss)
+
+
+def test_classifier_backward():
+
+    model = create_test_model()
+
+    input_ids = torch.randint(
+        0,
+        1017,
+        (4, 64),
+    )
+
+    attention_mask = torch.ones(
+        4,
+        64,
+        dtype=torch.long,
+    )
+
+    labels = torch.tensor(
+        [0, 1, 0, 1],
+        dtype=torch.long,
+    )
+
+    logits = model(
+        input_ids,
+        attention_mask,
+    )
+
+    criterion = torch.nn.CrossEntropyLoss()
+
+    loss = criterion(
+        logits,
+        labels,
+    )
+
+    loss.backward()
+
+    gradient = model.embedding.weight.grad
+
+    assert gradient is not None
+
+    assert torch.isfinite(gradient).all()
+
+
+def test_classifier_with_real_dataset():
 
     tokenizer = IntentTokenizer()
 
@@ -145,64 +214,29 @@ def test_model_with_real_dataset():
 
     batch = next(iter(dataloader))
 
-    model = IntentTransformerEncoder(
+    model = create_test_model(
         vocab_size=tokenizer.vocab_size,
-        embed_dim=128,
-        num_heads=4,
-        num_layers=2,
-        ff_dim=256,
-        max_length=64,
     )
 
-    output = model(
+    logits = model(
         batch["input_ids"],
         batch["attention_mask"],
     )
 
-    assert output.shape == (
+    assert logits.shape == (
         batch_size,
-        64,
-        128,
-    )
-
-    assert torch.isfinite(
-        output
-    ).all()
-    
-def test_model_backward():
-
-    model = IntentTransformerEncoder(
-        vocab_size=1017,
-        embed_dim=128,
-        num_heads=4,
-        num_layers=2,
-        ff_dim=256,
-        max_length=64,
-    )
-
-    input_ids = torch.randint(
-        0,
-        1017,
-        (2, 64),
-    )
-
-    attention_mask = torch.ones(
         2,
-        64,
-        dtype=torch.long,
     )
 
-    output = model(
-        input_ids,
-        attention_mask,
+    assert torch.isfinite(logits).all()
+
+    criterion = torch.nn.CrossEntropyLoss()
+
+    loss = criterion(
+        logits,
+        batch["label"],
     )
 
-    loss = output.mean()
+    assert torch.isfinite(loss)
 
     loss.backward()
-
-    assert model.embedding.weight.grad is not None
-
-    assert torch.isfinite(
-        model.embedding.weight.grad
-    ).all()

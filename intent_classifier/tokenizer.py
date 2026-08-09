@@ -155,3 +155,30 @@ class IntentTokenizer:
             tokens.append(token)
 
         return " ".join(tokens)
+
+    def build_vocab_from_file(
+        self,
+        file_path,
+    ):
+        import json
+    
+        texts = []
+    
+        with open(
+            file_path,
+            "r",
+            encoding="utf-8",
+        ) as file:
+    
+            for line in file:
+            
+                if not line.strip():
+                    continue
+                
+                record = json.loads(line)
+    
+                texts.append(
+                    record["text"]
+                )
+    
+        self.build_vocab(texts)

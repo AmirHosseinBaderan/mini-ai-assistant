@@ -214,16 +214,19 @@ class IntentTrainer:
     def fit(
         self,
         epochs: int,
+        checkpoint_path: str | Path | None = None,
     ) -> list[dict[str, float]]:
-
+    
         history = []
-
+    
+        best_f1 = -1.0
+    
         for epoch in range(1, epochs + 1):
-
+        
             train_metrics = self.train_epoch()
-
+    
             validation_metrics = self.validate()
-
+    
             result = {
                 "epoch": epoch,
                 "train_loss": train_metrics["loss"],
@@ -237,9 +240,9 @@ class IntentTrainer:
                 "validation_recall": validation_metrics["recall"],
                 "validation_f1": validation_metrics["f1"],
             }
-
+    
             history.append(result)
-
+    
             print(
                 f"Epoch {epoch}/{epochs} "
                 f"| "
@@ -253,7 +256,21 @@ class IntentTrainer:
                 f"| "
                 f"Val F1: {result['validation_f1']:.4f}"
             )
-
+    
+            if (
+                checkpoint_path is not None
+                and result["validation_f1"] > best_f1
+            ):
+                best_f1 = result[
+                    "validation_f1"
+                ]
+    
+                self.save_checkpoint(
+                    path=checkpoint_path,
+                    epoch=epoch,
+                    metrics=result,
+                )
+    
         return history
 
     def save_checkpoint(

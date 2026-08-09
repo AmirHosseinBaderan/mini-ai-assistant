@@ -181,7 +181,7 @@ def test_trainer_fit():
         validation_loader=validation_loader,
     )
 
-    history = trainer.fit(
+    history, best_epoch = trainer.fit(
         epochs=2,
     )
 

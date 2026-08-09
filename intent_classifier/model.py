@@ -2,14 +2,16 @@ import torch
 from torch import nn
 
 from .encoder import TransformerEncoder
+from .pooling import MeanPooling
 from .positional_encoding import PositionalEncoding
 
 
-class IntentTransformerEncoder(nn.Module):
+class IntentClassifier(nn.Module):
 
     def __init__(
         self,
         vocab_size: int,
+        num_classes: int = 2,
         embed_dim: int = 128,
         num_heads: int = 4,
         num_layers: int = 2,
@@ -18,9 +20,6 @@ class IntentTransformerEncoder(nn.Module):
         dropout: float = 0.1,
     ):
         super().__init__()
-
-        self.embed_dim = embed_dim
-        self.max_length = max_length
 
         self.embedding = nn.Embedding(
             num_embeddings=vocab_size,
@@ -42,6 +41,13 @@ class IntentTransformerEncoder(nn.Module):
             dropout=dropout,
         )
 
+        self.pooling = MeanPooling()
+
+        self.classifier = nn.Linear(
+            embed_dim,
+            num_classes,
+        )
+
     def forward(
         self,
         input_ids: torch.Tensor,
@@ -59,4 +65,11 @@ class IntentTransformerEncoder(nn.Module):
             attention_mask,
         )
 
-        return x
+        x = self.pooling(
+            x,
+            attention_mask,
+        )
+
+        logits = self.classifier(x)
+
+        return logits

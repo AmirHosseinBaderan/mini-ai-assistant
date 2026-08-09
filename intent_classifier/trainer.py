@@ -237,33 +237,56 @@ class IntentTrainer:
     def fit(
         self,
         epochs: int,
-        checkpoint_path: str | Path | None = None,
+        checkpoint_dir: str | Path | None = None,
         early_stopping: EarlyStopping | None = None,
     ) -> tuple[list[dict[str, float]], int]:
         history = []
+        start_epoch = 1
+        best_epoch = 0
 
         checkpoint_manager = None
 
-        if checkpoint_path is not None:
+        if checkpoint_dir is not None:
             checkpoint_manager = CheckpointManager(
-                checkpoint_dir=Path(checkpoint_path).parent,
+                checkpoint_dir=Path(checkpoint_dir),
             )
 
-        best_epoch = 0
-        try:
-            load_model = checkpoint_manager.load(
-                checkpoint_path
-            )
-            epoch = load_model['metrics']['epoch']
-        except:
-            print("failed load model")
+            if checkpoint_manager.has_last_checkpoint():
+                try:
+                    checkpoint = checkpoint_manager.load_last()
+                    self.model.load_state_dict(
+                        checkpoint["model_state_dict"]
+                    )
+                    self.optimizer.load_state_dict(
+                        checkpoint["optimizer_state_dict"]
+                    )
+                    start_epoch = checkpoint["metrics"]["epoch"] + 1
+                    best_epoch = checkpoint["metrics"].get(
+                        "best_epoch", start_epoch - 1
+                    )
+
+                    # Restore best_value from checkpoint metrics if available
+                    monitor_key = checkpoint_manager.monitor
+                    if monitor_key in checkpoint["metrics"]:
+                        checkpoint_manager.update_best(
+                            checkpoint["metrics"][monitor_key]
+                        )
+
+                    print(
+                        f"Resumed from checkpoint at epoch "
+                        f"{checkpoint['metrics']['epoch']}"
+                    )
+                except Exception as e:
+                    print(
+                        f"Failed to load checkpoint: {e}. "
+                        f"Starting from scratch."
+                    )
 
         epoch_pbar = tqdm(
-            range(epoch, epochs + 1),
+            range(start_epoch, epochs + 1),
             desc="Epochs",
             dynamic_ncols=True,
         )
-              
 
         for epoch in epoch_pbar:
 
@@ -279,6 +302,7 @@ class IntentTrainer:
 
             result = {
                 "epoch": epoch,
+                "best_epoch": best_epoch,
                 "train_loss": train_metrics["loss"],
                 "train_accuracy": train_metrics["accuracy"],
                 "train_precision": train_metrics["precision"],

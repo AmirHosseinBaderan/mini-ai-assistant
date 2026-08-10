@@ -1,0 +1,262 @@
+{"text": "خلاصه‌ی سند مربوط به راهنمای دیپلوی رو بگو", "label": "rag"}
+{"text": "nice to meet you, I'm Amir Hossein", "label": "chat"}
+{"text": "never mind, forget it", "label": "chat"}
+{"text": "با استفاده از مرجع، مدل ANPR رو توضیح بده", "label": "rag"}
+{"text": "Reza here, how's it going", "label": "chat"}
+{"text": "Sara here, how's it going", "label": "chat"}
+{"text": "search for Alice in the employee records", "label": "rag"}
+{"text": "look up the ANPR model in the knowledge base", "label": "rag"}
+{"text": "Alice is not a rag", "label": "chat"}
+{"text": "what do you know about the ANPR model from the docs?", "label": "rag"}
+{"text": "طبق مستندات ما پلن قیمت‌گذاری رو توضیح بده", "label": "rag"}
+{"text": "hello, my name is Yasin", "label": "chat"}
+{"text": "search the documents for RAG pipelines", "label": "rag"}
+{"text": "سلام، من ندا هستم", "label": "chat"}
+{"text": "باشه فهمیدم ممنون", "label": "chat"}
+{"text": "just saying hi", "label": "chat"}
+{"text": "how's your day going?", "label": "chat"}
+{"text": "دارم فقط تستت می‌کنم", "label": "chat"}
+{"text": "توی مستندات درباره سیاست بازگشت وجه بگرد", "label": "rag"}
+{"text": "David is my name, not a topic", "label": "chat"}
+{"text": "John is mentioned in the file, what does it say?", "label": "rag"}
+{"text": "طبق فایل آپلود شده راهنمای دیپلوی چیه؟", "label": "rag"}
+{"text": "what do you know about vector databases from the docs?", "label": "rag"}
+{"text": "جزئیات پلن قیمت‌گذاری توی رکوردهای ما چیه؟", "label": "rag"}
+{"text": "باشه باشه ممنون", "label": "chat"}
+{"text": "see you later", "label": "chat"}
+{"text": "according to the uploaded file, what is Helm?", "label": "rag"}
+{"text": "توی فایل به امیر اشاره شده، چی نوشته؟", "label": "rag"}
+{"text": "hi, I'm Maryam", "label": "chat"}
+{"text": "look up our refund policy in the knowledge base", "label": "rag"}
+{"text": "search for Hossein Baderan in the employee records", "label": "rag"}
+{"text": "سلام، اسم من مینا است", "label": "chat"}
+{"text": "what does the report say about Docker networking?", "label": "rag"}
+{"text": "باشه ممنون", "label": "chat"}
+{"text": "سوالی ندارم، فقط سر زدم", "label": "chat"}
+{"text": "میشه اطلاعات هلم رو پیدا کنی؟", "label": "rag"}
+{"text": "از روی اسناد درباره پروتکل MCP چه می‌دانی؟", "label": "rag"}
+{"text": "hi, I'm Kian", "label": "chat"}
+{"text": "just call me Alice", "label": "chat"}
+{"text": "let's talk about something else", "label": "chat"}
+{"text": "John here, how's it going", "label": "chat"}
+{"text": "based on our documentation, explain PostgreSQL indexing", "label": "rag"}
+{"text": "حسین بادران فقط اسمه، موضوع نیست", "label": "chat"}
+{"text": "گزارش درباره راهنمای دیپلوی چی نوشته؟", "label": "rag"}
+{"text": "با استفاده از مرجع، سیاست بازگشت وجه رو توضیح بده", "label": "rag"}
+{"text": "رضا فقط اسمه، موضوع نیست", "label": "chat"}
+{"text": "according to the uploaded file, what is our refund policy?", "label": "rag"}
+{"text": "explain the pricing plan using the reference material", "label": "rag"}
+{"text": "توی فایل به حسین بادران اشاره شده، چی نوشته؟", "label": "rag"}
+{"text": "my name is Amir Hossein", "label": "chat"}
+{"text": "find the section that covers the deployment guide", "label": "rag"}
+{"text": "توی رکورد کارمندا دنبال حسین بادران بگرد", "label": "rag"}
+{"text": "طبق فایل آپلود شده پایپ‌لاین رگ چیه؟", "label": "rag"}
+{"text": "according to the uploaded file, what is transformer attention?", "label": "rag"}
+{"text": "توی رکورد کارمندا دنبال سارا بگرد", "label": "rag"}
+{"text": "hi, I'm Mina", "label": "chat"}
+{"text": "فقط اومدم سلام کنم", "label": "chat"}
+{"text": "چه خبر", "label": "chat"}
+{"text": "true I disagree", "label": "chat"}
+{"text": "just call me Yasin", "label": "chat"}
+{"text": "سلام، من مینا هستم", "label": "chat"}
+{"text": "اسمم امیر ست", "label": "chat"}
+{"text": "یکم خسته‌ام امروز", "label": "chat"}
+{"text": "ببخشید منظورم چیز دیگه بود", "label": "chat"}
+{"text": "طبق مستندات ما ترافرم رو توضیح بده", "label": "rag"}
+{"text": "توی نالج بیس دنبال فرآیند آنبوردینگ بگرد", "label": "rag"}
+{"text": "سارا هستم، چطوری؟", "label": "chat"}
+{"text": "سلام، اسم من ندا است", "label": "chat"}
+{"text": "hello, my name is Kian", "label": "chat"}
+{"text": "بله ادامه بده", "label": "chat"}
+{"text": "سلام، اسم من کیان است", "label": "chat"}
+{"text": "ندا هستم، چطوری؟", "label": "chat"}
+{"text": "have a nice day", "label": "chat"}
+{"text": "thanks a lot, that helped", "label": "chat"}
+{"text": "اسمم حسین بادران ست", "label": "chat"}
+{"text": "میشه اطلاعات راهنمای دیپلوی رو پیدا کنی؟", "label": "rag"}
+{"text": "nice to meet you, I'm Alice", "label": "chat"}
+{"text": "what does the manual say about Terraform?", "label": "rag"}
+{"text": "طبق فایل آپلود شده سیاست بازگشت وجه چیه؟", "label": "rag"}
+{"text": "این که رگ نیست", "label": "chat"}
+{"text": "no question, just checking in", "label": "chat"}
+{"text": "مشخصات فنی پروتکل MCP رو بیار", "label": "rag"}
+{"text": "hello, my name is Maryam", "label": "chat"}
+{"text": "راهنما درباره سیاست بازگشت وجه چی گفته؟", "label": "rag"}
+{"text": "search the documents for Docker networking", "label": "rag"}
+{"text": "find Amir's profile in the database", "label": "rag"}
+{"text": "I need the architecture of Kubernetes", "label": "rag"}
+{"text": "بخشی که درباره ایندکس پستگرس صحبت کرده رو پیدا کن", "label": "rag"}
+{"text": "بخشی که درباره پایپ‌لاین رگ صحبت کرده رو پیدا کن", "label": "rag"}
+{"text": "Yasin is mentioned in the file, what does it say?", "label": "rag"}
+{"text": "hello, my name is Amir", "label": "chat"}
+{"text": "بریم یه چیز دیگه بگیم", "label": "chat"}
+{"text": "خلاصه‌ی سند مربوط به ترافرم رو بگو", "label": "rag"}
+{"text": "مشخصات فنی فرآیند آنبوردینگ رو بیار", "label": "rag"}
+{"text": "توی مستندات درباره ترافرم بگرد", "label": "rag"}
+{"text": "سلام، اسم من علی است", "label": "chat"}
+{"text": "حالت چطوره امروز؟", "label": "chat"}
+{"text": "Neda is not a rag", "label": "chat"}
+{"text": "از روی اسناد درباره فرآیند آنبوردینگ چه می‌دانی؟", "label": "rag"}
+{"text": "توی مستندات درباره فرآیند آنبوردینگ بگرد", "label": "rag"}
+{"text": "میشه دوباره تکرار کنی؟", "label": "chat"}
+{"text": "مشخصات فنی پلن قیمت‌گذاری رو بیار", "label": "rag"}
+{"text": "اسمم مینا ست", "label": "chat"}
+{"text": "okay cool, thanks", "label": "chat"}
+{"text": "I need the architecture of PostgreSQL indexing", "label": "rag"}
+{"text": "میشه اطلاعات ترافرم رو پیدا کنی؟", "label": "rag"}
+{"text": "از روی اسناد درباره پایپ‌لاین رگ چه می‌دانی؟", "label": "rag"}
+{"text": "I'm just testing you", "label": "chat"}
+{"text": "nice to meet you, I'm Sara", "label": "chat"}
+{"text": "that's a great point", "label": "chat"}
+{"text": "آره فکر کنم همینطوره", "label": "chat"}
+{"text": "میشه اطلاعات فرآیند آنبوردینگ رو پیدا کنی؟", "label": "rag"}
+{"text": "lol okay noted", "label": "chat"}
+{"text": "از روی اسناد درباره شبکه داکر چه می‌دانی؟", "label": "rag"}
+{"text": "حسین بادران کیه؟ توی رکوردها پیداش کن", "label": "rag"}
+{"text": "haha true, I agree", "label": "chat"}
+{"text": "check the knowledge base for Terraform", "label": "rag"}
+{"text": "با استفاده از مرجع، اتنشن ترنسفورمر رو توضیح بده", "label": "rag"}
+{"text": "based on our documentation, explain transformer attention", "label": "rag"}
+{"text": "pull up the specs for transformer attention", "label": "rag"}
+{"text": "my name is Neda", "label": "chat"}
+{"text": "look up Docker networking in the knowledge base", "label": "rag"}
+{"text": "کیان هستم، چطوری؟", "label": "chat"}
+{"text": "سلام، من امیرحسین هستم", "label": "chat"}
+{"text": "I need the architecture of the pricing plan", "label": "rag"}
+{"text": "can you find information about RAG pipelines?", "label": "rag"}
+{"text": "what are the details of PostgreSQL indexing in our records?", "label": "rag"}
+{"text": "بخشی که درباره کوبرنتیز صحبت کرده رو پیدا کن", "label": "rag"}
+{"text": "جزئیات اتنشن ترنسفورمر توی رکوردهای ما چیه؟", "label": "rag"}
+{"text": "I don't need docs for this, just chatting", "label": "chat"}
+{"text": "just call me Neda", "label": "chat"}
+{"text": "nice to meet you, I'm Hossein Baderan", "label": "chat"}
+{"text": "اسمم علی ست", "label": "chat"}
+{"text": "find Yasin's profile in the database", "label": "rag"}
+{"text": "سلام، اسم من امیر است", "label": "chat"}
+{"text": "رضا کیه؟ توی رکوردها پیداش کن", "label": "rag"}
+{"text": "خلاصه‌ی سند مربوط به ایندکس پستگرس رو بگو", "label": "rag"}
+{"text": "can you repeat that please?", "label": "chat"}
+{"text": "look up the onboarding process in the knowledge base", "label": "rag"}
+{"text": "find Kian's profile in the database", "label": "rag"}
+{"text": "یاسین هستم، چطوری؟", "label": "chat"}
+{"text": "سلام، من یاسین هستم", "label": "chat"}
+{"text": "find David's profile in the database", "label": "rag"}
+{"text": "what are the details of vector databases in our records?", "label": "rag"}
+{"text": "معماری اتنشن ترنسفورمر رو لازم دارم", "label": "rag"}
+{"text": "what does the manual say about Helm?", "label": "rag"}
+{"text": "طبق فایل آپلود شده هلم چیه؟", "label": "rag"}
+{"text": "explain Kubernetes using the reference material", "label": "rag"}
+{"text": "توی نالج بیس دنبال مدل ANPR بگرد", "label": "rag"}
+{"text": "hi, I'm Amir", "label": "chat"}
+{"text": "explain vector databases using the reference material", "label": "rag"}
+{"text": "مشخصات فنی هلم رو بیار", "label": "rag"}
+{"text": "yeah I think so too", "label": "chat"}
+{"text": "what does the manual say about the pricing plan?", "label": "rag"}
+{"text": "Neda here, how's it going", "label": "chat"}
+{"text": "find the section that covers the pricing plan", "label": "rag"}
+{"text": "find Reza's profile in the database", "label": "rag"}
+{"text": "مستندات ما درباره مینا چی گفته؟", "label": "rag"}
+{"text": "hello, my name is Alice", "label": "chat"}
+{"text": "از روی اسناد درباره هلم چه می‌دانی؟", "label": "rag"}
+{"text": "پروفایل یاسین رو توی دیتابیس پیدا کن", "label": "rag"}
+{"text": "اسمم زهرا ست", "label": "chat"}
+{"text": "just call me Kian", "label": "chat"}
+{"text": "سلام، من رضا هستم", "label": "chat"}
+{"text": "what do our documents say about Neda?", "label": "rag"}
+{"text": "John is not a rag", "label": "chat"}
+{"text": "not a rag", "label": "chat"}
+{"text": "توی نالج بیس دنبال پایپ‌لاین رگ بگرد", "label": "rag"}
+{"text": "nice to meet you, I'm Mina", "label": "chat"}
+{"text": "my name is Hossein Baderan", "label": "chat"}
+{"text": "what are the details of MCP protocol in our records?", "label": "rag"}
+{"text": "طبق فایل آپلود شده شبکه داکر چیه؟", "label": "rag"}
+{"text": "just call me Maryam", "label": "chat"}
+{"text": "راهنما درباره راهنمای دیپلوی چی گفته؟", "label": "rag"}
+{"text": "سارا فقط اسمه، موضوع نیست", "label": "chat"}
+{"text": "summarize the document about the deployment guide", "label": "rag"}
+{"text": "what do our documents say about Hossein Baderan?", "label": "rag"}
+{"text": "آره موافقم", "label": "chat"}
+{"text": "find the section that covers Terraform", "label": "rag"}
+{"text": "گزارش درباره ترافرم چی نوشته؟", "label": "rag"}
+{"text": "search for Yasin in the employee records", "label": "rag"}
+{"text": "pull up the specs for Terraform", "label": "rag"}
+{"text": "what's up", "label": "chat"}
+{"text": "how are you today?", "label": "chat"}
+{"text": "سلام، اسم من یاسین است", "label": "chat"}
+{"text": "سلام، من امیر هستم", "label": "chat"}
+{"text": "my name is Reza", "label": "chat"}
+{"text": "طبق مستندات ما دیتابیس برداری رو توضیح بده", "label": "rag"}
+{"text": "hi, I'm Amir Hossein", "label": "chat"}
+{"text": "search for Maryam in the employee records", "label": "rag"}
+{"text": "Amir is my name, not a topic", "label": "chat"}
+{"text": "Maryam is my name, not a topic", "label": "chat"}
+{"text": "طبق فایل آپلود شده مدل ANPR چیه؟", "label": "rag"}
+{"text": "ممنون، خیلی کمک کرد", "label": "chat"}
+{"text": "خوب کار می‌کنی", "label": "chat"}
+{"text": "توی رکورد کارمندا دنبال ندا بگرد", "label": "rag"}
+{"text": "sure, go ahead", "label": "chat"}
+{"text": "pull up the specs for Kubernetes", "label": "rag"}
+{"text": "search for Mina in the employee records", "label": "rag"}
+{"text": "علی هستم، چطوری؟", "label": "chat"}
+{"text": "ندا فقط اسمه، موضوع نیست", "label": "chat"}
+{"text": "روز خوبی داشته باشی، چطور پیش می‌ره؟", "label": "chat"}
+{"text": "who is Reza? look them up in our records", "label": "rag"}
+{"text": "بخشی که درباره اتنشن ترنسفورمر صحبت کرده رو پیدا کن", "label": "rag"}
+{"text": "میشه خلاصه‌تر بگی؟", "label": "chat"}
+{"text": "find the section that covers the onboarding process", "label": "rag"}
+{"text": "explain Helm using the reference material", "label": "rag"}
+{"text": "رضا هستم، چطوری؟", "label": "chat"}
+{"text": "nice to meet you, I'm David", "label": "chat"}
+{"text": "Neda is my name, not a topic", "label": "chat"}
+{"text": "based on our documentation, explain RAG pipelines", "label": "rag"}
+{"text": "sounds good, thank you", "label": "chat"}
+{"text": "what are the details of the onboarding process in our records?", "label": "rag"}
+{"text": "summarize the document about Helm", "label": "rag"}
+{"text": "hi, I'm Reza", "label": "chat"}
+{"text": "my name is Yasin", "label": "chat"}
+{"text": "امیر فقط اسمه، موضوع نیست", "label": "chat"}
+{"text": "فعلا خداحافظ", "label": "chat"}
+{"text": "Amir is not a rag", "label": "chat"}
+{"text": "Amir here, how's it going", "label": "chat"}
+{"text": "just call me Reza", "label": "chat"}
+{"text": "you're doing great", "label": "chat"}
+{"text": "توی نالج بیس دنبال دیتابیس برداری بگرد", "label": "rag"}
+{"text": "توی نالج بیس دنبال هلم بگرد", "label": "rag"}
+{"text": "Amir Hossein is my name, not a topic", "label": "chat"}
+{"text": "گزارش درباره پروتکل MCP چی نوشته؟", "label": "rag"}
+{"text": "can you be more concise next time?", "label": "chat"}
+{"text": "بخشی که درباره پلن قیمت‌گذاری صحبت کرده رو پیدا کن", "label": "rag"}
+{"text": "جزئیات هلم توی رکوردهای ما چیه؟", "label": "rag"}
+{"text": "my name is Amir", "label": "chat"}
+{"text": "search the documents for MCP protocol", "label": "rag"}
+{"text": "صبح بخیر", "label": "chat"}
+{"text": "search for Reza in the employee records", "label": "rag"}
+{"text": "از روی اسناد درباره ترافرم چه می‌دانی؟", "label": "rag"}
+{"text": "can you find information about the ANPR model?", "label": "rag"}
+{"text": "راهنما درباره شبکه داکر چی گفته؟", "label": "rag"}
+{"text": "good morning!", "label": "chat"}
+{"text": "who is Amir? look them up in our records", "label": "rag"}
+{"text": "hello, my name is Sara", "label": "chat"}
+{"text": "what are the details of Docker networking in our records?", "label": "rag"}
+{"text": "میشه اطلاعات ایندکس پستگرس رو پیدا کنی؟", "label": "rag"}
+{"text": "پروفایل سارا رو توی دیتابیس پیدا کن", "label": "rag"}
+{"text": "Mina here, how's it going", "label": "chat"}
+{"text": "سارا کیه؟ توی رکوردها پیداش کن", "label": "rag"}
+{"text": "Alice is my name, not a topic", "label": "chat"}
+{"text": "روز خوبی داشته باشی", "label": "chat"}
+{"text": "Mina is not a rag", "label": "chat"}
+{"text": "what does the manual say about RAG pipelines?", "label": "rag"}
+{"text": "اسمم سارا ست", "label": "chat"}
+{"text": "Mina is mentioned in the file, what does it say?", "label": "rag"}
+{"text": "کیان کیه؟ توی رکوردها پیداش کن", "label": "rag"}
+{"text": "Hossein Baderan is not a rag", "label": "chat"}
+{"text": "مستندات ما درباره سارا چی گفته؟", "label": "rag"}
+{"text": "ولش کن مهم نیست", "label": "chat"}
+{"text": "نه قبول ندارم راستش", "label": "chat"}
+{"text": "summarize the document about PostgreSQL indexing", "label": "rag"}
+{"text": "sorry, I meant something else", "label": "chat"}
+{"text": "according to the uploaded file, what is the deployment guide?", "label": "rag"}
+{"text": "گزارش درباره پایپ‌لاین رگ چی نوشته؟", "label": "rag"}
+{"text": "I'm feeling a bit tired today", "label": "chat"}
+{"text": "نکته‌ی خوبی بود", "label": "chat"}
+{"text": "یاسین فقط اسمه، موضوع نیست", "label": "chat"}

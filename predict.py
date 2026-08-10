@@ -8,9 +8,6 @@ from intent_classifier.predictor import IntentPredictor
 
 logger = get_logger("intent.predict")
 
-CHECKPOINT_DIR = Path("checkpoints/intent")
-TRAIN_PATH = Path("data/intent/train.jsonl")
-
 
 def main():
     config = IntentConfig()
@@ -24,12 +21,12 @@ def main():
     logger.info("Starting intent predictor")
 
     tokenizer = IntentTokenizer()
-    tokenizer.build_vocab_from_file(TRAIN_PATH)
+    tokenizer.build_vocab_from_file(IntentConfig.TRAIN_PATH)
 
     predictor = IntentPredictor(
         tokenizer=tokenizer,
         config=config,
-        checkpoint_dir=CHECKPOINT_DIR,
+        checkpoint_dir=IntentConfig.CHECKPOINT_DIR,
     )
 
     print("Intent Classifier Predictor")

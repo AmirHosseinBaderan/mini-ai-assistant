@@ -27,6 +27,8 @@ class IntentConfig:
     checkpoint_dir: Path = field(
         default_factory=lambda: Path("checkpoints/intent")
     )
+    CHECKPOINT_DIR = Path("checkpoints/intent")
+    TRAIN_PATH = Path("data/intent/train.jsonl")
 
     tensorboard_log_dir: Path = field(
         default_factory=lambda: Path("logs/intent")

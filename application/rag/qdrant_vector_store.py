@@ -13,14 +13,14 @@ class QdrantVectorStore(VectorStore):
             self,
             collection_name: str,
             vector_size: int,
-            host: str | None = None,
+            host: str = "",
             port: int = 6333,
     ):
         self.collection_name = collection_name
         host = host or os.getenv(
-            "QDRANT_HOST",
-            "localhost",
+            "QDRANT_HOST"
         )
+        print(host)
 
         self.client = QdrantClient(
             host=host,

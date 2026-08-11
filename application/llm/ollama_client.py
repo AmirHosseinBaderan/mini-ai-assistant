@@ -58,24 +58,22 @@ class OllamaClient(LLMClient):
             model=self.model,
             messages=messages,
             tools=tools,
+            stream=False,
         )
-
-        message = response["message"]
 
         tool_calls = []
 
-        for tool_call in message.get(
-                "tool_calls",
-                [],
-        ):
+        for tool_call in response.message.tool_calls or []:
             tool_calls.append(
                 ToolCall(
-                    name=tool_call["function"]["name"],
-                    arguments=tool_call["function"]["arguments"],
+                    name=tool_call.function.name,
+                    arguments=dict(
+                        tool_call.function.arguments
+                    ),
                 )
             )
 
         return LLMResponse(
-            content=message.get("content"),
+            content=response.message.content,
             tool_calls=tool_calls or None,
         )

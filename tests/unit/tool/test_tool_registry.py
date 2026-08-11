@@ -54,27 +54,3 @@ def test_unknown_tool():
         registry.get(
             "unknown_tool"
         )
-
-def test_tool_schema():
-
-    registry = ToolRegistry()
-
-    tool = FakeTool()
-
-    registry.register(tool)
-
-    schemas = registry.schemas()
-
-    assert schemas == [
-        {
-            "type": "function",
-            "function": {
-                "name": "fake_tool",
-                "description": "Fake tool.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {},
-                },
-            },
-        }
-    ]

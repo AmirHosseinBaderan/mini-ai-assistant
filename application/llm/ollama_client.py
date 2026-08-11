@@ -4,6 +4,7 @@ from typing import Iterator
 from ollama import Client
 
 from application.llm.client import LLMClient
+from application.llm.response import LLMResponse, ToolCall
 
 
 class OllamaClient(LLMClient):
@@ -46,3 +47,35 @@ class OllamaClient(LLMClient):
         )
 
         return response["embeddings"][0]
+
+    def chat(
+            self,
+            messages: list[dict[str, str]],
+            tools: list[dict],
+    ) -> LLMResponse:
+
+        response = self.client.chat(
+            model=self.model,
+            messages=messages,
+            tools=tools,
+        )
+
+        message = response["message"]
+
+        tool_calls = []
+
+        for tool_call in message.get(
+                "tool_calls",
+                [],
+        ):
+            tool_calls.append(
+                ToolCall(
+                    name=tool_call["function"]["name"],
+                    arguments=tool_call["function"]["arguments"],
+                )
+            )
+
+        return LLMResponse(
+            content=message.get("content"),
+            tool_calls=tool_calls or None,
+        )

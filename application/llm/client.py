@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Iterator
 
+from application.llm.response import LLMResponse
+
 
 class LLMClient(ABC):
 
@@ -12,5 +14,16 @@ class LLMClient(ABC):
         pass
 
     @abstractmethod
-    def embed(self,text)-> list[float]:
+    def chat(
+        self,
+        messages: list[dict[str, str]],
+        tools: list[dict],
+    ) -> LLMResponse:
+        pass
+
+    @abstractmethod
+    def embed(
+        self,
+        text: str,
+    ) -> list[float]:
         pass

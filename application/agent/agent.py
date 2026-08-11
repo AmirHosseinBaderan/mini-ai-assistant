@@ -1,3 +1,4 @@
+import json
 from typing import Iterator
 
 from application.llm.client import LLMClient
@@ -62,7 +63,10 @@ class Agent:
                 messages.append(
                     LLMMessage(
                         role="tool",
-                        content=str(result),
+                        content=json.dumps(
+                            result.content,
+                            ensure_ascii=False,
+                        ),
                         tool_name=tool_call.name,
                     )
                 )

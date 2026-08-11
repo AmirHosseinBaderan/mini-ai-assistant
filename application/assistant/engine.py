@@ -1,18 +1,19 @@
 from typing import Iterator
 
-from application.router.router import Router
+from application.agent.agent import Agent
 
 
 class AssistantEngine:
 
     def __init__(
         self,
-        chat_engine,
+        agent: Agent,
     ):
-        self.chat_engine = chat_engine
+        self.agent = agent
 
     def stream(
         self,
         text: str,
     ) -> Iterator[str]:
-        yield from self.chat_engine.stream(text)
+
+        yield from self.agent.stream(text)

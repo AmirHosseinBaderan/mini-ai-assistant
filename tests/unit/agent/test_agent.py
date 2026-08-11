@@ -6,6 +6,7 @@ from application.agent.agent import Agent
 from application.llm.response import LLMResponse, ToolCall
 from application.tools.base import Tool
 from application.tools.registry import ToolRegistry
+from application.tools.result import ToolResult
 
 
 class FakeTool(Tool):
@@ -31,13 +32,14 @@ class FakeTool(Tool):
         }
 
     def execute(
-        self,
-        **kwargs: Any,
-    ) -> Any:
-
-        return {
-            "result": f"Tool result for: {kwargs['query']}"
-        }
+            self,
+            **kwargs: Any,
+    ) -> ToolResult:
+        return ToolResult(
+            content={
+                "result": f"Tool result for: {kwargs['query']}"
+            }
+        )
 
 
 class FakeLLM:
@@ -139,8 +141,7 @@ def test_agent_executes_tool():
     assert second_messages[-1].role == "tool"
 
     assert second_messages[-1].content == (
-        "{'result': "
-        "'Tool result for: Python'}"
+        '{"result": "Tool result for: Python"}'
     )
 
     assert second_messages[-1].tool_name == (

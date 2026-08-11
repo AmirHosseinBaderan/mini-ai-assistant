@@ -7,14 +7,15 @@ from application.rag.retriever import Retriever
 from application.tools.knowledge_search import KnowledgeSearchTool
 from application.tools.registry import ToolRegistry
 
+from application.llm.message import LLMMessage
 from dotenv import find_dotenv, load_dotenv
-
+import json
+from application.llm.response import ToolCall
 
 load_dotenv(
     find_dotenv(),
     verbose=True,
 )
-
 
 def test_real_ollama_tool_calling():
 

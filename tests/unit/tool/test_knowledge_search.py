@@ -61,7 +61,7 @@ def test_execute_returns_search_results():
         query="What is Python?",
     )
 
-    assert result == [
+    assert result.content == [
         {
             "content": "Python is a programming language.",
             "score": 0.91,

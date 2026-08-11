@@ -2,6 +2,7 @@ from unittest.mock import Mock
 
 from application.agent.agent import Agent
 from application.assistant.engine import AssistantEngine
+from application.chat.history import ConversationHistory
 from application.llm.response import LLMResponse, ToolCall
 from application.rag.chunk import Chunk
 from application.rag.retriever import Retriever
@@ -14,6 +15,7 @@ class FakeLLM:
     def __init__(self):
 
         self.calls = 0
+        self._last_response = None
 
     def chat(
         self,
@@ -25,7 +27,7 @@ class FakeLLM:
 
         if self.calls == 1:
 
-            return LLMResponse(
+            self._last_response = LLMResponse(
                 tool_calls=[
                     ToolCall(
                         name="knowledge_search",
@@ -36,12 +38,23 @@ class FakeLLM:
                 ]
             )
 
-        return LLMResponse(
+            return self._last_response
+
+        self._last_response = LLMResponse(
             content=(
                 "Python is a programming "
                 "language."
             )
         )
+
+        return self._last_response
+
+    def stream(
+        self,
+        messages,
+    ):
+        if self._last_response and self._last_response.content:
+            yield self._last_response.content
 
 
 def test_assistant_executes_knowledge_tool():
@@ -81,6 +94,7 @@ def test_assistant_executes_knowledge_tool():
 
     assistant = AssistantEngine(
         agent=agent,
+        history=ConversationHistory(),
     )
 
     result = "".join(

@@ -33,7 +33,9 @@ class Agent:
             if not response.has_tool_calls:
 
                 if response.content:
-                    yield response.content
+                    yield from self.llm_client.stream(
+                        messages
+                    )
 
                 return
 

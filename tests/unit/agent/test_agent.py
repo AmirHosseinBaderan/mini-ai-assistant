@@ -51,6 +51,7 @@ class FakeLLM:
     ):
         self.responses = responses
         self.calls = []
+        self._last_response = None
 
     def chat(
             self,
@@ -64,7 +65,15 @@ class FakeLLM:
             }
         )
 
-        return self.responses.pop(0)
+        self._last_response = self.responses.pop(0)
+        return self._last_response
+
+    def stream(
+            self,
+            messages,
+    ):
+        if self._last_response and self._last_response.content:
+            yield self._last_response.content
 
 
 def test_agent_returns_direct_answer():

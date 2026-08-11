@@ -1,43 +1,24 @@
+from application.agent.agent import Agent
+from application.assistant.engine import AssistantEngine
 from application.llm.ollama_client import OllamaClient
-
-from application.rag.chunker import Chunker
-from application.rag.context_builder import ContextBuilder
-from application.rag.engine import RAGEngine
-from application.rag.indexer import Indexer
-from application.rag.knowledge_base import KnowledgeBase
-from application.rag.loader import DocumentLoader
-from application.rag.ollama_embedding import (
-    OllamaEmbeddingProvider,
-)
-from application.rag.qdrant_vector_store import (
-    QdrantVectorStore,
-)
+from application.rag.ollama_embedding import OllamaEmbeddingProvider
+from application.rag.qdrant_vector_store import QdrantVectorStore
 from application.rag.retriever import Retriever
+from application.tools.knowledge_search import KnowledgeSearchTool
+from application.tools.registry import ToolRegistry
 
 
-def create_llm_client():
-    return OllamaClient()
+def create_assistant() -> AssistantEngine:
 
+    llm_client = OllamaClient()
 
-def create_rag_components():
-
-    llm_client = create_llm_client()
-
-    embedding_provider = (
-        OllamaEmbeddingProvider(
-            client=llm_client,
-        )
-    )
-
-    vector_size = len(
-        embedding_provider.embed(
-            "initialization"
-        )
+    embedding_provider = OllamaEmbeddingProvider(
+        client=llm_client,
     )
 
     vector_store = QdrantVectorStore(
-        collection_name="mini_ai_assistant",
-        vector_size=vector_size,
+        collection_name="mini_chat_collection",
+        vector_size=4096,
     )
 
     retriever = Retriever(
@@ -45,30 +26,21 @@ def create_rag_components():
         vector_store=vector_store,
     )
 
-    context_builder = ContextBuilder()
-
-    rag_engine = RAGEngine(
+    knowledge_search_tool = KnowledgeSearchTool(
         retriever=retriever,
-        context_builder=context_builder,
+    )
+
+    tool_registry = ToolRegistry()
+
+    tool_registry.register(
+        knowledge_search_tool,
+    )
+
+    agent = Agent(
         llm_client=llm_client,
+        tool_registry=tool_registry,
     )
 
-    indexer = Indexer(
-        embedding_provider=embedding_provider,
-        vector_store=vector_store,
+    return AssistantEngine(
+        agent=agent,
     )
-
-    knowledge_base = KnowledgeBase(
-        loader=DocumentLoader(),
-        chunker=Chunker(
-            chunk_size=500,
-            chunk_overlap=50,
-        ),
-        indexer=indexer,
-    )
-
-    return {
-        "llm_client": llm_client,
-        "rag_engine": rag_engine,
-        "knowledge_base": knowledge_base,
-    }

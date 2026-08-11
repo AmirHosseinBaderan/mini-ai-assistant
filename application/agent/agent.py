@@ -1,5 +1,6 @@
 import json
 from collections.abc import Iterator
+from typing import Callable
 
 from application.llm.client import LLMClient
 from application.llm.message import LLMMessage
@@ -12,7 +13,7 @@ class Agent:
         self,
         llm_client: LLMClient,
         tool_registry: ToolRegistry,
-        on_tool_call=None,
+        on_tool_call: Callable[[str], None] | None = None,
     ):
         self.llm_client = llm_client
         self.tool_registry = tool_registry
@@ -35,9 +36,7 @@ class Agent:
             if not response.has_tool_calls:
 
                 if response.content:
-                    yield from self.llm_client.stream(
-                        messages
-                    )
+                    yield response.content
 
                 return
 

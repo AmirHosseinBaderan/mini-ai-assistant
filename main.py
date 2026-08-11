@@ -24,17 +24,21 @@ load_dotenv(
 )
 
 
-def build_assistant() -> AssistantEngine:
+KNOWLEDGE_COLLECTION = "mini_knowledge"
+VECTOR_SIZE = 4096
 
-    llm_client = OllamaClient()
+
+def build_assistant(
+    llm_client: OllamaClient,
+) -> AssistantEngine:
 
     embedding_provider = OllamaEmbeddingProvider(
         client=llm_client,
     )
 
     vector_store = QdrantVectorStore(
-        collection_name="mini_assistant",
-        vector_size=4096,
+        collection_name=KNOWLEDGE_COLLECTION,
+        vector_size=VECTOR_SIZE,
     )
 
     retriever = Retriever(
@@ -65,17 +69,17 @@ def build_assistant() -> AssistantEngine:
     )
 
 
-def build_knowledge_base() -> KnowledgeBase:
-
-    llm_client = OllamaClient()
+def build_knowledge_base(
+    llm_client: OllamaClient,
+) -> KnowledgeBase:
 
     embedding_provider = OllamaEmbeddingProvider(
         client=llm_client,
     )
 
     vector_store = QdrantVectorStore(
-        collection_name="mini_knowledge",
-        vector_size=4096,
+        collection_name=KNOWLEDGE_COLLECTION,
+        vector_size=VECTOR_SIZE,
     )
 
     indexer = Indexer(
@@ -94,6 +98,7 @@ def build_knowledge_base() -> KnowledgeBase:
 
 
 def show_menu() -> None:
+
     print()
     print("=" * 40)
     print("  Mini AI Assistant")
@@ -106,8 +111,15 @@ def show_menu() -> None:
 
 def main() -> None:
 
-    assistant = build_assistant()
-    knowledge_base = build_knowledge_base()
+    llm_client = OllamaClient()
+
+    assistant = build_assistant(
+        llm_client=llm_client,
+    )
+
+    knowledge_base = build_knowledge_base(
+        llm_client=llm_client,
+    )
 
     chat_cli = ChatCLI(
         engine=assistant,
@@ -118,23 +130,36 @@ def main() -> None:
     )
 
     while True:
+
         show_menu()
 
-        choice = input("Select> ").strip()
+        choice = input(
+            "Select> "
+        ).strip()
 
-        if choice in {"3", "exit", "quit"}:
+        if choice in {
+            "3",
+            "exit",
+            "quit",
+        }:
             print("Goodbye!")
             break
 
         if choice == "1" or choice.lower() == "chat":
+
             chat_cli.run()
+
             continue
 
         if choice == "2" or choice.lower() == "knowledge":
+
             knowledge_cli.run()
+
             continue
 
-        print("Unknown option. Use 1, 2, or 3.")
+        print(
+            "Unknown option. Use 1, 2, or 3."
+        )
 
 
 if __name__ == "__main__":

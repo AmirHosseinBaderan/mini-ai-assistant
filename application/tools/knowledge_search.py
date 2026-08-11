@@ -32,8 +32,11 @@ class KnowledgeSearchTool(Tool):
                 "query": {
                     "type": "string",
                     "description": (
-                        "The query to search "
-                        "in the knowledge base."
+                        "Search internal documents, technical specs, and stored knowledge "
+                        "to answer questions that require specific facts, data, or "
+                        "documentation you don't already have from the conversation. "
+                        "Do NOT use for casual conversation, greetings, or general "
+                        "reasoning that doesn't need external facts."
                     ),
                 },
                 "top_k": {

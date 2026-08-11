@@ -12,9 +12,11 @@ class Agent:
         self,
         llm_client: LLMClient,
         tool_registry: ToolRegistry,
+        on_tool_call=None,
     ):
         self.llm_client = llm_client
         self.tool_registry = tool_registry
+        self.on_tool_call = on_tool_call
 
     def stream(
         self,
@@ -48,6 +50,11 @@ class Agent:
             )
 
             for tool_call in response.tool_calls:
+
+                if self.on_tool_call:
+                    self.on_tool_call(
+                        tool_call.name
+                    )
 
                 tool = self.tool_registry.get(
                     tool_call.name

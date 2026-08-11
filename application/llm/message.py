@@ -2,7 +2,8 @@ from dataclasses import dataclass
 from typing import Any
 
 @dataclass
-class Message:
+class LLMMessage:
+
     role: str
     content: str = ""
     tool_calls: list[Any] | None = None

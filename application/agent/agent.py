@@ -1,6 +1,5 @@
-from typing import Any
-
 from application.llm.client import LLMClient
+from application.llm.message import LLMMessage
 from application.tools.registry import ToolRegistry
 
 class Agent:
@@ -18,29 +17,29 @@ class Agent:
         query: str,
     ) -> str:
 
-        messages: list[dict[str, Any]] = [
-            {
-                "role": "user",
-                "content": query,
-            }
+        messages = [
+            LLMMessage(
+                role="user",
+                content=query,
+            )
         ]
 
         while True:
 
             response = self.llm_client.chat(
                 messages=messages,
-                tools=self.tool_registry.schemas(),
+                tools=self.tool_registry.llm_tools(),
             )
 
             if not response.has_tool_calls:
                 return response.content or ""
 
             messages.append(
-                {
-                    "role": "assistant",
-                    "content": response.content or "",
-                    "tool_calls": response.tool_calls,
-                }
+                LLMMessage(
+                    role="assistant",
+                    content=response.content or "",
+                    tool_calls=response.tool_calls,
+                )
             )
 
             for tool_call in response.tool_calls:
@@ -54,9 +53,9 @@ class Agent:
                 )
 
                 messages.append(
-                    {
-                        "role": "tool",
-                        "content": str(result),
-                        "tool_name": tool_call.name,
-                    }
+                    LLMMessage(
+                        role="tool",
+                        content=str(result),
+                        tool_name=tool_call.name,
+                    )
                 )

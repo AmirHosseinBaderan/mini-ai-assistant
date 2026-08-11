@@ -1,125 +1,121 @@
-from dataclasses import dataclass
+from unittest.mock import Mock
 
 from application.assistant.engine import AssistantEngine
+from application.chat.history import ConversationHistory
 
 
-@dataclass
-class FakeRouteResult:
-    label: str
-    confidence: float
-    accepted: bool
+def test_assistant_engine_stores_user_and_assistant_messages():
 
+    agent = Mock()
 
-class FakeRouter:
-
-    def __init__(self, result):
-        self.result = result
-
-    def route(self, text):
-        return self.result
-
-
-class FakeChatEngine:
-
-    def stream(self, text):
-        yield "chat:"
-        yield text
-
-
-class FakeRAGEngine:
-
-    def stream(self, text):
-        yield "rag:"
-        yield text
-
-
-def test_chat_route():
-
-    router = FakeRouter(
-        FakeRouteResult(
-            label="chat",
-            confidence=0.95,
-            accepted=True,
-        )
+    agent.stream.return_value = iter(
+        [
+            "Hello",
+            " Amir",
+        ]
     )
 
+    history = ConversationHistory()
+
     engine = AssistantEngine(
-        router=router,
-        chat_engine=FakeChatEngine(),
-        rag_engine=FakeRAGEngine(),
+        agent=agent,
+        history=history,
     )
 
     result = "".join(
-        engine.stream("hello")
+        engine.stream("Hi")
     )
 
-    assert result == "chat:hello"
+    assert result == "Hello Amir"
+
+    messages = history.get_messages()
+
+    assert len(messages) == 2
+
+    assert messages[0].role == "user"
+    assert messages[0].content == "Hi"
+
+    assert messages[1].role == "assistant"
+    assert messages[1].content == "Hello Amir"
 
 
-def test_rag_route():
+def test_assistant_engine_passes_history_to_agent():
 
-    router = FakeRouter(
-        FakeRouteResult(
-            label="rag",
-            confidence=0.94,
-            accepted=True,
-        )
+    agent = Mock()
+
+    agent.stream.return_value = iter(
+        ["Amir"]
     )
+
+    history = ConversationHistory()
 
     engine = AssistantEngine(
-        router=router,
-        chat_engine=FakeChatEngine(),
-        rag_engine=FakeRAGEngine(),
+        agent=agent,
+        history=history,
     )
 
-    result = "".join(
-        engine.stream("what is python?")
+    list(
+        engine.stream("My name is Amir")
     )
 
-    assert result == "rag:what is python?"
+    agent.stream.assert_called_once()
+
+    messages = agent.stream.call_args.args[0]
+
+    assert len(messages) == 1
+
+    assert messages[0].role == "user"
+    assert messages[0].content == "My name is Amir"
 
 
-def test_low_confidence_falls_back_to_chat():
+def test_assistant_engine_preserves_previous_history():
 
-    router = FakeRouter(
-        FakeRouteResult(
-            label="rag",
-            confidence=0.51,
-            accepted=False,
-        )
-    )
+    agent = Mock()
+
+    agent.stream.side_effect = [
+        iter(["Nice to meet you."]),
+        iter(["Your name is Amir."]),
+    ]
+
+    history = ConversationHistory()
 
     engine = AssistantEngine(
-        router=router,
-        chat_engine=FakeChatEngine(),
-        rag_engine=FakeRAGEngine(),
+        agent=agent,
+        history=history,
     )
 
-    result = "".join(
-        engine.stream("ambiguous question")
+    first_result = "".join(
+        engine.stream("My name is Amir")
     )
 
-    assert result == "chat:ambiguous question"
-
-
-def test_unknown_route_raises():
-
-    router = FakeRouter(
-        FakeRouteResult(
-            label="unknown",
-            confidence=0.99,
-            accepted=True,
-        )
+    second_result = "".join(
+        engine.stream("What is my name?")
     )
 
-    engine = AssistantEngine(
-        router=router,
-        chat_engine=FakeChatEngine(),
-        rag_engine=FakeRAGEngine(),
+    assert first_result == "Nice to meet you."
+
+    assert second_result == "Your name is Amir."
+
+    assert agent.stream.call_count == 2
+
+    second_messages = (
+        agent.stream.call_args_list[1]
+        .args[0]
     )
 
-    try:
-        list(engine.stream("test"))
-        assert False, "Expected ValueError"
-    except ValueError as exc:
-        assert "Unknown route label" in str(exc)
+    assert len(second_messages) == 3
+
+    assert second_messages[0].role == "user"
+    assert second_messages[0].content == (
+        "My name is Amir"
+    )
+
+    assert second_messages[1].role == "assistant"
+    assert second_messages[1].content == (
+        "Nice to meet you."
+    )
+
+    assert second_messages[2].role == "user"
+    assert second_messages[2].content == (
+        "What is my name?"
+    )

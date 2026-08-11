@@ -1,5 +1,5 @@
 import json
-from typing import Iterator
+from collections.abc import Iterator
 
 from application.llm.client import LLMClient
 from application.llm.message import LLMMessage
@@ -18,15 +18,10 @@ class Agent:
 
     def stream(
         self,
-        query: str,
+        messages: list[LLMMessage],
     ) -> Iterator[str]:
 
-        messages = [
-            LLMMessage(
-                role="user",
-                content=query,
-            )
-        ]
+        messages = messages.copy()
 
         while True:
 

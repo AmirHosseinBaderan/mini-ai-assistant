@@ -3,6 +3,7 @@ from typing import Any
 import pytest
 
 from application.agent.agent import Agent
+from application.llm.message import LLMMessage
 from application.llm.response import LLMResponse, ToolCall
 from application.tools.base import Tool
 from application.tools.registry import ToolRegistry
@@ -45,18 +46,17 @@ class FakeTool(Tool):
 class FakeLLM:
 
     def __init__(
-        self,
-        responses: list[LLMResponse],
+            self,
+            responses: list[LLMResponse],
     ):
         self.responses = responses
         self.calls = []
 
     def chat(
-        self,
-        messages,
-        tools,
+            self,
+            messages,
+            tools,
     ):
-
         self.calls.append(
             {
                 "messages": messages,
@@ -68,7 +68,6 @@ class FakeLLM:
 
 
 def test_agent_returns_direct_answer():
-
     llm = FakeLLM(
         responses=[
             LLMResponse(
@@ -85,7 +84,14 @@ def test_agent_returns_direct_answer():
     )
 
     result = "".join(
-        agent.stream("Hello")
+        agent.stream(
+            [
+                LLMMessage(
+                    role="user",
+                    content="Hello",
+                )
+            ]
+        )
     )
 
     assert result == "Hello!"
@@ -94,7 +100,6 @@ def test_agent_returns_direct_answer():
 
 
 def test_agent_executes_tool():
-
     llm = FakeLLM(
         responses=[
             LLMResponse(
@@ -126,7 +131,12 @@ def test_agent_executes_tool():
 
     result = "".join(
         agent.stream(
-            "Tell me about Python."
+            [
+                LLMMessage(
+                    role="user",
+                    content="Hello",
+                )
+            ]
         )
     )
 
@@ -150,7 +160,6 @@ def test_agent_executes_tool():
 
 
 def test_agent_raises_for_unknown_tool():
-
     llm = FakeLLM(
         responses=[
             LLMResponse(
@@ -174,13 +183,17 @@ def test_agent_raises_for_unknown_tool():
     with pytest.raises(KeyError, match="Tool not found"):
         list(
             agent.stream(
-                "Use the unknown tool."
+                [
+                    LLMMessage(
+                        role="user",
+                        content="Hello",
+                    )
+                ]
             )
         )
 
 
 def test_agent_executes_multiple_tool_calls():
-
     llm = FakeLLM(
         responses=[
             LLMResponse(
@@ -218,7 +231,12 @@ def test_agent_executes_multiple_tool_calls():
 
     result = "".join(
         agent.stream(
-            "Tell me about Python and Django."
+            [
+                LLMMessage(
+                    role="user",
+                    content="Hello",
+                )
+            ]
         )
     )
 

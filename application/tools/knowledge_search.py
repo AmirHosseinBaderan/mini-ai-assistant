@@ -3,6 +3,7 @@ from typing import Any
 from application.rag.retriever import Retriever
 from application.tools.base import Tool
 
+
 class KnowledgeSearchTool(Tool):
 
     def __init__(

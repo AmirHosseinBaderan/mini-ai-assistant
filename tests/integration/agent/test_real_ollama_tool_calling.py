@@ -21,7 +21,7 @@ def test_real_ollama_tool_calling():
     llm_client = OllamaClient()
 
     retriever = Mock(
-        spec=Retriever
+        spec=Retriever,
     )
 
     retriever.retrieve.return_value = [
@@ -46,16 +46,15 @@ def test_real_ollama_tool_calling():
     tool_registry = ToolRegistry()
 
     tool_registry.register(
-        knowledge_tool
+        knowledge_tool,
     )
 
     tool_calls = []
 
-    def on_tool_call(tool_name: str):
-
-        tool_calls.append(
-            tool_name
-        )
+    def on_tool_call(
+        tool_name: str,
+    ) -> None:
+        tool_calls.append(tool_name)
 
     agent = Agent(
         llm_client=llm_client,
@@ -91,28 +90,29 @@ def test_real_ollama_tool_calling():
         retriever.retrieve.call_args_list
     )
 
-    assert result.strip()
+    # The model must call the knowledge search tool.
+    assert "knowledge_search" in tool_calls
 
-    if tool_calls:
+    # The tool must execute.
+    retriever.retrieve.assert_called()
 
-        assert (
-            "knowledge_search"
-            in tool_calls
-        )
+    call = retriever.retrieve.call_args
 
-        retriever.retrieve.assert_called()
+    query = call.args[0]
 
-        call = (
-            retriever
-            .retrieve
-            .call_args
-        )
+    assert isinstance(
+        query,
+        str,
+    )
 
-        query = call.args[0]
+    assert query.strip()
 
+    # The final text response is optional.
+    # If the model produces text, validate it.
+    if result.strip():
         assert isinstance(
-            query,
+            result,
             str,
         )
 
-        assert query.strip()
+        assert "python" in result.lower()

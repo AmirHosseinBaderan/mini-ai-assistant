@@ -1,6 +1,9 @@
+from typing import Iterator
+
 from application.llm.client import LLMClient
 from application.llm.message import LLMMessage
 from application.tools.registry import ToolRegistry
+
 
 class Agent:
 
@@ -12,10 +15,10 @@ class Agent:
         self.llm_client = llm_client
         self.tool_registry = tool_registry
 
-    def run(
+    def stream(
         self,
         query: str,
-    ) -> str:
+    ) -> Iterator[str]:
 
         messages = [
             LLMMessage(
@@ -32,7 +35,11 @@ class Agent:
             )
 
             if not response.has_tool_calls:
-                return response.content or ""
+
+                if response.content:
+                    yield response.content
+
+                return
 
             messages.append(
                 LLMMessage(

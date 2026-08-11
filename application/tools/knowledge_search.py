@@ -2,6 +2,7 @@ from typing import Any
 
 from application.rag.retriever import Retriever
 from application.tools.base import Tool
+from application.tools.result import ToolResult
 
 
 class KnowledgeSearchTool(Tool):
@@ -49,7 +50,7 @@ class KnowledgeSearchTool(Tool):
     def execute(
         self,
         **kwargs: Any,
-    ) -> list[dict[str, Any]]:
+    ) -> ToolResult:
 
         query = kwargs.get("query")
 
@@ -68,7 +69,7 @@ class KnowledgeSearchTool(Tool):
             top_k=top_k,
         )
 
-        return [
+        content = [
             {
                 "content": chunk.content,
                 "score": score,
@@ -76,3 +77,7 @@ class KnowledgeSearchTool(Tool):
             }
             for chunk, score in results
         ]
+
+        return ToolResult(
+            content=content,
+        )

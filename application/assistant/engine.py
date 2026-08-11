@@ -2,6 +2,7 @@ from collections.abc import Iterator
 
 from application.agent.agent import Agent
 from application.chat.history import ConversationHistory
+from application.llm.message import LLMMessage
 
 
 class AssistantEngine:
@@ -9,10 +10,10 @@ class AssistantEngine:
     def __init__(
         self,
         agent: Agent,
-        history: ConversationHistory | None = None,
+        history: ConversationHistory,
     ):
         self.agent = agent
-        self.history = history or ConversationHistory()
+        self.history = history
 
     def stream(
         self,
@@ -21,16 +22,14 @@ class AssistantEngine:
 
         self.history.add_user(text)
 
+        messages = self.history.get_messages()
+
         response = []
 
-        for chunk in self.agent.stream(
-            self.history.get_messages()
-        ):
+        for chunk in self.agent.stream(messages):
             response.append(chunk)
             yield chunk
 
-        assistant_message = "".join(response)
-
         self.history.add_assistant(
-            assistant_message
+            "".join(response)
         )

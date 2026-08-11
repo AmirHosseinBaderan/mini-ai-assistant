@@ -30,7 +30,10 @@ class ConversationHistory:
             )
         )
 
-    def get_messages(self) -> list[LLMMessage]:
+    def get_messages(
+        self,
+    ) -> list[LLMMessage]:
+
         return self._messages.copy()
 
     def clear(self) -> None:

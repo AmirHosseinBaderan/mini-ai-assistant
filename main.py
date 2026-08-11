@@ -1,20 +1,16 @@
+from dotenv import find_dotenv, load_dotenv
+
 from application.agent.agent import Agent
 from application.assistant.engine import AssistantEngine
 from application.chat.history import ConversationHistory
 from application.llm.ollama_client import OllamaClient
-from application.rag.ollama_embedding import (
-    OllamaEmbeddingProvider,
-)
-from application.rag.qdrant_vector_store import (
-    QdrantVectorStore,
-)
+from application.rag.ollama_embedding import OllamaEmbeddingProvider
+from application.rag.qdrant_vector_store import QdrantVectorStore
 from application.rag.retriever import Retriever
-from application.tools.knowledge_search import (
-    KnowledgeSearchTool,
-)
+from application.tools.knowledge_search import KnowledgeSearchTool
 from application.tools.registry import ToolRegistry
+
 from cli.chat.cli import ChatCLI
-from dotenv import find_dotenv, load_dotenv
 
 
 load_dotenv(
@@ -23,7 +19,7 @@ load_dotenv(
 )
 
 
-def main():
+def build_assistant() -> AssistantEngine:
 
     llm_client = OllamaClient()
 
@@ -32,7 +28,7 @@ def main():
     )
 
     vector_store = QdrantVectorStore(
-        collection_name="mini_chat_collection",
+        collection_name="mini_assistant",
         vector_size=4096,
     )
 
@@ -41,14 +37,14 @@ def main():
         vector_store=vector_store,
     )
 
-    knowledge_tool = KnowledgeSearchTool(
+    knowledge_search = KnowledgeSearchTool(
         retriever=retriever,
     )
 
     tool_registry = ToolRegistry()
 
     tool_registry.register(
-        knowledge_tool,
+        knowledge_search,
     )
 
     agent = Agent(
@@ -56,13 +52,20 @@ def main():
         tool_registry=tool_registry,
     )
 
-    assistant_engine = AssistantEngine(
+    history = ConversationHistory()
+
+    return AssistantEngine(
         agent=agent,
-        history=ConversationHistory(),
+        history=history,
     )
 
+
+def main() -> None:
+
+    assistant = build_assistant()
+
     cli = ChatCLI(
-        engine=assistant_engine,
+        engine=assistant,
     )
 
     cli.run()

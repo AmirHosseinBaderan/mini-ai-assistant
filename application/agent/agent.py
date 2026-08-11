@@ -1,9 +1,9 @@
 import json
 from collections.abc import Iterator
-from typing import Callable
 
 from application.llm.client import LLMClient
 from application.llm.message import LLMMessage
+from application.llm.response import ToolCall
 from application.tools.registry import ToolRegistry
 
 
@@ -13,7 +13,7 @@ class Agent:
         self,
         llm_client: LLMClient,
         tool_registry: ToolRegistry,
-        on_tool_call: Callable[[str], None] | None = None,
+        on_tool_call=None,
     ):
         self.llm_client = llm_client
         self.tool_registry = tool_registry
@@ -28,27 +28,49 @@ class Agent:
 
         while True:
 
-            response = self.llm_client.chat(
+            tool_calls = []
+
+            for event in self.llm_client.stream_chat(
                 messages=messages,
                 tools=self.tool_registry.llm_tools(),
-            )
+            ):
 
-            if not response.has_tool_calls:
+                if event.type == "text":
 
-                if response.content:
-                    yield response.content
+                    if event.content:
+                        yield event.content
 
+                    continue
+
+                if event.type == "tool_call":
+
+                    tool_calls.append(
+                        ToolCall(
+                            name=event.tool_name,
+                            arguments=(
+                                event.tool_arguments
+                                or {}
+                            ),
+                        )
+                    )
+
+                    continue
+
+                if event.type == "done":
+                    break
+
+            if not tool_calls:
                 return
 
             messages.append(
                 LLMMessage(
                     role="assistant",
-                    content=response.content or "",
-                    tool_calls=response.tool_calls,
+                    content="",
+                    tool_calls=tool_calls,
                 )
             )
 
-            for tool_call in response.tool_calls:
+            for tool_call in tool_calls:
 
                 if self.on_tool_call:
                     self.on_tool_call(

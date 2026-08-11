@@ -1,5 +1,5 @@
 import os
-from typing import Any, Iterator
+from typing import Any
 
 from ollama import Client
 
@@ -8,13 +8,18 @@ from application.llm.message import LLMMessage
 from application.llm.response import LLMResponse, ToolCall
 from application.llm.tool import LLMTool
 
+from collections.abc import Iterator
+
+from application.llm.stream_event import LLMStreamEvent
+
+
 class OllamaClient(LLMClient):
 
     def __init__(
-        self,
-        host: str | None = None,
-        model: str | None = None,
-        embedding_model: str | None = None,
+            self,
+            host: str | None = None,
+            model: str | None = None,
+            embedding_model: str | None = None,
     ):
         self.host = host or os.getenv(
             "OLLAMA_HOST",
@@ -36,8 +41,8 @@ class OllamaClient(LLMClient):
         )
 
     def stream(
-        self,
-        messages: list[LLMMessage],
+            self,
+            messages: list[LLMMessage],
     ) -> Iterator[str]:
 
         response = self.client.chat(
@@ -57,9 +62,9 @@ class OllamaClient(LLMClient):
                 yield content
 
     def chat(
-        self,
-        messages: list[LLMMessage],
-        tools: list[LLMTool],
+            self,
+            messages: list[LLMMessage],
+            tools: list[LLMTool],
     ) -> LLMResponse:
 
         response = self.client.chat(
@@ -80,7 +85,6 @@ class OllamaClient(LLMClient):
         tool_calls = []
 
         for tool_call in message.tool_calls or []:
-
             tool_calls.append(
                 ToolCall(
                     name=tool_call.function.name,
@@ -96,8 +100,8 @@ class OllamaClient(LLMClient):
         )
 
     def embed(
-        self,
-        text: str,
+            self,
+            text: str,
     ) -> list[float]:
 
         response = self.client.embed(
@@ -108,8 +112,8 @@ class OllamaClient(LLMClient):
         return response["embeddings"][0]
 
     def _to_ollama_message(
-        self,
-        message: LLMMessage,
+            self,
+            message: LLMMessage,
     ) -> dict[str, Any]:
 
         result: dict[str, Any] = {
@@ -134,8 +138,8 @@ class OllamaClient(LLMClient):
         return result
 
     def _to_ollama_tool(
-        self,
-        tool: LLMTool,
+            self,
+            tool: LLMTool,
     ) -> dict[str, Any]:
 
         return {
@@ -146,3 +150,56 @@ class OllamaClient(LLMClient):
                 "parameters": tool.parameters,
             },
         }
+
+    def stream_chat(
+            self,
+            messages: list[LLMMessage],
+            tools: list[LLMTool],
+    ) -> Iterator[LLMStreamEvent]:
+
+        response = self.client.chat(
+            model=self.model,
+            messages=[
+                self._to_ollama_message(message)
+                for message in messages
+            ],
+            tools=[
+                self._to_ollama_tool(tool)
+                for tool in tools
+            ],
+            stream=True,
+        )
+
+        for chunk in response:
+
+            message = chunk["message"]
+
+            content = message.get(
+                "content",
+                "",
+            )
+
+            if content:
+                yield LLMStreamEvent(
+                    type="text",
+                    content=content,
+                )
+
+            tool_calls = message.get(
+                "tool_calls"
+            )
+
+            if tool_calls:
+
+                for tool_call in tool_calls:
+                    function = tool_call["function"]
+
+                    yield LLMStreamEvent(
+                        type="tool_call",
+                        tool_name=function["name"],
+                        tool_arguments=function["arguments"],
+                    )
+
+        yield LLMStreamEvent(
+            type="done",
+        )

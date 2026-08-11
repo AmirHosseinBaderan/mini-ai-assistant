@@ -1,16 +1,50 @@
-from typing import Any
+from unittest.mock import Mock
 
 import pytest
 
 from application.agent.agent import Agent
 from application.llm.message import LLMMessage
-from application.llm.response import LLMResponse, ToolCall
+from application.llm.stream_event import LLMStreamEvent
+from application.llm.response import ToolCall
 from application.tools.base import Tool
 from application.tools.registry import ToolRegistry
-from application.tools.result import ToolResult
+
+
+class FakeLLM:
+
+    def __init__(
+        self,
+        responses: list[list[LLMStreamEvent]],
+    ):
+        self.responses = responses
+        self.call_count = 0
+        self.calls = []
+
+    def stream_chat(
+        self,
+        messages,
+        tools,
+    ):
+        self.calls.append(
+            {
+                "messages": messages,
+                "tools": tools,
+            }
+        )
+
+        response = self.responses[
+            self.call_count
+        ]
+
+        self.call_count += 1
+
+        yield from response
 
 
 class FakeTool(Tool):
+
+    def __init__(self):
+        self.execute_calls = []
 
     @property
     def name(self) -> str:
@@ -18,10 +52,10 @@ class FakeTool(Tool):
 
     @property
     def description(self) -> str:
-        return "A fake tool."
+        return "A fake tool for testing."
 
     @property
-    def parameters(self) -> dict[str, Any]:
+    def parameters(self) -> dict:
         return {
             "type": "object",
             "properties": {
@@ -33,55 +67,39 @@ class FakeTool(Tool):
         }
 
     def execute(
-            self,
-            **kwargs: Any,
-    ) -> ToolResult:
-        return ToolResult(
+        self,
+        **kwargs,
+    ):
+        self.execute_calls.append(kwargs)
+
+        return Mock(
             content={
-                "result": f"Tool result for: {kwargs['query']}"
-            }
+                "result": (
+                    f"Tool result for: "
+                    f"{kwargs['query']}"
+                )
+            },
+            success=True,
         )
 
 
-class FakeLLM:
+def test_agent_streams_direct_answer():
 
-    def __init__(
-            self,
-            responses: list[LLMResponse],
-    ):
-        self.responses = responses
-        self.calls = []
-        self._last_response = None
-
-    def chat(
-            self,
-            messages,
-            tools,
-    ):
-        self.calls.append(
-            {
-                "messages": messages,
-                "tools": tools,
-            }
-        )
-
-        self._last_response = self.responses.pop(0)
-        return self._last_response
-
-    def stream(
-            self,
-            messages,
-    ):
-        if self._last_response and self._last_response.content:
-            yield self._last_response.content
-
-
-def test_agent_returns_direct_answer():
     llm = FakeLLM(
         responses=[
-            LLMResponse(
-                content="Hello!",
-            )
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="Hello",
+                ),
+                LLMStreamEvent(
+                    type="text",
+                    content=" Amir",
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ]
         ]
     )
 
@@ -103,35 +121,48 @@ def test_agent_returns_direct_answer():
         )
     )
 
-    assert result == "Hello!"
+    assert result == "Hello Amir"
 
-    assert len(llm.calls) == 1
+    assert llm.call_count == 1
 
 
 def test_agent_executes_tool():
+
     llm = FakeLLM(
         responses=[
-            LLMResponse(
-                tool_calls=[
-                    ToolCall(
-                        name="fake_tool",
-                        arguments={
-                            "query": "Python",
-                        },
-                    )
-                ]
-            ),
-            LLMResponse(
-                content="Python information found.",
-            ),
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="Let me search.",
+                ),
+                LLMStreamEvent(
+                    type="tool_call",
+                    tool_name="fake_tool",
+                    tool_arguments={
+                        "query": "Python",
+                    },
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="Python information found.",
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
         ]
     )
 
+    tool = FakeTool()
+
     registry = ToolRegistry()
 
-    registry.register(
-        FakeTool()
-    )
+    registry.register(tool)
 
     agent = Agent(
         llm_client=llm,
@@ -143,42 +174,42 @@ def test_agent_executes_tool():
             [
                 LLMMessage(
                     role="user",
-                    content="Hello",
+                    content=(
+                        "Tell me about Python."
+                    ),
                 )
             ]
         )
     )
 
     assert result == (
+        "Let me search."
         "Python information found."
     )
 
-    assert len(llm.calls) == 2
+    assert llm.call_count == 2
 
-    second_messages = llm.calls[1]["messages"]
-
-    assert second_messages[-1].role == "tool"
-
-    assert second_messages[-1].content == (
-        '{"result": "Tool result for: Python"}'
-    )
-
-    assert second_messages[-1].tool_name == (
-        "fake_tool"
-    )
+    assert tool.execute_calls == [
+        {
+            "query": "Python",
+        }
+    ]
 
 
 def test_agent_raises_for_unknown_tool():
+
     llm = FakeLLM(
         responses=[
-            LLMResponse(
-                tool_calls=[
-                    ToolCall(
-                        name="unknown_tool",
-                        arguments={},
-                    )
-                ]
-            )
+            [
+                LLMStreamEvent(
+                    type="tool_call",
+                    tool_name="unknown_tool",
+                    tool_arguments={},
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
         ]
     )
 
@@ -189,13 +220,18 @@ def test_agent_raises_for_unknown_tool():
         tool_registry=registry,
     )
 
-    with pytest.raises(KeyError, match="Tool not found"):
+    with pytest.raises(
+        KeyError,
+        match="Tool not found",
+    ):
         list(
             agent.stream(
                 [
                     LLMMessage(
                         role="user",
-                        content="Hello",
+                        content=(
+                            "Use the unknown tool."
+                        ),
                     )
                 ]
             )
@@ -203,35 +239,45 @@ def test_agent_raises_for_unknown_tool():
 
 
 def test_agent_executes_multiple_tool_calls():
+
     llm = FakeLLM(
         responses=[
-            LLMResponse(
-                tool_calls=[
-                    ToolCall(
-                        name="fake_tool",
-                        arguments={
-                            "query": "Python",
-                        },
-                    ),
-                    ToolCall(
-                        name="fake_tool",
-                        arguments={
-                            "query": "Django",
-                        },
-                    ),
-                ]
-            ),
-            LLMResponse(
-                content="Information found.",
-            ),
+            [
+                LLMStreamEvent(
+                    type="tool_call",
+                    tool_name="fake_tool",
+                    tool_arguments={
+                        "query": "Python",
+                    },
+                ),
+                LLMStreamEvent(
+                    type="tool_call",
+                    tool_name="fake_tool",
+                    tool_arguments={
+                        "query": "Django",
+                    },
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="Information found.",
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
         ]
     )
 
+    tool = FakeTool()
+
     registry = ToolRegistry()
 
-    registry.register(
-        FakeTool()
-    )
+    registry.register(tool)
 
     agent = Agent(
         llm_client=llm,
@@ -243,7 +289,10 @@ def test_agent_executes_multiple_tool_calls():
             [
                 LLMMessage(
                     role="user",
-                    content="Hello",
+                    content=(
+                        "Tell me about "
+                        "Python and Django."
+                    ),
                 )
             ]
         )
@@ -251,18 +300,138 @@ def test_agent_executes_multiple_tool_calls():
 
     assert result == "Information found."
 
-    assert len(llm.calls) == 2
+    assert llm.call_count == 2
 
-    second_messages = llm.calls[1]["messages"]
+    assert tool.execute_calls == [
+        {
+            "query": "Python",
+        },
+        {
+            "query": "Django",
+        },
+    ]
 
-    assert len(second_messages) == 4
 
-    assert second_messages[0].role == "user"
+def test_agent_calls_on_tool_call_callback():
 
-    assert second_messages[1].role == "assistant"
+    llm = FakeLLM(
+        responses=[
+            [
+                LLMStreamEvent(
+                    type="tool_call",
+                    tool_name="fake_tool",
+                    tool_arguments={
+                        "query": "Python",
+                    },
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="Done.",
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
+        ]
+    )
 
-    assert second_messages[2].role == "tool"
-    assert second_messages[2].tool_name == "fake_tool"
+    tool = FakeTool()
 
-    assert second_messages[3].role == "tool"
-    assert second_messages[3].tool_name == "fake_tool"
+    registry = ToolRegistry()
+
+    registry.register(tool)
+
+    on_tool_call = Mock()
+
+    agent = Agent(
+        llm_client=llm,
+        tool_registry=registry,
+        on_tool_call=on_tool_call,
+    )
+
+    result = "".join(
+        agent.stream(
+            [
+                LLMMessage(
+                    role="user",
+                    content="Search Python.",
+                )
+            ]
+        )
+    )
+
+    assert result == "Done."
+
+    on_tool_call.assert_called_once_with(
+        "fake_tool"
+    )
+
+
+def test_agent_preserves_streamed_text_before_tool():
+
+    llm = FakeLLM(
+        responses=[
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="I will ",
+                ),
+                LLMStreamEvent(
+                    type="text",
+                    content="search first.",
+                ),
+                LLMStreamEvent(
+                    type="tool_call",
+                    tool_name="fake_tool",
+                    tool_arguments={
+                        "query": "Python",
+                    },
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
+            [
+                LLMStreamEvent(
+                    type="text",
+                    content="Here is the result.",
+                ),
+                LLMStreamEvent(
+                    type="done",
+                ),
+            ],
+        ]
+    )
+
+    tool = FakeTool()
+
+    registry = ToolRegistry()
+
+    registry.register(tool)
+
+    agent = Agent(
+        llm_client=llm,
+        tool_registry=registry,
+    )
+
+    result = "".join(
+        agent.stream(
+            [
+                LLMMessage(
+                    role="user",
+                    content="Search Python.",
+                )
+            ]
+        )
+    )
+
+    assert result == (
+        "I will "
+        "search first."
+        "Here is the result."
+    )

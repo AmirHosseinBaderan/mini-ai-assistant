@@ -1,6 +1,5 @@
+from application.llm.tool import LLMTool
 from application.tools.base import Tool
-from typing import Any
-
 
 class ToolRegistry:
 
@@ -8,8 +7,8 @@ class ToolRegistry:
         self._tools: dict[str, Tool] = {}
 
     def register(
-            self,
-            tool: Tool,
+        self,
+        tool: Tool,
     ) -> None:
 
         if tool.name in self._tools:
@@ -20,8 +19,8 @@ class ToolRegistry:
         self._tools[tool.name] = tool
 
     def get(
-            self,
-            name: str,
+        self,
+        name: str,
     ) -> Tool:
 
         try:
@@ -36,15 +35,12 @@ class ToolRegistry:
             self._tools.values()
         )
 
-    def schemas(self) -> list[dict[str, Any]]:
+    def llm_tools(self) -> list[LLMTool]:
         return [
-            {
-                "type": "function",
-                "function": {
-                    "name": tool.name,
-                    "description": tool.description,
-                    "parameters": tool.parameters,
-                },
-            }
+            LLMTool(
+                name=tool.name,
+                description=tool.description,
+                parameters=tool.parameters,
+            )
             for tool in self._tools.values()
         ]

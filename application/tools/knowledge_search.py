@@ -22,6 +22,29 @@ class KnowledgeSearchTool(Tool):
             "for information relevant to the query."
         )
 
+    @property
+    def parameters(self) -> dict[str, Any]:
+        return {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": (
+                        "The query to search "
+                        "in the knowledge base."
+                    ),
+                },
+                "top_k": {
+                    "type": "integer",
+                    "description": (
+                        "Maximum number of "
+                        "results to return."
+                    ),
+                },
+            },
+            "required": ["query"],
+        }
+
     def execute(
         self,
         **kwargs: Any,

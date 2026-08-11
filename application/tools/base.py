@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-
 class Tool(ABC):
 
     @property
@@ -12,6 +11,11 @@ class Tool(ABC):
     @property
     @abstractmethod
     def description(self) -> str:
+        ...
+
+    @property
+    @abstractmethod
+    def parameters(self) -> dict[str, Any]:
         ...
 
     @abstractmethod

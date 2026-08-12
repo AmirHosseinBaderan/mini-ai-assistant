@@ -5,6 +5,11 @@ import pytest
 
 from application.tools.save_memory import SaveMemoryTool
 
+DEFAULT_MEMORY_PATH = (
+    Path("data/memory")
+    / "memo.json"
+)
+
 
 def create_tool(path=None):
     return SaveMemoryTool(path=path)
@@ -105,6 +110,32 @@ def test_execute_creates_parent_directories(tmp_path):
 
     assert result.success is True
     assert memory_file.exists()
+
+
+def test_execute_creates_file_at_default_path():
+    """Test that the default path creates a real file in data/memory/memo.json"""
+    # Clean up any existing file first
+    if DEFAULT_MEMORY_PATH.exists():
+        DEFAULT_MEMORY_PATH.unlink()
+
+    tool = create_tool()  # uses default path
+
+    result = tool.execute(
+        key="name",
+        value="Amir",
+    )
+
+    assert result.success is True
+
+    with open(DEFAULT_MEMORY_PATH, "r", encoding="utf-8") as f:
+        saved_data = json.load(f)
+
+    assert saved_data == {"name": "Amir"}
+    print(f"\n[memo file created at] {DEFAULT_MEMORY_PATH}")
+    print(f"[memo file content] {saved_data}")
+
+    # Clean up after test
+    DEFAULT_MEMORY_PATH.unlink()
 
 
 def test_execute_requires_key():

@@ -5,6 +5,10 @@ import pytest
 
 from application.tools.load_memory import LoadMemoryTool
 
+DEFAULT_MEMORY_PATH = (
+    Path("data/memory")
+    / "memo.json"
+)
 
 def create_tool(path=None):
     return LoadMemoryTool(path=path)
@@ -135,3 +139,41 @@ def test_execute_handles_io_error(tmp_path):
     finally:
         # Restore permissions so pytest can clean up
         memory_file.chmod(0o644)
+
+
+def test_execute_loads_from_default_path():
+    """Test that load_memory reads from the actual default path"""
+    # Ensure file exists with known content
+    DEFAULT_MEMORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(DEFAULT_MEMORY_PATH, "w", encoding="utf-8") as f:
+        json.dump({"name": "Amir", "language": "Python"}, f)
+
+    tool = create_tool()  # uses default path
+    result = tool.execute()
+
+    assert result.success is True
+    assert result.content == {"name": "Amir", "language": "Python"}
+    print(f"\n[memo file loaded from] {DEFAULT_MEMORY_PATH}")
+    print(f"[memo file content] {result.content}")
+
+    # Clean up
+    DEFAULT_MEMORY_PATH.unlink()
+
+
+def test_execute_loads_specific_key_from_default_path():
+    """Test that load_memory can load a specific key from the default path"""
+    # Ensure file exists with known content
+    DEFAULT_MEMORY_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(DEFAULT_MEMORY_PATH, "w", encoding="utf-8") as f:
+        json.dump({"name": "Amir", "language": "Python"}, f)
+
+    tool = create_tool()  # uses default path
+    result = tool.execute(key="name")
+
+    assert result.success is True
+    assert result.content == "Amir"
+    print(f"\n[memo file loaded from] {DEFAULT_MEMORY_PATH}")
+    print(f"[loaded key='name'] {result.content}")
+
+    # Clean up
+    DEFAULT_MEMORY_PATH.unlink()

@@ -1,5 +1,5 @@
-from unittest.mock import patch, mock_open
 import json
+from pathlib import Path
 
 import pytest
 
@@ -31,82 +31,79 @@ def test_tool_parameters():
 
 def test_default_path_is_memo_json():
     tool = create_tool()
-    assert tool.path.endswith("data/memory/memo.json")
+    assert str(tool.path).endswith("data/memory/memo.json")
 
 
-def test_custom_path():
-    custom_path = "/tmp/custom_memory.json"
-    tool = create_tool(path=custom_path)
+def test_custom_path(tmp_path):
+    custom_path = tmp_path / "custom_memory.json"
+    tool = create_tool(path=str(custom_path))
     assert tool.path == custom_path
 
 
-def test_execute_loads_memory_from_file():
-    tool = create_tool()
+def test_execute_loads_memory_from_file(tmp_path):
+    memory_file = tmp_path / "memo.json"
     memory_content = "User likes Python and coffee"
     memory_data = {"memory": memory_content}
 
-    m = mock_open(
-        read_data=json.dumps(memory_data),
-    )
+    with open(memory_file, "w", encoding="utf-8") as f:
+        json.dump(memory_data, f)
 
-    with patch("application.tools.load_memory.open", m):
-        with patch("application.tools.load_memory.os.path.exists", return_value=True):
-            result = tool.execute()
+    tool = create_tool(path=str(memory_file))
+    result = tool.execute()
 
     assert result.success is True
     assert result.content == memory_content
 
 
-def test_execute_returns_message_when_no_memory_file():
-    tool = create_tool()
+def test_execute_returns_message_when_no_memory_file(tmp_path):
+    memory_file = tmp_path / "nonexistent.json"
+    tool = create_tool(path=str(memory_file))
 
-    with patch("application.tools.load_memory.os.path.exists", return_value=False):
-        result = tool.execute()
+    result = tool.execute()
 
     assert result.success is True
     assert "No memory found" in result.content
 
 
-def test_execute_returns_message_when_memory_empty():
-    tool = create_tool()
+def test_execute_returns_message_when_memory_empty(tmp_path):
+    memory_file = tmp_path / "memo.json"
     memory_data = {"memory": ""}
 
-    m = mock_open(
-        read_data=json.dumps(memory_data),
-    )
+    with open(memory_file, "w", encoding="utf-8") as f:
+        json.dump(memory_data, f)
 
-    with patch("application.tools.load_memory.open", m):
-        with patch("application.tools.load_memory.os.path.exists", return_value=True):
-            result = tool.execute()
+    tool = create_tool(path=str(memory_file))
+    result = tool.execute()
 
     assert result.success is True
     assert "empty" in result.content.lower()
 
 
-def test_execute_handles_invalid_json():
-    tool = create_tool()
+def test_execute_handles_invalid_json(tmp_path):
+    memory_file = tmp_path / "memo.json"
 
-    m = mock_open(
-        read_data="not valid json",
-    )
+    with open(memory_file, "w", encoding="utf-8") as f:
+        f.write("not valid json")
 
-    with patch("application.tools.load_memory.open", m):
-        with patch("application.tools.load_memory.os.path.exists", return_value=True):
-            result = tool.execute()
+    tool = create_tool(path=str(memory_file))
+    result = tool.execute()
 
     assert result.success is False
     assert "Error loading memory" in result.content
 
 
-def test_execute_handles_io_error():
-    tool = create_tool()
+def test_execute_handles_io_error(tmp_path):
+    memory_file = tmp_path / "memo.json"
+    tool = create_tool(path=str(memory_file))
 
-    m = mock_open()
-    m.side_effect = IOError("Permission denied")
+    # Make the file unreadable
+    memory_file.write_text("test")
+    memory_file.chmod(0o000)
 
-    with patch("application.tools.load_memory.open", m):
-        with patch("application.tools.load_memory.os.path.exists", return_value=True):
-            result = tool.execute()
-
-    assert result.success is False
-    assert "Error loading memory" in result.content
+    try:
+        result = tool.execute()
+        assert result.success is False
+        assert "Error loading memory" in result.content
+    finally:
+        # Restore permissions so pytest can clean up
+        memory_file.chmod(0o644)

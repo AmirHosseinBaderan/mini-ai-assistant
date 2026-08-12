@@ -24,9 +24,10 @@ class SaveMemoryTool(Tool):
     @property
     def description(self) -> str:
         return (
-            "Save important details to persistent memory storage. "
+            "Save a key-value pair to persistent memory storage. "
             "Use this to remember user preferences, personal information, "
             "chat context, or any details that should persist across sessions. "
+            "Example: save_memory(key='name', value='Amir'). "
             "The saved memory can be retrieved later using load_memory."
         )
 
@@ -35,37 +36,59 @@ class SaveMemoryTool(Tool):
         return {
             "type": "object",
             "properties": {
-                "details": {
+                "key": {
                     "type": "string",
                     "description": (
-                        "The details to save in memory. "
-                        "Can be any text, facts, user preferences, "
-                        "or important information to remember."
+                        "The key to store the value under. "
+                        "For example: 'name', 'language', 'preference'."
+                    ),
+                },
+                "value": {
+                    "type": "string",
+                    "description": (
+                        "The value to store. "
+                        "For example: 'Amir', 'Python', 'dark mode'."
                     ),
                 },
             },
-            "required": ["details"],
+            "required": ["key", "value"],
         }
 
     def execute(
             self,
             **kwargs: Any,
     ) -> ToolResult:
-        details = kwargs.get("details")
+        key = kwargs.get("key")
+        value = kwargs.get("value")
 
-        if not isinstance(details, str) or not details.strip():
+        if not isinstance(key, str) or not key.strip():
             raise ValueError(
-                "details is required and must be a non-empty string"
+                "key is required and must be a non-empty string"
             )
 
-        memory_data = {"memory": details.strip()}
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError(
+                "value is required and must be a non-empty string"
+            )
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Load existing memory if file exists
+        memory_data = {}
+        if self.path.exists():
+            try:
+                with open(self.path, "r", encoding="utf-8") as f:
+                    memory_data = json.load(f)
+            except (json.JSONDecodeError, IOError):
+                memory_data = {}
+
+        # Update with new key-value pair
+        memory_data[key.strip()] = value.strip()
 
         with open(self.path, "w", encoding="utf-8") as f:
             json.dump(memory_data, f, ensure_ascii=False, indent=2)
 
         return ToolResult(
-            content=f"Successfully saved memory: {details.strip()}",
+            content=f"Successfully saved memory: {key.strip()} = {value.strip()}",
             success=True,
         )

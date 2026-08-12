@@ -5,9 +5,8 @@ import pytest
 
 from application.tools.load_memory import LoadMemoryTool
 
-
 DEFAULT_MEMORY_PATH = (
-    Path("data/memory")
+    Path("./data/memory")
     / "memo.json"
 )
 
@@ -49,7 +48,7 @@ def test_custom_path(tmp_path):
 
 def test_execute_loads_all_memory(tmp_path):
     memory_file = tmp_path / "memo.json"
-    memory_data = {"name": "Amir", "language": "Python"}
+    memory_data = {"name": "Amir"}
 
     with open(memory_file, "w", encoding="utf-8") as f:
         json.dump(memory_data, f)
@@ -57,13 +56,17 @@ def test_execute_loads_all_memory(tmp_path):
     tool = create_tool(path=str(memory_file))
     result = tool.execute()
 
+    assert (
+        result
+    )
+
     assert result.success is True
     assert result.content == memory_data
 
 
 def test_execute_loads_specific_key(tmp_path):
     memory_file = tmp_path / "memo.json"
-    memory_data = {"name": "Amir", "language": "Python"}
+    memory_data = {"name": "Amir"}
 
     with open(memory_file, "w", encoding="utf-8") as f:
         json.dump(memory_data, f)
@@ -158,9 +161,6 @@ def test_execute_loads_from_default_path():
     print(f"\n[memo file loaded from] {DEFAULT_MEMORY_PATH}")
     print(f"[memo file content] {result.content}")
 
-    # Clean up
-    DEFAULT_MEMORY_PATH.unlink()
-
 
 def test_execute_loads_specific_key_from_default_path():
     """Test that load_memory can load a specific key from the default path"""
@@ -176,6 +176,3 @@ def test_execute_loads_specific_key_from_default_path():
     assert result.content == "Amir"
     print(f"\n[memo file loaded from] {DEFAULT_MEMORY_PATH}")
     print(f"[loaded key='name'] {result.content}")
-
-    # Clean up
-    DEFAULT_MEMORY_PATH.unlink()

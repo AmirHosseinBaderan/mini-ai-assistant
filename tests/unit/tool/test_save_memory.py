@@ -6,7 +6,7 @@ import pytest
 from application.tools.save_memory import SaveMemoryTool
 
 DEFAULT_MEMORY_PATH = (
-    Path("data/memory")
+    Path("./data/memory")
     / "memo.json"
 )
 
@@ -54,7 +54,7 @@ def test_execute_saves_key_value_to_file(tmp_path):
 
     result = tool.execute(
         key="name",
-        value="Amir",
+        value="Test Name",
     )
 
     assert result.success is True
@@ -64,7 +64,7 @@ def test_execute_saves_key_value_to_file(tmp_path):
     with open(memory_file, "r", encoding="utf-8") as f:
         saved_data = json.load(f)
 
-    assert saved_data == {"name": "Amir"}
+    assert saved_data == {"name": "Test Name"}
 
 
 def test_execute_saves_multiple_key_values(tmp_path):
@@ -72,14 +72,14 @@ def test_execute_saves_multiple_key_values(tmp_path):
     tool = create_tool(path=str(memory_file))
 
     # Save first key-value
-    tool.execute(key="name", value="Amir")
+    tool.execute(key="name", value="Test Name")
     # Save second key-value
     tool.execute(key="language", value="Python")
 
     with open(memory_file, "r", encoding="utf-8") as f:
         saved_data = json.load(f)
 
-    assert saved_data == {"name": "Amir", "language": "Python"}
+    assert saved_data == {"name": "Test Name", "language": "Python"}
 
 
 def test_execute_overwrites_existing_key(tmp_path):
@@ -87,7 +87,7 @@ def test_execute_overwrites_existing_key(tmp_path):
     tool = create_tool(path=str(memory_file))
 
     # Save initial value
-    tool.execute(key="name", value="Amir")
+    tool.execute(key="name", value="Test Name")
     # Overwrite with new value
     result = tool.execute(key="name", value="Ali")
 
@@ -122,7 +122,7 @@ def test_execute_creates_file_at_default_path():
 
     result = tool.execute(
         key="name",
-        value="Amir",
+        value="Test Name",
     )
 
     assert result.success is True
@@ -130,12 +130,9 @@ def test_execute_creates_file_at_default_path():
     with open(DEFAULT_MEMORY_PATH, "r", encoding="utf-8") as f:
         saved_data = json.load(f)
 
-    assert saved_data == {"name": "Amir"}
+    assert saved_data == {"name": "Test Name"}
     print(f"\n[memo file created at] {DEFAULT_MEMORY_PATH}")
     print(f"[memo file content] {saved_data}")
-
-    # Clean up after test
-    DEFAULT_MEMORY_PATH.unlink()
 
 
 def test_execute_requires_key():
@@ -158,7 +155,7 @@ def test_execute_rejects_empty_key():
     with pytest.raises(ValueError):
         tool.execute(
             key="   ",
-            value="Amir",
+            value="Test Name",
         )
 
 
@@ -178,7 +175,7 @@ def test_execute_rejects_non_string_key():
     with pytest.raises(ValueError):
         tool.execute(
             key=123,
-            value="Amir",
+            value="Test Name",
         )
 
 

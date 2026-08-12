@@ -1,3 +1,5 @@
+import asyncio
+
 class ChatCLI:
 
     def __init__(
@@ -63,6 +65,71 @@ class ChatCLI:
                         print(
                             f"\r\033[K"
                             f"Assistant: {token}",
+                            end="",
+                            flush=True,
+                        )
+
+                        self._status_shown = False
+
+                    else:
+
+                        print(
+                            token,
+                            end="",
+                            flush=True,
+                        )
+
+                    self._first_token = False
+
+                    continue
+
+                print(
+                    token,
+                    end="",
+                    flush=True,
+                )
+
+            print()
+
+    async def arun(self):
+
+        while True:
+
+            query = input("You: ").strip()
+
+            if query.lower() in {
+                "exit",
+                "quit",
+                "/exit",
+            }:
+                break
+
+            if not query:
+                continue
+
+            self.engine.agent.on_tool_call = (
+                self._on_tool_call
+            )
+
+            self._first_token = True
+            self._status_shown = False
+
+            print(
+                "Assistant: ",
+                end="",
+                flush=True,
+            )
+
+            async for token in self.engine.astream(
+                    query
+            ):
+
+                if self._first_token:
+
+                    if self._status_shown:
+
+                        print(
+                            f"\r\033[KAssistant: {token}",
                             end="",
                             flush=True,
                         )

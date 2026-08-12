@@ -1,5 +1,5 @@
 from application.mcp import MCPClient
-from application.mcp import MCPTool
+from application.tools.mcp_tool import MCPTool
 
 
 async def discover_tools(

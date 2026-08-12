@@ -6,8 +6,8 @@ import pytest
 from application.tools.load_memory import LoadMemoryTool
 
 
-def create_tool():
-    return LoadMemoryTool()
+def create_tool(path=None):
+    return LoadMemoryTool(path=path)
 
 
 def test_tool_name():
@@ -27,6 +27,17 @@ def test_tool_parameters():
 
     assert parameters["type"] == "object"
     assert parameters["required"] == []
+
+
+def test_default_path_is_memo_json():
+    tool = create_tool()
+    assert tool.path.endswith("data/memory/memo.json")
+
+
+def test_custom_path():
+    custom_path = "/tmp/custom_memory.json"
+    tool = create_tool(path=custom_path)
+    assert tool.path == custom_path
 
 
 def test_execute_loads_memory_from_file():

@@ -6,8 +6,8 @@ import pytest
 from application.tools.save_memory import SaveMemoryTool
 
 
-def create_tool():
-    return SaveMemoryTool()
+def create_tool(path=None):
+    return SaveMemoryTool(path=path)
 
 
 def test_tool_name():
@@ -30,6 +30,17 @@ def test_tool_parameters():
     assert "details" in parameters["required"]
 
 
+def test_default_path_is_memo_json():
+    tool = create_tool()
+    assert tool.path.endswith("data/memory/memo.json")
+
+
+def test_custom_path():
+    custom_path = "/tmp/custom_memory.json"
+    tool = create_tool(path=custom_path)
+    assert tool.path == custom_path
+
+
 def test_execute_saves_memory_to_file():
     tool = create_tool()
     m = mock_open()
@@ -43,19 +54,11 @@ def test_execute_saves_memory_to_file():
 
     assert result.success is True
     assert "Successfully saved memory" in result.content
-    m.assert_called_once()
-
-    # Verify json.dump was called with correct data
-    written_data = None
-    for call_args in m.return_value.write.call_args_list:
-        pass  # json.dump writes directly to file handle
-
-    # Get the file handle from the mock
-    file_handle = m.return_value
-    # json.dump is called, so we check the call
-    assert m.call_args[0][0].endswith("memory.json")
-    assert m.call_args[0][1] == "w"
-    assert m.call_args[1]["encoding"] == "utf-8"
+    m.assert_called_once_with(
+        tool.path,
+        "w",
+        encoding="utf-8",
+    )
 
 
 def test_execute_requires_details():

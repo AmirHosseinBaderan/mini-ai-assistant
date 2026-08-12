@@ -26,6 +26,7 @@ def test_tool_parameters():
     parameters = tool.parameters
 
     assert parameters["type"] == "object"
+    assert "key" in parameters["properties"]
     assert parameters["required"] == []
 
 
@@ -40,10 +41,9 @@ def test_custom_path(tmp_path):
     assert tool.path == custom_path
 
 
-def test_execute_loads_memory_from_file(tmp_path):
+def test_execute_loads_all_memory(tmp_path):
     memory_file = tmp_path / "memo.json"
-    memory_content = "User likes Python and coffee"
-    memory_data = {"memory": memory_content}
+    memory_data = {"name": "Amir", "language": "Python"}
 
     with open(memory_file, "w", encoding="utf-8") as f:
         json.dump(memory_data, f)
@@ -52,7 +52,35 @@ def test_execute_loads_memory_from_file(tmp_path):
     result = tool.execute()
 
     assert result.success is True
-    assert result.content == memory_content
+    assert result.content == memory_data
+
+
+def test_execute_loads_specific_key(tmp_path):
+    memory_file = tmp_path / "memo.json"
+    memory_data = {"name": "Amir", "language": "Python"}
+
+    with open(memory_file, "w", encoding="utf-8") as f:
+        json.dump(memory_data, f)
+
+    tool = create_tool(path=str(memory_file))
+    result = tool.execute(key="name")
+
+    assert result.success is True
+    assert result.content == "Amir"
+
+
+def test_execute_returns_message_when_key_not_found(tmp_path):
+    memory_file = tmp_path / "memo.json"
+    memory_data = {"name": "Amir"}
+
+    with open(memory_file, "w", encoding="utf-8") as f:
+        json.dump(memory_data, f)
+
+    tool = create_tool(path=str(memory_file))
+    result = tool.execute(key="language")
+
+    assert result.success is True
+    assert "not found" in result.content.lower()
 
 
 def test_execute_returns_message_when_no_memory_file(tmp_path):
@@ -67,7 +95,7 @@ def test_execute_returns_message_when_no_memory_file(tmp_path):
 
 def test_execute_returns_message_when_memory_empty(tmp_path):
     memory_file = tmp_path / "memo.json"
-    memory_data = {"memory": ""}
+    memory_data = {}
 
     with open(memory_file, "w", encoding="utf-8") as f:
         json.dump(memory_data, f)

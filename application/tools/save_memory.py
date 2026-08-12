@@ -1,5 +1,5 @@
 import json
-import os
+from pathlib import Path
 from typing import Any
 
 from application.tools.base import Tool
@@ -9,22 +9,13 @@ from application.tools.result import ToolResult
 class SaveMemoryTool(Tool):
 
     def __init__(
-        self,
-        path: str | None = None,
+            self,
+            path: str | None = None,
     ):
         if path is None:
-            self.path = os.path.join(
-                os.path.dirname(
-                    os.path.dirname(
-                        os.path.dirname(__file__)
-                    )
-                ),
-                "data",
-                "memory",
-                "memo.json",
-            )
+            self.path = Path("data/memory") / "memo.json"
         else:
-            self.path = path
+            self.path = Path(path)
 
     @property
     def name(self) -> str:
@@ -57,8 +48,8 @@ class SaveMemoryTool(Tool):
         }
 
     def execute(
-        self,
-        **kwargs: Any,
+            self,
+            **kwargs: Any,
     ) -> ToolResult:
         details = kwargs.get("details")
 
@@ -69,7 +60,7 @@ class SaveMemoryTool(Tool):
 
         memory_data = {"memory": details.strip()}
 
-        os.makedirs(os.path.dirname(self.path), exist_ok=True)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(self.path, "w", encoding="utf-8") as f:
             json.dump(memory_data, f, ensure_ascii=False, indent=2)

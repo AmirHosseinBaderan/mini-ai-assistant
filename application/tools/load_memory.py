@@ -1,5 +1,5 @@
 import json
-import os
+from pathlib import Path
 from typing import Any
 
 from application.tools.base import Tool
@@ -9,22 +9,13 @@ from application.tools.result import ToolResult
 class LoadMemoryTool(Tool):
 
     def __init__(
-        self,
-        path: str | None = None,
+            self,
+            path: str | None = None,
     ):
         if path is None:
-            self.path = os.path.join(
-                os.path.dirname(
-                    os.path.dirname(
-                        os.path.dirname(__file__)
-                    )
-                ),
-                "data",
-                "memory",
-                "memo.json",
-            )
+            self.path = Path("data/memory") / "memo.json"
         else:
-            self.path = path
+            self.path = Path(path)
 
     @property
     def name(self) -> str:
@@ -48,10 +39,10 @@ class LoadMemoryTool(Tool):
         }
 
     def execute(
-        self,
-        **kwargs: Any,
+            self,
+            **kwargs: Any,
     ) -> ToolResult:
-        if not os.path.exists(self.path):
+        if not self.path.exists():
             return ToolResult(
                 content="No memory found. Use save_memory to store details first.",
                 success=True,

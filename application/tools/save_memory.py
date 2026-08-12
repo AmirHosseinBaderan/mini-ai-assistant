@@ -8,6 +8,24 @@ from application.tools.result import ToolResult
 
 class SaveMemoryTool(Tool):
 
+    def __init__(
+        self,
+        path: str | None = None,
+    ):
+        if path is None:
+            self.path = os.path.join(
+                os.path.dirname(
+                    os.path.dirname(
+                        os.path.dirname(__file__)
+                    )
+                ),
+                "data",
+                "memory",
+                "memo.json",
+            )
+        else:
+            self.path = path
+
     @property
     def name(self) -> str:
         return "save_memory"
@@ -49,21 +67,11 @@ class SaveMemoryTool(Tool):
                 "details is required and must be a non-empty string"
             )
 
-        memory_path = os.path.join(
-            os.path.dirname(
-                os.path.dirname(
-                    os.path.dirname(__file__)
-                )
-            ),
-            "data",
-            "memory.json",
-        )
-
         memory_data = {"memory": details.strip()}
 
-        os.makedirs(os.path.dirname(memory_path), exist_ok=True)
+        os.makedirs(os.path.dirname(self.path), exist_ok=True)
 
-        with open(memory_path, "w", encoding="utf-8") as f:
+        with open(self.path, "w", encoding="utf-8") as f:
             json.dump(memory_data, f, ensure_ascii=False, indent=2)
 
         return ToolResult(

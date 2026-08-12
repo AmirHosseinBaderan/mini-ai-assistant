@@ -8,6 +8,24 @@ from application.tools.result import ToolResult
 
 class LoadMemoryTool(Tool):
 
+    def __init__(
+        self,
+        path: str | None = None,
+    ):
+        if path is None:
+            self.path = os.path.join(
+                os.path.dirname(
+                    os.path.dirname(
+                        os.path.dirname(__file__)
+                    )
+                ),
+                "data",
+                "memory",
+                "memo.json",
+            )
+        else:
+            self.path = path
+
     @property
     def name(self) -> str:
         return "load_memory"
@@ -33,24 +51,14 @@ class LoadMemoryTool(Tool):
         self,
         **kwargs: Any,
     ) -> ToolResult:
-        memory_path = os.path.join(
-            os.path.dirname(
-                os.path.dirname(
-                    os.path.dirname(__file__)
-                )
-            ),
-            "data",
-            "memory.json",
-        )
-
-        if not os.path.exists(memory_path):
+        if not os.path.exists(self.path):
             return ToolResult(
                 content="No memory found. Use save_memory to store details first.",
                 success=True,
             )
 
         try:
-            with open(memory_path, "r", encoding="utf-8") as f:
+            with open(self.path, "r", encoding="utf-8") as f:
                 memory_data = json.load(f)
 
             memory_content = memory_data.get("memory", "")

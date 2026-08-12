@@ -5,10 +5,12 @@ import pytest
 
 from application.tools.load_memory import LoadMemoryTool
 
+
 DEFAULT_MEMORY_PATH = (
     Path("data/memory")
     / "memo.json"
 )
+
 
 def create_tool(path=None):
     return LoadMemoryTool(path=path)

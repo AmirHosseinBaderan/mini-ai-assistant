@@ -13,7 +13,7 @@ from application.rag.qdrant_vector_store import QdrantVectorStore
 from application.rag.retriever import Retriever
 from application.tools.knowledge_search import KnowledgeSearchTool
 from application.tools.registry import ToolRegistry
-
+import asyncio
 from cli.chat.cli import ChatCLI
 from cli.knowledge.cli import KnowledgeCLI
 
@@ -146,9 +146,9 @@ def main() -> None:
             break
 
         if choice == "1" or choice.lower() == "chat":
-
-            chat_cli.run()
-
+            asyncio.run(
+                chat_cli.arun()
+            )
             continue
 
         if choice == "2" or choice.lower() == "knowledge":

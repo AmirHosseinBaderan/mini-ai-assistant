@@ -3,11 +3,6 @@ import pytest
 from application.agent.agent import Agent
 from application.assistant.engine import AssistantEngine
 from application.chat.history import ConversationHistory
-from application.llm.message import LLMMessage
-from application.llm.response import (
-    LLMResponse,
-    ToolCall,
-)
 from application.llm.stream_event import LLMStreamEvent
 from application.mcp import MCPClient
 from application.mcp import discover_tools
@@ -97,7 +92,7 @@ async def test_assistant_can_use_mcp_tool():
 
         assert "".join(result) == "30"
 
-        messages = history.messages()
+        messages = history.get_messages()
 
         assert messages[0].role == "user"
         assert messages[0].content == "Calculate 10 + 20"

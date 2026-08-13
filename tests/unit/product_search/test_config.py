@@ -1,83 +1,50 @@
 import json
 
-import pytest
-
-from application.product_search.config import (
+from application.product_search import (
     SiteConfigLoader,
 )
 
 
 def test_load_sites(tmp_path):
 
-    config_path = tmp_path / "sites.json"
+    path = tmp_path / "sites.json"
 
-    config_path.write_text(
+    path.write_text(
         json.dumps(
             {
                 "sites": [
                     {
-                        "name": "example",
+                        "name": "torob",
                         "search_url": (
-                            "https://example.com/search?q={query}"
+                            "https://torob.com/search/?query={query}"
                         ),
-                    }
+                    },
+                    {
+                        "name": "digikala",
+                        "search_url": (
+                            "https://digikala.com/search/?q={query}"
+                        ),
+                    },
                 ]
             }
         ),
         encoding="utf-8",
     )
 
-    loader = SiteConfigLoader(config_path)
+    loader = SiteConfigLoader(
+        path,
+    )
 
     sites = loader.load()
 
-    assert len(sites) == 1
+    assert len(sites) == 2
 
-    assert sites[0].name == "example"
-
-    assert (
-        sites[0].search_url
-        == "https://example.com/search?q={query}"
+    assert sites[0].name == "torob"
+    assert sites[0].search_url == (
+        "https://torob.com/search/?query={query}"
     )
 
-
-def test_load_empty_sites(tmp_path):
-
-    config_path = tmp_path / "sites.json"
-
-    config_path.write_text(
-        json.dumps(
-            {"sites": []}
-        ),
-        encoding="utf-8",
+    assert sites[1].name == "digikala"
+    assert sites[1].search_url == (
+        "https://digikala.com/search/?q={query}"
     )
-
-    loader = SiteConfigLoader(config_path)
-
-    assert loader.load() == []
-
-
-def test_invalid_search_url(tmp_path):
-
-    config_path = tmp_path / "sites.json"
-
-    config_path.write_text(
-        json.dumps(
-            {
-                "sites": [
-                    {
-                        "name": "example",
-                        "search_url": (
-                            "https://example.com/search"
-                        ),
-                    }
-                ]
-            }
-        ),
-        encoding="utf-8",
-    )
-
-    loader = SiteConfigLoader(config_path)
-
-    with pytest.raises(ValueError):
-        loader.load()

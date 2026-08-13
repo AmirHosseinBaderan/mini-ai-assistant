@@ -1,9 +1,6 @@
-from application.product_search import (
-    Product,
-    ProductSearchService,
-    ParserRegistry,
-    SiteConfig,
-)
+from application.product_search.models import Product, SiteConfig
+from application.product_search.parsers.registry import ParserRegistry
+from application.product_search.service import ProductSearchService
 
 
 class ProductSearchEngine:

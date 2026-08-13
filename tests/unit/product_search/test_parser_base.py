@@ -1,6 +1,6 @@
 import pytest
 
-from application.product_search import ParserBase
+from application.product_search.parsers.base import ParserBase
 
 
 def test_parser_base_requires_parse():

@@ -1,4 +1,4 @@
-from application.product_search import ParserBase
+from application.product_search.parsers.base import ParserBase
 
 
 class ParserRegistry:

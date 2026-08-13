@@ -2,13 +2,11 @@ from pathlib import Path
 
 import pytest
 
-from application.product_search import (
-    HttpxFetcher,
-    ParserRegistry,
-    ProductSearchEngine,
-    ProductSearchService,
-    SiteConfigLoader,
-)
+from application.product_search.fetcher import HttpxFetcher
+from application.product_search.parsers.registry import ParserRegistry
+from application.product_search.engine import ProductSearchEngine
+from application.product_search.service import ProductSearchService
+from application.product_search.config import SiteConfigLoader
 from application.product_search.parsers.torob import (
     TorobParser,
 )

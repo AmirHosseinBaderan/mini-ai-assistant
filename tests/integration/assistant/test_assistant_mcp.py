@@ -4,9 +4,9 @@ from application.agent.agent import Agent
 from application.assistant.engine import AssistantEngine
 from application.chat.history import ConversationHistory
 from application.llm.stream_event import LLMStreamEvent
-from application.mcp import MCPClient
-from application.mcp import discover_tools
-from application.mcp import mcp
+from application.mcp.client.client import MCPClient
+from application.mcp.tools import discover_tools
+from application.mcp.server.server import mcp
 from application.tools.registry import ToolRegistry
 
 from dotenv import find_dotenv, load_dotenv

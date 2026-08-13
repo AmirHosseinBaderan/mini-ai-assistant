@@ -1,8 +1,6 @@
 import json
 
-from application.product_search import (
-    SiteConfigLoader,
-)
+from application.product_search.config import SiteConfigLoader
 
 
 def test_load_sites(tmp_path):

@@ -1,6 +1,6 @@
 import pytest
 
-from application.mcp import mcp
+from application.mcp.server.server import mcp
 
 
 @pytest.mark.anyio

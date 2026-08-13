@@ -1,11 +1,11 @@
 import pytest
 
-from application.mcp import ProductSearchTool
+from application.mcp.server.tools.product_search import ProductSearchTool
 from application.mcp.server.server import (
     mcp,
     register_product_search,
 )
-from application.product_search import Product
+from application.product_search.models import Product
 
 
 class FakeEngine:

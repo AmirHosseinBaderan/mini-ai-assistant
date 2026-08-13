@@ -1,4 +1,4 @@
-from application.product_search import Product
+from application.product_search.models import Product
 
 
 class ProductSearchService:

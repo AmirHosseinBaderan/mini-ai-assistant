@@ -1,6 +1,6 @@
 import pytest
 
-from application.mcp import MCPClient
+from application.mcp.client.client import MCPClient
 from application.mcp.server.bootstrap import create_server
 
 

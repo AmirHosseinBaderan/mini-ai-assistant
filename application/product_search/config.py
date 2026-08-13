@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from application.product_search import SiteConfig
+from application.product_search.models import SiteConfig
 
 
 class SiteConfigLoader:

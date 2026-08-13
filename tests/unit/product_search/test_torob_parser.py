@@ -1,6 +1,4 @@
-from application.product_search import (
-    TorobParser,
-)
+from application.product_search.parsers.torob import TorobParser
 
 
 def test_parse_product():

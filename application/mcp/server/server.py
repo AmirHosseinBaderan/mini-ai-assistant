@@ -1,6 +1,6 @@
 from mcp.server import MCPServer
 
-from application.mcp import ProductSearchTool
+from application.mcp.server.tools.product_search import ProductSearchTool
 
 
 mcp = MCPServer(

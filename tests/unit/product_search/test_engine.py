@@ -1,12 +1,9 @@
 import pytest
 
-from application.product_search import (
-    ParserRegistry,
-    Product,
-    ProductSearchEngine,
-    ProductSearchService,
-    SiteConfig,
-)
+from application.product_search.models import Product, SiteConfig
+from application.product_search.parsers.registry import ParserRegistry
+from application.product_search.service import ProductSearchService
+from application.product_search.engine import ProductSearchEngine
 
 
 class FakeParser:

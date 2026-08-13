@@ -2,7 +2,7 @@ import pytest
 
 from mcp import Client
 
-from application.mcp import mcp
+from application.mcp.server.server import mcp
 
 
 @pytest.mark.anyio

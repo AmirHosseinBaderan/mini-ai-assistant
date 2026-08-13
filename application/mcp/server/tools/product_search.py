@@ -1,8 +1,6 @@
 from typing import Any
 
-from application.product_search import (
-    ProductSearchEngine,
-)
+from application.product_search.engine import ProductSearchEngine
 
 
 class ProductSearchTool:

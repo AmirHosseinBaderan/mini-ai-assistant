@@ -57,7 +57,7 @@ class SaveMemoryTool(Tool):
             "required": ["key", "value"],
         }
 
-    def execute(
+    async def execute(
             self,
             **kwargs: Any,
     ) -> ToolResult:

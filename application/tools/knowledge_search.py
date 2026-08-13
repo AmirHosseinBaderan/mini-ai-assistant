@@ -61,7 +61,7 @@ class KnowledgeSearchTool(Tool):
             "required": ["query"],
         }
 
-    def execute(
+    async def execute(
         self,
         **kwargs: Any,
     ) -> ToolResult:

@@ -97,8 +97,8 @@ class Agent:
                 )
 
     async def astream(
-        self,
-        messages: list[LLMMessage],
+            self,
+            messages: list[LLMMessage],
     ) -> AsyncIterator[str]:
 
         messages = messages.copy()
@@ -108,8 +108,8 @@ class Agent:
             tool_calls = []
 
             for event in self.llm_client.stream_chat(
-                messages=messages,
-                tools=self.tool_registry.llm_tools(),
+                    messages=messages,
+                    tools=self.tool_registry.llm_tools(),
             ):
 
                 if event.type == "text":
@@ -120,13 +120,12 @@ class Agent:
                     continue
 
                 if event.type == "tool_call":
-
                     tool_calls.append(
                         ToolCall(
                             name=event.tool_name,
                             arguments=(
-                                event.tool_arguments
-                                or {}
+                                    event.tool_arguments
+                                    or {}
                             ),
                         )
                     )
@@ -158,7 +157,7 @@ class Agent:
                     tool_call.name
                 )
 
-                result = tool.execute(
+                result = await tool.execute(
                     **tool_call.arguments
                 )
 

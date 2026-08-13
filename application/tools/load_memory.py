@@ -9,8 +9,8 @@ from application.tools.result import ToolResult
 class LoadMemoryTool(Tool):
 
     def __init__(
-        self,
-        path: str | None = None,
+            self,
+            path: str | None = None,
     ):
         if path is None:
             self.path = Path("data/memory") / "memo.json"
@@ -48,9 +48,9 @@ class LoadMemoryTool(Tool):
             "required": [],
         }
 
-    def execute(
-        self,
-        **kwargs: Any,
+    async def execute(
+            self,
+            **kwargs: Any,
     ) -> ToolResult:
         key = kwargs.get("key")
 

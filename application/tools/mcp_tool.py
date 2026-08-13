@@ -1,10 +1,11 @@
 from typing import Any
 
 from application.mcp import MCPClient
+from application.tools.base import Tool
 from application.tools.result import ToolResult
 
 
-class MCPTool:
+class MCPTool(Tool):
 
     def __init__(
         self,
@@ -14,16 +15,21 @@ class MCPTool:
         input_schema: dict[str, Any],
     ):
         self.client = client
-        self.name = name
-        self.description = description or ""
-        self.parameters = input_schema
+        self._name = name
+        self._description = description or ""
+        self._parameters = input_schema
 
-    def definition(self) -> dict[str, Any]:
-        return {
-            "name": self.name,
-            "description": self.description,
-            "input_schema": self.parameters,
-        }
+    @property
+    def name(self) -> str:
+        return self._name
+
+    @property
+    def description(self) -> str:
+        return self._description
+
+    @property
+    def parameters(self) -> dict[str, Any]:
+        return self._parameters
 
     async def execute(
         self,

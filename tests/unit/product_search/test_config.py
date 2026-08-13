@@ -18,12 +18,14 @@ def test_load_sites(tmp_path):
                         "search_url": (
                             "https://torob.com/search/?query={query}"
                         ),
+                        "parser": "torob",
                     },
                     {
                         "name": "digikala",
                         "search_url": (
                             "https://digikala.com/search/?q={query}"
                         ),
+                        "parser": "digikala",
                     },
                 ]
             }
@@ -43,8 +45,10 @@ def test_load_sites(tmp_path):
     assert sites[0].search_url == (
         "https://torob.com/search/?query={query}"
     )
+    assert sites[0].parser == "torob"
 
     assert sites[1].name == "digikala"
     assert sites[1].search_url == (
         "https://digikala.com/search/?q={query}"
     )
+    assert sites[1].parser == "digikala"

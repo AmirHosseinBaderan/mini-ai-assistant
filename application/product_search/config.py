@@ -1,9 +1,7 @@
 import json
 from pathlib import Path
 
-from application.product_search.models import (
-    SiteConfig,
-)
+from application.product_search import SiteConfig
 
 
 class SiteConfigLoader:
@@ -27,6 +25,7 @@ class SiteConfigLoader:
             SiteConfig(
                 name=site["name"],
                 search_url=site["search_url"],
+                parser=site["parser"],
             )
             for site in data["sites"]
         ]

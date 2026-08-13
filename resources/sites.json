@@ -1,8 +1,9 @@
 {
-  "sites": [
-    {
-      "name": "torob",
-      "search_url": "https://torob.com/search/?query={query}"
-    }
-  ]
+    "sites": [
+        {
+            "name": "torob",
+            "search_url": "https://torob.com/search/?query={query}",
+            "parser": "torob"
+        }
+    ]
 }

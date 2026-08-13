@@ -25,12 +25,18 @@ class LoadMemoryTool(Tool):
     def description(self) -> str:
         return (
             "Load previously saved memory details from persistent storage. "
-            "Use this to retrieve user preferences, personal information, "
-            "chat context, or any details that were saved using save_memory. "
-            "You can load all memory by omitting the key, or load a specific "
-            "value by providing its key. "
-            "Example: load_memory(key='name') returns 'Amir'. "
-            "Example: load_memory() returns all saved key-value pairs."
+        "ALWAYS call this tool at the start of a conversation, or whenever "
+        "the user refers to something they told you before (e.g. 'what's "
+        "my name?', 'do you remember my preference?', 'what did I tell you "
+        "earlier?'), to check if relevant information was already saved — "
+        "do not rely on chat history alone, since saved memory persists "
+        "across sessions and chat history may not. "
+        "You can load all memory by omitting the key, or load a specific "
+        "value by providing its key. "
+        "Example: load_memory(key='name') returns 'Amir'. "
+        "Example: load_memory() returns all saved key-value pairs. "
+        "If the requested key does not exist, this returns an empty result "
+        "rather than an error — treat that as 'nothing saved yet', not a failure."
         )
 
     @property

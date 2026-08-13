@@ -25,10 +25,13 @@ class SaveMemoryTool(Tool):
     def description(self) -> str:
         return (
             "Save a key-value pair to persistent memory storage. "
-            "Use this to remember user preferences, personal information, "
-            "chat context, or any details that should persist across sessions. "
-            "Example: save_memory(key='name', value='Amir'). "
-            "The saved memory can be retrieved later using load_memory."
+            "ALWAYS call this tool whenever the user shares personal "
+            "information about themselves (their name, preferences, "
+            "language, or any fact they want remembered), even if they "
+            "don't explicitly say 'save' or 'remember' — for example if "
+            "they say 'my name is X' or 'I prefer dark mode', call this "
+            "tool immediately without asking. "
+            "Example: save_memory(key='name', value='Amir')."
         )
 
     @property

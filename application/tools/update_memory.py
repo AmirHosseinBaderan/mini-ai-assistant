@@ -25,8 +25,13 @@ class UpdateMemoryTool(Tool):
     def description(self) -> str:
         return (
             "Update an existing key-value pair in persistent memory storage. "
-            "Use this to modify previously saved user preferences, personal information, "
-            "or any details that were saved using save_memory. "
+            "ALWAYS call this tool whenever the user shares a correction or "
+            "change to something already remembered about them — for example "
+            "if they say 'actually my name is X now', 'change my preference to Y', "
+            "or 'that's wrong, it's actually Z'. Call it immediately without "
+            "asking for confirmation. "
+            "If you are not sure whether the key was previously saved, call "
+            "save_memory instead — it will create the key if missing. "
             "Example: update_memory(key='name', value='Ali'). "
             "Returns an error if the key does not exist."
         )

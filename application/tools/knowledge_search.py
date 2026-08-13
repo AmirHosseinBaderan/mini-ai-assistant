@@ -23,8 +23,16 @@ class KnowledgeSearchTool(Tool):
             "Search internal documents, technical specs, and stored knowledge "
             "to answer questions that require specific facts, data, or "
             "documentation you don't already have from the conversation. "
-            "Do NOT use for casual conversation, greetings, or general "
-            "reasoning that doesn't need external facts."
+            "ALWAYS call this tool when the user asks about a specific topic, "
+            "technical detail, product spec, or documentation that could exist "
+            "in the knowledge base — even if you think you might already know "
+            "the answer, prefer verifying with this tool over guessing. "
+            "Do NOT use for casual conversation, greetings, personal facts "
+            "about the user (use load_memory for those instead), or general "
+            "reasoning that doesn't need external facts. "
+            "If no relevant documents are found, this returns an empty result "
+            "rather than an error — in that case, say you don't have that "
+            "information rather than making something up."
         )
 
     @property

@@ -1,0 +1,19 @@
+Mini AI Assistant is a lightweight, self-hosted agent built in Python, powered by Ollama as its local LLM backend — no cloud APIs required.
+
+It keeps its own persistent memory with three core operations: save, update, and load.
+
+save lets the assistant store new facts, user preferences, and conversation summaries as structured memory records.
+
+update lets it refine or correct existing memories when new information arrives, keeping knowledge fresh and accurate.
+
+load retrieves relevant memories on demand, so the assistant can recall context across sessions and stay personalized.
+
+It exposes and consumes capabilities through MCP (Model Context Protocol), making tool integration clean, standardized, and extensible.
+
+The agent uses MCP to call a growing set of tools — from file operations and web lookups to custom utilities — to act beyond just chatting.
+
+An intelligent agent loop decides when to query memory, invoke tools, or respond directly, chaining steps for complex tasks.
+
+Because everything runs via Ollama, the whole system is private, offline-friendly, and model-swappable (llama, mistral, qwen, etc.).
+
+The result is a modular mini-assistant — part memory, part tools, part agent — that grows smarter the more you use it.

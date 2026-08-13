@@ -1,6 +1,6 @@
 from typing import Any
 
-from application.mcp import MCPClient
+from application.mcp.client.client import MCPClient
 from application.tools.base import Tool
 from application.tools.result import ToolResult
 

@@ -7,7 +7,46 @@ from application.llm.tool import LLMTool
 from application.tools.base import Tool
 from application.tools.registry import ToolRegistry
 from application.tools.result import ToolResult
+from application.tools.mcp_tool import MCPTool
 
+class FakeMCPClient:
+
+    def __init__(self):
+
+        self.calls = []
+
+    async def call_tool(
+        self,
+        name: str,
+        arguments: dict,
+    ):
+
+        self.calls.append(
+            {
+                "name": name,
+                "arguments": arguments,
+            }
+        )
+
+        return FakeMCPResult()
+
+
+class FakeMCPResult:
+
+    is_error = False
+
+    content = [
+        type(
+            "TextContent",
+            (),
+            {
+                "text": (
+                    "iPhone 16 - "
+                    "160000000 تومان"
+                )
+            },
+        )()
+    ]
 
 class FakeTool(Tool):
 
@@ -121,5 +160,69 @@ async def test_agent_mcp_tool_call():
     assert "".join(result) == (
         "قیمت آیفون ۱۶ حدود ۱۶۰ میلیون تومان است."
     )
+
+    assert llm_client.calls == 2
+
+@pytest.mark.anyio
+async def test_agent_mcp_tool_call():
+
+    llm_client = FakeLLMClient()
+
+    mcp_client = FakeMCPClient()
+
+    mcp_tool = MCPTool(
+        client=mcp_client,
+        name="product_search",
+        description="Search products.",
+        input_schema={
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                },
+            },
+            "required": [
+                "query",
+            ],
+        },
+    )
+
+    registry = ToolRegistry()
+
+    registry.register(
+        mcp_tool,
+    )
+
+    agent = Agent(
+        llm_client=llm_client,
+        tool_registry=registry,
+    )
+
+    messages = [
+        LLMMessage(
+            role="user",
+            content="قیمت آیفون ۱۶ چنده؟",
+        )
+    ]
+
+    result = []
+
+    async for chunk in agent.astream(
+        messages,
+    ):
+        result.append(chunk)
+
+    assert "".join(result) == (
+        "قیمت آیفون ۱۶ حدود ۱۶۰ میلیون تومان است."
+    )
+
+    assert mcp_client.calls == [
+        {
+            "name": "product_search",
+            "arguments": {
+                "query": "iphone 16",
+            },
+        }
+    ]
 
     assert llm_client.calls == 2

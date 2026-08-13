@@ -1,6 +1,6 @@
 from mcp.server import MCPServer
 
-from application.mcp import search_products
+from application.mcp import ProductSearchTool
 
 
 mcp = MCPServer(
@@ -9,4 +9,23 @@ mcp = MCPServer(
 )
 
 
-mcp.add_tool(search_products)
+def register_product_search(
+    tool: ProductSearchTool,
+) -> None:
+
+    async def search_products(
+        query: str,
+    ) -> list[dict]:
+
+        return await tool.execute(
+            query=query,
+        )
+
+    mcp.add_tool(
+        search_products,
+        name="product_search",
+        description=(
+            "Search for products and prices "
+            "from configured shopping websites."
+        ),
+    )

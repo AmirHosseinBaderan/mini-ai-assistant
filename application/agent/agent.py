@@ -158,7 +158,7 @@ class Agent:
                     tool_call.name
                 )
 
-                result = await tool.execute(
+                result = tool.execute(
                     **tool_call.arguments
                 )
 

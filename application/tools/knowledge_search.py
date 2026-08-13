@@ -20,8 +20,11 @@ class KnowledgeSearchTool(Tool):
     @property
     def description(self) -> str:
         return (
-            "Search the user's knowledge base "
-            "for information relevant to the query."
+            "Search internal documents, technical specs, and stored knowledge "
+            "to answer questions that require specific facts, data, or "
+            "documentation you don't already have from the conversation. "
+            "Do NOT use for casual conversation, greetings, or general "
+            "reasoning that doesn't need external facts."
         )
 
     @property

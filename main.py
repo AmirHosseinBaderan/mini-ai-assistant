@@ -1,8 +1,4 @@
-from dotenv import find_dotenv, load_dotenv
 
-from application.agent.agent import Agent
-from application.assistant.engine import AssistantEngine
-from application.chat.history import ConversationHistory
 from application.llm.ollama_client import OllamaClient
 from application.rag.chunker import Chunker
 from application.rag.indexer import Indexer
@@ -10,69 +6,25 @@ from application.rag.knowledge_base import KnowledgeBase
 from application.rag.loader import DocumentLoader
 from application.rag.ollama_embedding import OllamaEmbeddingProvider
 from application.rag.qdrant_vector_store import QdrantVectorStore
-from application.rag.retriever import Retriever
-from application.tools.knowledge_search import KnowledgeSearchTool
-from application.tools.registry import ToolRegistry
+from application.bootstrap import create_assistant
 import asyncio
 from cli.chat.cli import ChatCLI
 from cli.knowledge.cli import KnowledgeCLI
 
+from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(
     find_dotenv(),
     verbose=True,
 )
 
-
 KNOWLEDGE_COLLECTION = "mini_knowledge"
 VECTOR_SIZE = 4096
 
 
-def build_assistant(
-    llm_client: OllamaClient,
-) -> AssistantEngine:
-
-    embedding_provider = OllamaEmbeddingProvider(
-        client=llm_client,
-    )
-
-    vector_store = QdrantVectorStore(
-        collection_name=KNOWLEDGE_COLLECTION,
-        vector_size=VECTOR_SIZE,
-    )
-
-    retriever = Retriever(
-        embedding_provider=embedding_provider,
-        vector_store=vector_store,
-    )
-
-    knowledge_search = KnowledgeSearchTool(
-        retriever=retriever,
-    )
-
-    tool_registry = ToolRegistry()
-
-    tool_registry.register(
-        knowledge_search,
-    )
-
-    agent = Agent(
-        llm_client=llm_client,
-        tool_registry=tool_registry,
-    )
-
-    history = ConversationHistory()
-
-    return AssistantEngine(
-        agent=agent,
-        history=history,
-    )
-
-
 def build_knowledge_base(
-    llm_client: OllamaClient,
+        llm_client: OllamaClient,
 ) -> KnowledgeBase:
-
     embedding_provider = OllamaEmbeddingProvider(
         client=llm_client,
     )
@@ -98,7 +50,6 @@ def build_knowledge_base(
 
 
 def show_menu() -> None:
-
     print()
     print("=" * 40)
     print("  Mini AI Assistant")
@@ -110,12 +61,9 @@ def show_menu() -> None:
 
 
 def main() -> None:
-
     llm_client = OllamaClient()
 
-    assistant = build_assistant(
-        llm_client=llm_client,
-    )
+    assistant = create_assistant()
 
     knowledge_base = build_knowledge_base(
         llm_client=llm_client,
@@ -152,7 +100,6 @@ def main() -> None:
             continue
 
         if choice == "2" or choice.lower() == "knowledge":
-
             knowledge_cli.run()
 
             continue

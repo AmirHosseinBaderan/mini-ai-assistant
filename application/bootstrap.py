@@ -1,5 +1,8 @@
+from idlelib.history import History
+
 from application.agent.agent import Agent
 from application.assistant.engine import AssistantEngine
+from application.chat.history import ConversationHistory
 from application.llm.ollama_client import OllamaClient
 from application.rag.ollama_embedding import OllamaEmbeddingProvider
 from application.rag.qdrant_vector_store import QdrantVectorStore
@@ -12,7 +15,6 @@ from application.tools.registry import ToolRegistry
 
 
 def create_assistant() -> AssistantEngine:
-
     llm_client = OllamaClient()
 
     embedding_provider = OllamaEmbeddingProvider(
@@ -62,4 +64,5 @@ def create_assistant() -> AssistantEngine:
 
     return AssistantEngine(
         agent=agent,
+        history=ConversationHistory()
     )

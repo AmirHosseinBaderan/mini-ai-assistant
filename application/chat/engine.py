@@ -18,7 +18,6 @@ class ChatEngine:
         self.history.add_user(user_message)
 
         response = []
-
         try:
             for chunk in self.llm.stream(
                 self.history.get_messages()

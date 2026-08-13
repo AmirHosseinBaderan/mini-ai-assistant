@@ -1,67 +1,70 @@
-from unittest.mock import AsyncMock, Mock
-
 import pytest
 
-from application.product_search.models import SiteConfig
 from application.product_search.service import (
     ProductSearchService,
 )
+
+class FakeFetcher:
+
+    def __init__(self):
+        self.urls = []
+
+    async def fetch(
+        self,
+        url: str,
+    ) -> str:
+
+        self.urls.append(url)
+
+        return "<html>test</html>"
+
+
+class FakeParser:
+
+    def __init__(self):
+        self.html = None
+
+    def parse(
+        self,
+        html: str,
+    ):
+
+        self.html = html
+
+        return [
+            {
+                "name": "iPhone 16",
+                "price": "160000000",
+            }
+        ]
 
 
 @pytest.mark.anyio
 async def test_search():
 
-    config_loader = Mock()
-
-    config_loader.load.return_value = [
-        SiteConfig(
-            name="example",
-            search_url=(
-                "https://example.com/search?q={query}"
-            ),
-        ),
-    ]
-
-    fetcher = Mock()
-
-    fetcher.fetch = AsyncMock(
-        return_value="<html>products</html>",
-    )
+    fetcher = FakeFetcher()
+    parser = FakeParser()
 
     service = ProductSearchService(
-        config_loader=config_loader,
         fetcher=fetcher,
+        parser=parser,
     )
 
     result = await service.search(
-        "laptop",
+        "https://example.com/search",
     )
 
-    fetcher.fetch.assert_awaited_once_with(
-        "https://example.com/search?q=laptop",
+    assert fetcher.urls == [
+        "https://example.com/search"
+    ]
+
+    assert parser.html == (
+        "<html>test</html>"
     )
 
     assert result == [
         {
-            "site": "example",
-            "url": (
-                "https://example.com/search?q=laptop"
-            ),
-            "html": "<html>products</html>",
+            "name": "iPhone 16",
+            "price": "160000000",
         }
     ]
-
-@pytest.mark.anyio
-async def test_search_requires_query():
-
-    config_loader = Mock()
-    fetcher = Mock()
-
-    service = ProductSearchService(
-        config_loader=config_loader,
-        fetcher=fetcher,
-    )
-
-    with pytest.raises(ValueError):
-
-        await service.search("")

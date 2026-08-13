@@ -5,3 +5,4 @@ from .parsers.registry import ParserRegistry
 from .config import SiteConfigLoader
 from .service import ProductSearchService
 from .engine import ProductSearchEngine
+from .fetcher import HttpxFetcher

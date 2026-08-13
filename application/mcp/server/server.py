@@ -1,19 +1,12 @@
 from mcp.server import MCPServer
 
+from application.mcp import search_products
+
 
 mcp = MCPServer(
-    "Mini Assistant MCP"
+    name="Product Search MCP",
+    version="1.0.0",
 )
 
 
-@mcp.tool()
-def add(
-    a: int,
-    b: int,
-) -> int:
-    """Add two numbers."""
-    return a + b
-
-
-if __name__ == "__main__":
-    mcp.run()
+mcp.add_tool(search_products)

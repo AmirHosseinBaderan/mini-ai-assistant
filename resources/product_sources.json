@@ -1,0 +1,7 @@
+[
+  {
+    "name": "example",
+    "url": "https://example.com",
+    "search_url": "https://example.com/search?q={query}"
+  }
+]

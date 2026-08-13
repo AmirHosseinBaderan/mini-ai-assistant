@@ -47,11 +47,11 @@ async def test_search():
 
     service = ProductSearchService(
         fetcher=fetcher,
-        parser=parser,
     )
 
     result = await service.search(
         "https://example.com/search",
+        parser=parser,
     )
 
     assert fetcher.urls == [

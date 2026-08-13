@@ -1,10 +1,10 @@
 import pytest
 
 from application.product_search import (
+    ParserRegistry,
     Product,
     ProductSearchEngine,
     ProductSearchService,
-    ParserRegistry,
     SiteConfig,
 )
 
@@ -26,37 +26,33 @@ class FakeParser:
         ]
 
 
-class FakeFetcher:
-
-    async def fetch(
-        self,
-        url: str,
-    ) -> str:
-
-        return "<html>products</html>"
-
-
 class FakeService:
 
-    def __init__(
-        self,
-        fetcher,
-        parser,
-    ):
-        self.fetcher = fetcher
-        self.parser = parser
+    def __init__(self):
+
         self.calls = []
 
     async def search(
         self,
         url: str,
+        parser,
     ) -> list[Product]:
 
-        self.calls.append(url)
-
-        return self.parser.parse(
-            "<html>products</html>"
+        self.calls.append(
+            {
+                "url": url,
+                "parser": parser,
+            }
         )
+
+        return [
+            Product(
+                name="iPhone 16",
+                price="160000000",
+                url="https://example.com/product",
+                source="torob",
+            )
+        ]
 
 
 @pytest.mark.anyio
@@ -71,12 +67,7 @@ async def test_search():
         parser,
     )
 
-    fetcher = FakeFetcher()
-
-    service = ProductSearchService(
-        fetcher=fetcher,
-        parser=parser,
-    )
+    service = FakeService()
 
     engine = ProductSearchEngine(
         sites=[
@@ -104,3 +95,11 @@ async def test_search():
             source="torob",
         )
     ]
+
+    assert len(service.calls) == 1
+
+    assert service.calls[0]["url"] == (
+        "https://torob.com/search/?query=iphone 16"
+    )
+
+    assert service.calls[0]["parser"] is parser

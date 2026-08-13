@@ -1,8 +1,8 @@
 from application.product_search import (
     Product,
-    SiteConfig,
     ProductSearchService,
     ParserRegistry,
+    SiteConfig,
 )
 
 
@@ -31,17 +31,13 @@ class ProductSearchEngine:
                 site.parser,
             )
 
-            service = ProductSearchService(
-                fetcher=self.search_service.fetcher,
-                parser=parser,
-            )
-
             url = site.search_url.format(
                 query=query,
             )
 
-            results = await service.search(
-                url,
+            results = await self.search_service.search(
+                url=url,
+                parser=parser,
             )
 
             products.extend(

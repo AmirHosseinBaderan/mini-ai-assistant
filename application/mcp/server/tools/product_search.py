@@ -1,24 +1,33 @@
 from typing import Any
 
+from application.product_search import (
+    ProductSearchEngine,
+)
 
-async def search_products(
-    query: str,
-) -> list[dict[str, Any]]:
-    """
-    Search products across configured websites.
 
-    Args:
-        query: Product name or search query.
+class ProductSearchTool:
 
-    Returns:
-        A list of products with name, price, currency,
-        source and url.
-    """
+    def __init__(
+        self,
+        engine: ProductSearchEngine,
+    ):
+        self.engine = engine
 
-    if not query.strip():
-        raise ValueError(
-            "query is required"
+    async def execute(
+        self,
+        query: str,
+    ) -> list[dict[str, Any]]:
+
+        products = await self.engine.search(
+            query,
         )
 
-    # Product search service will be connected here.
-    raise NotImplementedError
+        return [
+            {
+                "name": product.name,
+                "price": product.price,
+                "url": product.url,
+                "source": product.source,
+            }
+            for product in products
+        ]

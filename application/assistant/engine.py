@@ -35,30 +35,18 @@ class AssistantEngine:
         )
 
     async def astream(
-            self,
-            text: str,
+        self,
+        text: str,
     ) -> AsyncIterator[str]:
+
+        self.history.add_user(text)
 
         messages = self.history.get_messages()
 
-        messages.append(
-            LLMMessage(
-                role="user",
-                content=text,
-            )
-        )
-
-        self.history.add_user(
-            content=text
-        )
-
         assistant_chunks = []
 
-        async for chunk in self.agent.astream(
-                messages
-        ):
+        async for chunk in self.agent.astream(messages):
             assistant_chunks.append(chunk)
-
             yield chunk
 
         self.history.add_assistant(

@@ -1,15 +1,8 @@
 {
   "sites": [
     {
-      "name": "example",
-      "search_url": "https://example.com/search?q={query}",
-      "parser": {
-        "type": "css",
-        "item": ".product",
-        "name": ".product-name",
-        "price": ".product-price",
-        "url": "a"
-      }
+      "name": "torob",
+      "search_url": "https://torob.com/search/?query={query}"
     }
   ]
 }

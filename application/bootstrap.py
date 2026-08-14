@@ -3,15 +3,15 @@ from application.assistant.engine import AssistantEngine
 from application.chat.history import ConversationHistory
 from application.llm.ollama_client import OllamaClient
 from application.mcp.client.client import MCPClient
-from application.mcp.tools import discover_tools
 from application.rag.ollama_embedding import OllamaEmbeddingProvider
 from application.rag.qdrant_vector_store import QdrantVectorStore
 from application.rag.retriever import Retriever
+from application.tools.bootstrap import register_mcp_tools
 from application.tools.knowledge_search import KnowledgeSearchTool
 from application.tools.load_memory import LoadMemoryTool
+from application.tools.registry import ToolRegistry
 from application.tools.save_memory import SaveMemoryTool
 from application.tools.update_memory import UpdateMemoryTool
-from application.tools.registry import ToolRegistry
 
 
 async def create_assistant(
@@ -59,15 +59,10 @@ async def create_assistant(
         update_memory_tool,
     )
 
-    mcp_tools = await discover_tools(
-        mcp_client,
+    await register_mcp_tools(
+        registry=tool_registry,
+        clients=[mcp_client],
     )
-
-    for tool in mcp_tools:
-
-        tool_registry.register(
-            tool,
-        )
 
     agent = Agent(
         llm_client=llm_client,

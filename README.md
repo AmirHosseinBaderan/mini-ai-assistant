@@ -9,7 +9,6 @@
    - [2. Application Layer](#2-application-layer)
    - [3. Domain Layer](#3-domain-layer)
    - [4. Infrastructure Layer](#4-infrastructure-layer)
-   - [5. ML/AI Layer](#5-mlai-layer)
 4. [How Layers Work Together](#how-layers-work-together)
 5. [Why Layers Exist](#why-layers-exist)
 6. [Key Design Patterns](#key-design-patterns)
@@ -45,8 +44,8 @@ The project follows a **Layered Architecture** pattern with clear separation of 
 ├─────────────────────────────────────────────────────────────┤
 │                    Application Layer                         │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │  Assistant   │  │    Agent    │  │  Router (Intent)    │  │
-│  │   Engine     │  │   Engine    │  │                     │  │
+│  │  Assistant   │  │    Agent    │  │  Chat Engine        │  │
+│  │   Engine     │  │   Engine    │  │  (Simple Chat)      │  │
 │  └─────────────┘  └─────────────┘  └─────────────────────┘  │
 ├─────────────────────────────────────────────────────────────┤
 │                      Domain Layer                            │
@@ -63,7 +62,6 @@ The project follows a **Layered Architecture** pattern with clear separation of 
 ├─────────────────────────────────────────────────────────────┤
 │                      ML/AI Layer                             │
 │  ┌─────────────────────────────────────────────────────┐    │
-│  │  Intent Classifier (Transformer)                     │    │
 │  │  Embeddings (Ollama)                                 │    │
 │  │  RAG Pipeline (Chunk → Embed → Store → Retrieve)     │    │
 │  └─────────────────────────────────────────────────────┘    │
@@ -175,33 +173,33 @@ class Agent:
 - Makes tool calling transparent to upper layers
 - Provides streaming for better UX
 
-#### 2.3 Router (Intent Classification)
+#### 2.3 Chat Engine (Simple Chat)
 
-**Location:** `application/router/router.py`
+**Location:** `application/chat/engine.py`
 
 **What it does:**
-- Classifies user intent using the ML model
-- Routes messages to appropriate handlers based on confidence
-- Falls back to general chat if confidence is low
+- Provides a simpler streaming interface for direct LLM interaction
+- Manages conversation history for basic chat flows
+- Used by the Knowledge CLI for document indexing interactions
 
 **How it works:**
 ```python
-class Router:
-    def __init__(self, predictor, threshold=0.7):
-        self.predictor = predictor
-        self.threshold = threshold
+class ChatEngine:
+    def __init__(self, llm: LLMClient, history: ConversationHistory | None = None):
+        self.llm = llm
+        self.history = history or ConversationHistory()
     
-    def route(self, message: str):
-        label, confidence = self.predictor.predict(message)
-        if confidence >= self.threshold:
-            return self.handlers[label]
-        return self.handlers["default"]
+    def stream(self, user_message: str) -> Iterator[str]:
+        self.history.add_user(user_message)
+        for chunk in self.llm.stream(self.history.get_messages()):
+            yield chunk
+        self.history.add_assistant("".join(response))
 ```
 
 **Why it exists:**
-- Enables intent-based routing without hardcoding logic
-- Makes the system extensible for new intents
-- Provides confidence-based fallback
+- Provides a lightweight alternative to the full Agent pipeline
+- Enables direct LLM streaming without tool calling
+- Supports the Knowledge CLI for document management
 
 ---
 
@@ -428,17 +426,37 @@ User Query → Embedding → Similarity Search → Context → LLM
 
 ---
 
-### 5. ML/AI Layer
+### 5. ML/AI Components
 
-Contains machine learning models and training infrastructure.
+Contains machine learning components used by the main application.
 
-#### 5.1 Intent Classifier
+#### 5.1 Embeddings
+
+**Location:** `application/rag/ollama_embedding.py`
+
+**What it does:**
+- Generates vector embeddings for text using Ollama
+- Powers the RAG retrieval system
+- Enables semantic similarity search
+
+**Key components:**
+- [`application/rag/ollama_embedding.py`](application/rag/ollama_embedding.py) - Ollama embedding provider
+- [`application/rag/embedding.py`](application/rag/embedding.py) - Embedding provider interface
+
+**Why it exists:**
+- Enables semantic search without external APIs
+- Keeps embeddings local and private
+- Supports dynamic knowledge base updates
+
+#### 5.2 Intent Classifier (Standalone/Branched Application)
 
 **Location:** `intent_classifier/`
 
+**Note:** The intent classifier is a **branched/standalone application** and is **not integrated** into the main chat or agent flow. It exists as a separate module for potential future integration or standalone use.
+
 **What it does:**
 - Custom transformer-based text classification model
-- Classifies user messages into intents (e.g., "search_product", "ask_knowledge", "chat")
+- Classifies user messages into intents
 - Trained on custom dataset with attention mechanism
 
 **Architecture:**
@@ -457,23 +475,9 @@ Input Text → Tokenizer → Embedding → Positional Encoding
 - [`intent_classifier/attention.py`](intent_classifier/attention.py) - Multi-head attention
 
 **Why it exists:**
-- Enables intelligent routing without hardcoded rules
-- Learns from data rather than manual pattern matching
-- Provides confidence scores for fallback handling
-
-#### 5.2 Training Pipeline
-
-**Location:** `train.py`, `predict.py`
-
-**What it does:**
-- Trains the intent classifier on JSONL dataset
-- Saves checkpoints for inference
-- Provides prediction interface
-
-**Why it exists:**
-- Separates training from inference
-- Enables model improvement without code changes
-- Provides reproducible training pipeline
+- Demonstrates custom transformer implementation
+- Provides intent classification capability for future integration
+- Serves as a standalone ML module
 
 ---
 
@@ -494,7 +498,6 @@ User Input (CLI)
     ▼
 ┌─────────────────────────────────────────┐
 │  Application Layer (AssistantEngine)    │
-│  - Routes query via Router              │
 │  - Manages conversation history         │
 │  - Delegates to Agent                   │
 └─────────────────────────────────────────┘
@@ -526,7 +529,6 @@ User Input (CLI)
     ▼
 ┌─────────────────────────────────────────┐
 │  ML/AI Layer                            │
-│  - Intent Classification (if routing)   │
 │  - Embeddings (if RAG)                  │
 │  - LLM Inference (Ollama)               │
 └─────────────────────────────────────────┘
@@ -739,13 +741,7 @@ User sees: "I'm doing well, thank you!"
 User: "Find me a laptop under 20 million"
     │
     ▼
-Router.classify("Find me a laptop under 20 million")
-    │
-    ▼
-IntentClassifier → "search_product" (confidence: 0.92)
-    │
-    ▼
-Agent.stream() with routing
+Agent.stream() with tools
     │
     ▼
 LLM requests tool call: search_products(query="laptop", max_price=20000000)
@@ -783,13 +779,7 @@ Response streamed to user
 User: "What is the return policy?"
     │
     ▼
-Router.classify("What is the return policy?")
-    │
-    ▼
-IntentClassifier → "ask_knowledge" (confidence: 0.88)
-    │
-    ▼
-Agent.stream() with routing
+Agent.stream() with tools
     │
     ▼
 LLM requests tool call: knowledge_search(query="return policy")

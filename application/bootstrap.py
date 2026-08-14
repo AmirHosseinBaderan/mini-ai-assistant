@@ -1,9 +1,9 @@
-from idlelib.history import History
-
 from application.agent.agent import Agent
 from application.assistant.engine import AssistantEngine
 from application.chat.history import ConversationHistory
 from application.llm.ollama_client import OllamaClient
+from application.mcp.client.client import MCPClient
+from application.mcp.tools import discover_tools
 from application.rag.ollama_embedding import OllamaEmbeddingProvider
 from application.rag.qdrant_vector_store import QdrantVectorStore
 from application.rag.retriever import Retriever
@@ -14,8 +14,10 @@ from application.tools.update_memory import UpdateMemoryTool
 from application.tools.registry import ToolRegistry
 
 
-def create_assistant() -> AssistantEngine:
-    llm_client = OllamaClient()
+async def create_assistant(
+    llm_client: OllamaClient,
+    mcp_client: MCPClient,
+) -> AssistantEngine:
 
     embedding_provider = OllamaEmbeddingProvider(
         client=llm_client,
@@ -57,6 +59,16 @@ def create_assistant() -> AssistantEngine:
         update_memory_tool,
     )
 
+    mcp_tools = await discover_tools(
+        mcp_client,
+    )
+
+    for tool in mcp_tools:
+
+        tool_registry.register(
+            tool,
+        )
+
     agent = Agent(
         llm_client=llm_client,
         tool_registry=tool_registry,
@@ -64,5 +76,5 @@ def create_assistant() -> AssistantEngine:
 
     return AssistantEngine(
         agent=agent,
-        history=ConversationHistory()
+        history=ConversationHistory(),
     )

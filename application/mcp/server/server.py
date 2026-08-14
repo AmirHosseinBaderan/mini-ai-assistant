@@ -25,7 +25,8 @@ def register_product_search(
         search_products,
         name="product_search",
         description=(
-            "Search for products and prices "
-            "from configured shopping websites."
+            "Search configured shopping websites for products and prices. "
+            "Returns the top 10 matching products, each including the product "
+            "Use this tool to find products, compare prices, or check "
         ),
     )

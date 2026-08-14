@@ -27,5 +27,5 @@ class ProductSearchTool:
                 "url": product.url,
                 "source": product.source,
             }
-            for product in products
+            for product in products[:10]
         ]

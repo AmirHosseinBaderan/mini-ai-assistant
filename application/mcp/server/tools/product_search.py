@@ -22,14 +22,12 @@ class ProductSearchTool:
             query,
         )
 
-        base_url = self._get_base_url()
-
         return [
             {
                 "name": product.name,
                 "price": product.price,
                 "url": self._normalize_url(
-                    base_url,
+                    product.source,
                     product.url,
                 ),
                 "source": product.source,
@@ -37,25 +35,31 @@ class ProductSearchTool:
             for product in products[:take]
         ]
 
-    def _get_base_url(self) -> str:
-        """Extract base URL from the first site's search URL."""
+    def _get_base_url_for_source(
+        self,
+        source: str,
+    ) -> str:
+        """Extract base URL from the site config matching the given source."""
         sites = getattr(self.engine, "sites", None)
         if sites:
-            search_url = sites[0].search_url
-            # Extract scheme + netloc from search_url
-            # e.g., "https://torob.com/search/?query={query}" -> "https://torob.com"
-            parts = search_url.split("/")
-            return f"{parts[0]}//{parts[2]}"
-        return "https://torob.com"
+            for site in sites:
+                if site.name == source:
+                    # Extract scheme + netloc from search_url
+                    # e.g., "https://torob.com/search/?query={query}" -> "https://torob.com"
+                    parts = site.search_url.split("/")
+                    return f"{parts[0]}//{parts[2]}"
+        return ""
 
     def _normalize_url(
         self,
-        base_url: str,
+        source: str,
         url: str,
     ) -> str:
-        """Normalize URL to absolute, decoded form."""
+        """Normalize URL to absolute, decoded form using the source's base URL."""
         if not url:
             return url
+
+        base_url = self._get_base_url_for_source(source)
 
         # Join base URL with relative path
         absolute_url = urljoin(base_url, url)

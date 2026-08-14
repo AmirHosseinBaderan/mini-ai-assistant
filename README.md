@@ -15,6 +15,7 @@
 6. [Key Design Patterns](#key-design-patterns)
 7. [Data Flow Examples](#data-flow-examples)
 8. [Teaching Notes](#teaching-notes)
+9. [Architecture Diagrams & Class Wiring](./ARCHITECTURE_DIAGRAMS.md)
 
 ---
 
@@ -24,7 +25,6 @@
 
 - **Conversational AI** with streaming responses via Ollama (local LLM)
 - **Retrieval-Augmented Generation (RAG)** for knowledge-based Q&A
-- **Intent Classification** using a custom transformer model for message routing
 - **Tool Calling** with a registry-based tool system
 - **MCP (Model Context Protocol)** integration for external tool servers
 - **Product Search** across multiple e-commerce sites
@@ -246,6 +246,8 @@ class ToolRegistry:
 - [`application/tools/save_memory.py`](application/tools/save_memory.py) - Memory persistence
 - [`application/tools/load_memory.py`](application/tools/load_memory.py) - Memory retrieval
 - [`application/tools/update_memory.py`](application/tools/update_memory.py) - Memory updates
+- [`application/tools/mcp_tool.py`](application/tools/mcp_tool.py) - MCP tool adapter
+- [`application/tools/result.py`](application/tools/result.py) - Tool result wrapper
 
 #### 3.2 Chat History
 
@@ -260,6 +262,20 @@ class ToolRegistry:
 - Maintains context for multi-turn conversations
 - Enables the LLM to reference previous messages
 - Abstracts storage mechanism from the agent
+
+#### 3.3 Chat Engine
+
+**Location:** `application/chat/engine.py`
+
+**What it does:**
+- Provides a simpler streaming interface for direct LLM interaction
+- Manages conversation history for basic chat flows
+- Used by the Knowledge CLI for document indexing interactions
+
+**Why it exists:**
+- Provides a lightweight alternative to the full Agent pipeline
+- Enables direct LLM streaming without tool calling
+- Supports the Knowledge CLI for document management
 
 #### 3.3 Product Search Domain
 
@@ -319,6 +335,7 @@ class OllamaClient(LLMClient):
 - [`application/llm/message.py`](application/llm/message.py) - Message types
 - [`application/llm/response.py`](application/llm/response.py) - Response types
 - [`application/llm/stream_event.py`](application/llm/stream_event.py) - Streaming events
+- [`application/llm/tool.py`](application/llm/tool.py) - LLM tool definition
 
 #### 4.2 RAG (Retrieval-Augmented Generation)
 
@@ -343,6 +360,16 @@ User Query → Embedding → Similarity Search → Context → LLM
 - [`application/rag/chunker.py`](application/rag/chunker.py) - Text chunking
 - [`application/rag/qdrant_vector_store.py`](application/rag/qdrant_vector_store.py) - Qdrant integration
 - [`application/rag/ollama_embedding.py`](application/rag/ollama_embedding.py) - Embedding generation
+- [`application/rag/knowledge_base.py`](application/rag/knowledge_base.py) - Knowledge base management
+- [`application/rag/context_builder.py`](application/rag/context_builder.py) - Context assembly
+- [`application/rag/loader.py`](application/rag/loader.py) - Document loading
+- [`application/rag/embedding.py`](application/rag/embedding.py) - Embedding provider interface
+- [`application/rag/vector_store.py`](application/rag/vector_store.py) - Vector store interface
+- [`application/rag/in_memory_vector_store.py`](application/rag/in_memory_vector_store.py) - In-memory vector store
+- [`application/rag/chunk.py`](application/rag/chunk.py) - Chunk data model
+- [`application/rag/document.py`](application/rag/document.py) - Document data model
+- [`application/rag/similarity.py`](application/rag/similarity.py) - Similarity metrics
+- [`application/rag/pipeline.py`](application/rag/pipeline.py) - RAG pipeline orchestration
 
 **Why it exists:**
 - Enables knowledge-based Q&A without fine-tuning
@@ -371,8 +398,9 @@ User Query → Embedding → Similarity Search → Context → LLM
 - [`application/mcp/client/client.py`](application/mcp/client/client.py) - MCP client wrapper
 - [`application/mcp/server/server.py`](application/mcp/server/server.py) - MCP server setup
 - [`application/mcp/tools.py`](application/mcp/tools.py) - Tool discovery
-- [`application/mcp/tool.py`](application/mcp/tool.py) - MCP tool wrapper
 - [`application/tools/mcp_tool.py`](application/tools/mcp_tool.py) - Adapter to internal Tool interface
+- [`application/mcp/server/tools/product_search.py`](application/mcp/server/tools/product_search.py) - Product search MCP tool
+- [`application/mcp/server/tools/math_tools.py`](application/mcp/server/tools/math_tools.py) - Math tools MCP server
 
 **Why it exists:**
 - Enables extensibility without code changes
@@ -392,6 +420,11 @@ User Query → Embedding → Similarity Search → Context → LLM
 - [`application/product_search/parsers/base.py`](application/product_search/parsers/base.py) - Abstract parser
 - [`application/product_search/parsers/torob.py`](application/product_search/parsers/torob.py) - Torob.ir parser
 - [`application/product_search/parsers/registry.py`](application/product_search/parsers/registry.py) - Parser registry
+- [`application/product_search/models.py`](application/product_search/models.py) - Domain models (Product, SiteConfig)
+- [`application/product_search/config.py`](application/product_search/config.py) - Configuration
+- [`application/product_search/fetcher.py`](application/product_search/fetcher.py) - HTTP fetching
+- [`application/product_search/service.py`](application/product_search/service.py) - Business logic
+- [`application/product_search/engine.py`](application/product_search/engine.py) - Search orchestration
 
 ---
 
@@ -877,13 +910,16 @@ This is more efficient because:
 ```
 mini-ai-assistant/
 ├── cli/                          # Presentation Layer
-│   └── chat/
-│       └── cli.py               # Chat interface
+│   ├── chat/
+│   │   └── cli.py               # Chat interface
+│   └── knowledge/
+│       └── cli.py               # Knowledge base management
 ├── application/                  # Application + Domain + Infrastructure
-│   ├── bootstrap.py             # Composition root
+│   ├── bootstrap.py             # Composition root (create_assistant)
 │   ├── agent/                   # Application Layer
-│   │   ├── agent.py            # Core agent with tool loop
-│   │   └── bootstrap.py        # Agent factory
+│   │   ├── agent.py            # Core agent with ReAct tool loop
+│   │   ├── bootstrap.py        # Agent factory
+│   │   └── mcp_tools.py        # MCP tool provider
 │   ├── assistant/               # Application Layer
 │   │   └── engine.py           # Assistant orchestration
 │   ├── router/                  # Application Layer
@@ -891,38 +927,54 @@ mini-ai-assistant/
 │   ├── llm/                     # Infrastructure Layer
 │   │   ├── client.py           # Abstract LLM interface
 │   │   ├── ollama_client.py    # Ollama implementation
-│   │   ├── message.py          # Message types
-│   │   ├── response.py         # Response types
-│   │   └── stream_event.py     # Streaming events
+│   │   ├── message.py          # Message types (LLMMessage)
+│   │   ├── response.py         # Response types (LLMResponse, ToolCall)
+│   │   ├── stream_event.py     # Streaming events (LLMStreamEvent)
+│   │   └── tool.py             # LLM tool definition (LLMTool)
 │   ├── rag/                     # Infrastructure + ML Layer
 │   │   ├── engine.py           # RAG orchestration
 │   │   ├── retriever.py        # Similarity search
 │   │   ├── indexer.py          # Document indexing
 │   │   ├── chunker.py          # Text chunking
-│   │   ├── qdrant_vector_store.py  # Vector DB
-│   │   └── ollama_embedding.py # Embeddings
+│   │   ├── qdrant_vector_store.py  # Qdrant vector DB
+│   │   ├── ollama_embedding.py # Ollama embeddings
+│   │   ├── knowledge_base.py   # Knowledge base management
+│   │   ├── context_builder.py  # Context assembly
+│   │   ├── loader.py           # Document loading
+│   │   ├── embedding.py        # Embedding provider interface
+│   │   ├── vector_store.py     # Vector store interface
+│   │   ├── in_memory_vector_store.py  # In-memory vector store
+│   │   ├── chunk.py            # Chunk data model
+│   │   ├── document.py         # Document data model
+│   │   ├── similarity.py       # Similarity metrics
+│   │   └── pipeline.py         # RAG pipeline orchestration
 │   ├── tools/                   # Domain Layer
-│   │   ├── base.py             # Abstract Tool
+│   │   ├── base.py             # Abstract Tool (ABC)
 │   │   ├── registry.py         # Tool registry
+│   │   ├── bootstrap.py        # MCP tool registration
 │   │   ├── knowledge_search.py # RAG search tool
-│   │   ├── save_memory.py      # Memory tool
-│   │   ├── load_memory.py      # Memory tool
-│   │   └── update_memory.py    # Memory tool
+│   │   ├── save_memory.py      # Memory persistence
+│   │   ├── load_memory.py      # Memory retrieval
+│   │   ├── update_memory.py    # Memory updates
+│   │   ├── mcp_tool.py         # MCP tool adapter
+│   │   └── result.py           # Tool result wrapper
 │   ├── mcp/                     # Infrastructure Layer
 │   │   ├── client/             # MCP client
 │   │   │   └── client.py
 │   │   ├── server/             # MCP server
 │   │   │   ├── server.py
+│   │   │   ├── bootstrap.py    # Server factory
 │   │   │   └── tools/          # MCP tools
 │   │   │       ├── product_search.py
 │   │   │       └── math_tools.py
-│   │   ├── tool.py             # MCP tool wrapper
+│   │   ├── tool.py             # (deprecated, use tools/mcp_tool.py)
 │   │   └── tools.py            # Tool discovery
 │   ├── product_search/          # Domain + Infrastructure
 │   │   ├── engine.py           # Search orchestration
 │   │   ├── service.py          # Business logic
 │   │   ├── fetcher.py          # HTTP fetching
-│   │   ├── models.py           # Domain models
+│   │   ├── models.py           # Domain models (Product, SiteConfig)
+│   │   ├── config.py           # Configuration
 │   │   └── parsers/            # Site-specific parsers
 │   │       ├── base.py
 │   │       ├── torob.py
@@ -930,6 +982,8 @@ mini-ai-assistant/
 │   ├── chat/                    # Domain Layer
 │   │   ├── engine.py           # Chat orchestration
 │   │   └── history.py          # Message history
+│   ├── multi_agent/             # Multi-agent support
+│   │   └── __init__.py
 │   └── utils/                   # Utilities
 │       └── logger.py
 ├── intent_classifier/           # ML/AI Layer
@@ -940,16 +994,34 @@ mini-ai-assistant/
 │   ├── encoder.py              # Transformer encoder
 │   ├── attention.py            # Multi-head attention
 │   ├── config.py               # Model config
-│   └── labels.py               # Intent labels
+│   ├── labels.py               # Intent labels
+│   ├── dataset.py              # Dataset handling
+│   ├── checkpoint.py           # Model checkpointing
+│   ├── early_stopping.py       # Early stopping
+│   ├── metrics.py              # Training metrics
+│   ├── pooling.py              # Pooling strategies
+│   └── positional_encoding.py  # Positional encoding
 ├── data/                        # Data files
-│   ├── intent/                 # Training data
-│   ├── documents/              # Knowledge base
-│   ├── memory/                 # Persistent memory
+│   ├── intent/                 # Training data (JSONL)
+│   ├── documents/              # Knowledge base documents
+│   ├── memory/                 # Persistent memory (JSON)
 │   └── vector_db/              # Vector storage
+├── resources/                   # Configuration resources
+│   ├── product_sources.json    # Product search sources
+│   └── sites.json              # Site configurations
+├── checkpoints/                 # Model checkpoints
+│   └── intent/
+│       ├── best.pt
+│       └── last.pt
+├── logs/                        # Training logs
+│   └── intent/
 ├── main.py                      # Entry point
 ├── train.py                     # Training script
 ├── predict.py                   # Prediction script
-└── requirements.txt             # Dependencies
+├── requirements.txt             # Dependencies
+├── pytest.ini                   # Test configuration
+├── run_tests.py                 # Test runner
+└── clean_intent_data.py         # Data cleaning utility
 ```
 
 ---
@@ -965,9 +1037,16 @@ The Mini AI Assistant demonstrates a well-architected, production-ready AI syste
 - **Real-world integrations** with Ollama, Qdrant, and MCP
 
 This architecture serves as an excellent teaching example for:
+
 - Layered architecture design
 - Dependency injection and inversion of control
 - Abstract base classes and polymorphism
 - Registry and factory patterns
 - Streaming and async programming
 - RAG and tool-calling patterns in AI applications
+
+---
+
+## Additional Resources
+
+- **[ARCHITECTURE_DIAGRAMS.md](./ARCHITECTURE_DIAGRAMS.md)** - Visual diagrams, class wiring, component connections, and sequence diagrams

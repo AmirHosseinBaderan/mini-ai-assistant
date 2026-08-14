@@ -116,20 +116,18 @@ This is the **orchestration layer** that coordinates domain services and infrast
 **Location:** `application/assistant/engine.py`
 
 **What it does:**
-- Orchestrates the Agent, Router, and Conversation History
+- Orchestrates the Agent and Conversation History
 - Provides the main `stream()` and `astream()` methods used by the CLI
 - Manages the complete conversation lifecycle
 
 **How it works:**
 ```python
 class AssistantEngine:
-    def __init__(self, agent, router, history):
+    def __init__(self, agent, history):
         self.agent = agent
-        self.router = router
         self.history = history
     
     def stream(self, query: str):
-        # Route the query if needed
         # Delegate to agent for processing
         # Manage conversation history
         pass
@@ -627,11 +625,13 @@ New features can be added without modifying existing code:
 Dependencies flow inward (outer layers depend on inner):
 ```
 CLI → AssistantEngine → Agent → LLMClient
-                    ↘         ↗
-                     ToolRegistry
+                     ↘         ↗
+                      ToolRegistry
 ```
 
 Inner layers don't know about outer layers.
+
+> **Note:** The `intent_classifier/` module is a standalone/branched application and is not integrated into the main chat or agent flow. It exists as a separate ML module for potential future use.
 
 ---
 
@@ -679,13 +679,13 @@ async def create_agent(llm_client, mcp_clients):
 **Benefit:** Centralized configuration, easy testing with mocks.
 
 ### 5. Strategy Pattern
-Different strategies for different intents:
+Different strategies for different tool types:
 ```python
-router = Router(predictor, handlers={
-    "search_product": handle_product_search,
-    "ask_knowledge": handle_knowledge_search,
-    "chat": handle_general_chat,
-})
+# Tools act as strategies - each tool implements different behavior
+registry = ToolRegistry()
+registry.register(KnowledgeSearchTool())
+registry.register(ProductSearchTool())
+registry.register(SaveMemoryTool())
 ```
 
 **Benefit:** Swappable behaviors, open for extension.
@@ -912,8 +912,6 @@ mini-ai-assistant/
 │   │   └── mcp_tools.py        # MCP tool provider
 │   ├── assistant/               # Application Layer
 │   │   └── engine.py           # Assistant orchestration
-│   ├── router/                  # Application Layer
-│   │   └── router.py           # Intent-based routing
 │   ├── llm/                     # Infrastructure Layer
 │   │   ├── client.py           # Abstract LLM interface
 │   │   ├── ollama_client.py    # Ollama implementation
@@ -976,21 +974,6 @@ mini-ai-assistant/
 │   │   └── __init__.py
 │   └── utils/                   # Utilities
 │       └── logger.py
-├── intent_classifier/           # ML/AI Layer
-│   ├── model.py                # Transformer model
-│   ├── trainer.py              # Training loop
-│   ├── predictor.py            # Inference wrapper
-│   ├── tokenizer.py            # Text tokenization
-│   ├── encoder.py              # Transformer encoder
-│   ├── attention.py            # Multi-head attention
-│   ├── config.py               # Model config
-│   ├── labels.py               # Intent labels
-│   ├── dataset.py              # Dataset handling
-│   ├── checkpoint.py           # Model checkpointing
-│   ├── early_stopping.py       # Early stopping
-│   ├── metrics.py              # Training metrics
-│   ├── pooling.py              # Pooling strategies
-│   └── positional_encoding.py  # Positional encoding
 ├── data/                        # Data files
 │   ├── intent/                 # Training data (JSONL)
 │   ├── documents/              # Knowledge base documents
@@ -1040,3 +1023,6 @@ This architecture serves as an excellent teaching example for:
 ## Additional Resources
 
 - **[ARCHITECTURE_DIAGRAMS.md](./ARCHITECTURE_DIAGRAMS.md)** - Visual diagrams, class wiring, component connections, and sequence diagrams
+- **[intent_classifier/README.md](intent_classifier/README.md)** - Standalone intent classifier module documentation
+
+> **Note:** The `intent_classifier/` module is a **standalone/branched application** and is **not integrated** into the main chat or agent flow. It exists as a separate ML module for potential future integration or standalone use.

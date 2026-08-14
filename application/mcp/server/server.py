@@ -15,10 +15,12 @@ def register_product_search(
 
     async def search_products(
         query: str,
+        take: int = 10,
     ) -> list[dict]:
 
         return await tool.execute(
             query=query,
+            take=take,
         )
 
     mcp.add_tool(
@@ -26,7 +28,9 @@ def register_product_search(
         name="product_search",
         description=(
             "Search configured shopping websites for products and prices. "
-            "Returns the top 10 matching products, each including the product "
+            "Returns up to 'take' matching products (default 10), each including "
+            "the product name, price, URL, and source website. "
             "Use this tool to find products, compare prices, or check "
+            "availability across different stores."
         ),
     )
